@@ -1,0 +1,60 @@
+# .roadmap.hexa_antimatter — repo-overall tracker
+
+> Cross-cutting state: invariant lattice, release cadence, cycle history,
+> deadlines, pointers. Sister of `petite-cern` / `hexa-ufo` / `hexa-fusion`
+> under `need-singularity` org.
+
+**Last sync**: 2026-05-06 · **Current release**: v1.0.0 · **Branch**: `main`
+
+---
+
+## §0 Terminal goal — 탁상 반물질 substrate (1.7×10¹² p̄/s 도달)
+
+hexa-antimatter 도착지 = **탁상 반물질 (factory + tabletop + PET cyclotron) production rate 1.7×10¹² p̄/s 도달 + Dirac-mirror n=6 closed-form 검증**.
+
+DoD:
+1. `pet_cyclotron` ¹⁸F β⁺ on-site regen .hexa 시뮬레이터.
+2. `tabletop` antimatter trap 8.7 kW p-¹¹B 의존 cross-verify with `hexa-fusion`.
+3. `factory` scale-up spec (10¹⁴ p̄/s).
+4. `hexa-ufo` Stage-3 propulsion fuel cross-verify.
+
+## §A.1 Invariant lattice (n=6)
+
+```
+σ(6) · φ(6) = n · τ(6) = J₂ = 24
+   12   ·   2  =  6  ·   4  = 24
+```
+
+| Symbol | Value | Role | Antimatter projection |
+|--------|-------|------|------------------------|
+| σ(6)   | 12    | sigma — cardinality bin | 12 antiparticle species (e⁺ / p̄ / n̄ / Λ̄ / ...) |
+| τ(6)   | 4     | tau — state quartet | 4 trap states (capture / cool / store / extract) |
+| φ(6)   | 2     | phi — verdict bit | matter / antimatter (Dirac mirror) |
+| J₂     | 24    | Mathieu / Leech | σ·φ = J₂ = 24 — Dirac mirror symmetry generators |
+
+## §A.2 Release cadence
+
+| Version | Date | Status | Highlights |
+|---------|------|--------|------------|
+| v1.0.0 | 2026-05-06 | RELEASED | 3 verb 시드 (factory + tabletop + pet_cyclotron) |
+| v1.1.0 | ~2026-08 (TARGET) | planned | `pet_cyclotron` ¹⁸F β⁺ regen .hexa 시뮬레이터 |
+| v1.2.0 | ~2026-10 | planned | `tabletop` p̄ trap 8.7 kW p-¹¹B 의존 cross-verify with hexa-fusion |
+| v1.3.0 | ~2026-12 | planned | `factory` scale-up spec (10¹⁴ p̄/s) |
+| v2.0.0 | ~2027-Q3 | ASPIRATIONAL | hexa-ufo Stage-3 propulsion fuel cross-verify |
+
+## §A.3 Cycle history
+
+- **Cycle 0 (2026-05-06)** — v1.0.0 initial extraction from n6-architecture@c0f1f570. Commit `f91c153`. 11 files / 2094+ insertions.
+
+## §A.4 Falsifier preregister
+
+- **F-AM-1** — PET ¹⁸F regen rate 측정 (cyclotron 공개 spec) closed-form fit?
+- **F-AM-2** — tabletop p̄ density σ·J₂=288 fit (CERN AEgIS / ALPHA / GBAR ref)?
+- **F-AM-3** — Dirac mirror symmetry 6-fold closed-form, CPT 측정 일치?
+- **F-AM-4** — 탁상 1.7×10¹² p̄/s 도달 시 hexa-ufo Stage-3 propulsion break-even?
+
+## §A.5 Pending decisions
+
+- petite-cern (가속기 cousin) 와의 verb 중복 정리 (PET cyclotron 은 antimatter측에 귀속, accelerator 측은 reference만).
+- 반물질 가격 (현재 ~$62.5조/g) → 탁상 가격 모델.
+- CERN ALPHA collab 외부 partnership 시점.
