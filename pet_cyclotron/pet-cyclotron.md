@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/physics/pet-cyclotron/pet-cyclotron.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 081adb50f910b3c5fe978b1472fc9abf -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: pet-cyclotron

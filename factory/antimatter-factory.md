@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/physics/antimatter-factory/antimatter-factory.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: e6c5d6b70fc09e15e715172df56a2281 -->
 <!-- gold-standard: shared/harness/sample.md -->
 ---
 domain: antimatter-factory

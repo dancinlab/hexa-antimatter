@@ -1,3 +1,6 @@
+<!-- @canonical: n6-architecture@0570a835:domains/physics/tabletop-antimatter/tabletop-antimatter.md -->
+<!-- @extracted: 2026-05-06 -->
+<!-- @md5_at_extraction: 16569e0cb571f7bac9c557439b6e6237 -->
 <!-- @own(sections=[WHY, COMPARE, REQUIRES, STRUCT, FLOW, EVOLVE, VERIFY], strict=false, order=sequential, prefix="§") -->
 
 <!-- gold-standard: shared/harness/sample.md -->
