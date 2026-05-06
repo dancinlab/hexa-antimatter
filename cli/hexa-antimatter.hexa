@@ -66,7 +66,7 @@ fn _print_caveats() {
     println("     clinical operation is performed by this repo.")
     println("  4. tabletop 1.7e12 p-bar/s and factory 1e12 p-bar/hr are candidate")
     println("     numbers from declarative .md SSOT — academia-unproven.")
-    println("  5. Cross-link: petite-cern (accelerator cousin), hexa-ufo (Stage-3")
+    println("  5. Cross-link: hexa-cern (accelerator cousin), hexa-ufo (Stage-3")
     println("     propulsion fuel dependency — hexa-antimatter is its substrate).")
 }
 

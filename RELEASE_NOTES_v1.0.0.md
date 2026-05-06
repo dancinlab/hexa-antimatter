@@ -43,7 +43,7 @@ master identity:   σ · φ = n · τ = 24
 
 ## Cross-links
 
-- Accelerator cousin: `need-singularity/petite-cern`
+- Accelerator cousin: `need-singularity/hexa-cern`
 - Stage-3 propulsion fuel consumer: `need-singularity/hexa-ufo`
 - HEXA family sister: `need-singularity/hexa-bio` (molecular toolkit)
 - Upstream `.md` SSOTs in `n6-architecture/domains/physics/`:

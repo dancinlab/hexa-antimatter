@@ -101,7 +101,7 @@ hexa-antimatter pet_cyclotron           # spec sentinel
 
 ## § Cross-link
 
-- **`need-singularity/petite-cern`** — accelerator cousin (compact-accelerator substrate)
+- **`need-singularity/hexa-cern`** — accelerator cousin (compact-accelerator substrate)
 - **`need-singularity/hexa-ufo`** — Stage-3 propulsion fuel dependency (UFO substrate sources its antimatter fuel from this repo)
 - Sister substrate: [`need-singularity/hexa-bio`](https://github.com/need-singularity/hexa-bio) (molecular toolkit, HEXA family)
 - Upstream concept SSOTs (declarative):

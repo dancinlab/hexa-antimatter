@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `install.hexa` hx hook (no python deps; selftest sentinel check, warn-only).
 - `tests/test_selftest.hexa` placeholder selftest.
 - README with §Why / §Verbs / §Status / §Install / §Cross-link / §License.
-- Cross-link to sister substrates: `petite-cern` (accelerator cousin), `hexa-ufo`
+- Cross-link to sister substrates: `hexa-cern` (accelerator cousin), `hexa-ufo`
   (Stage-3 propulsion fuel dependency), `hexa-bio` (molecular toolkit, HEXA family).
 
 ### Honest scope (raw#10 C3)
