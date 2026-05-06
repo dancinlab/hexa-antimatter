@@ -1,4 +1,4 @@
-# hexa-antimatter ☄️
+# ☄️ hexa-antimatter
 
 > 반물질 substrate — antimatter-factory + tabletop + PET cyclotron. n=6 Dirac-mirror lattice.
 
