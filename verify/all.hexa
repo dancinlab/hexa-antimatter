@@ -23,6 +23,8 @@
 //   verify/numerics_lattice_arithmetic.hexa → __HEXA_ANTIMATTER_NUMERICS_LATTICE_ARITHMETIC__
 //   verify/falsifier_check.hexa   →  __HEXA_ANTIMATTER_FALSIFIER__
 //   verify/lint_numerics.hexa     →  __HEXA_ANTIMATTER_LINT_NUMERICS__
+//   verify/calc_break_even.hexa   →  __HEXA_ANTIMATTER_CALC_BREAK_EVEN__
+//   verify/numerics_break_even.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -75,7 +77,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (20-step orchestrator)")
+    println("  hexa-antimatter — verify/all (22-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -252,6 +254,24 @@ fn main() {
         summary = summary + ["  [PASS] verify/lint_numerics  (5-invariant grep-lint)"]
     } else {
         summary = summary + ["  [FAIL] verify/lint_numerics"]
+    }
+
+    tot = tot + 1
+    if run_step("calc_break_even", r + "/verify/calc_break_even.hexa",
+                "__HEXA_ANTIMATTER_CALC_BREAK_EVEN__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/calc_break_even  (T1 algebraic, F-AM-4)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/calc_break_even"]
+    }
+
+    tot = tot + 1
+    if run_step("numerics_break_even", r + "/verify/numerics_break_even.hexa",
+                "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/numerics_break_even  (T2 numerical, F-AM-4)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/numerics_break_even"]
     }
 
     tot = tot + 1

@@ -99,8 +99,8 @@ let F3_T3_DESC       = "CERN-scale factory 1e12 p̄/hr CPT-precision feed (Stage
 
 let F4_ID            = "F-AM-4"
 let F4_RETRACT       = "tabletop 1.7×10¹² p̄/s ≠ hexa-ufo Stage-3 propulsion break-even"
-let F4_T1_SCRIPTS: [str] = []        // partial — no calc_break_even.hexa yet (iter 17 candidate)
-let F4_T2_SCRIPTS: [str] = []        // pending numerics_break_even.hexa
+let F4_T1_SCRIPTS    = ["calc_break_even.hexa"]
+let F4_T2_SCRIPTS    = ["numerics_break_even.hexa"]
 let F4_T3_DESC       = "hexa-ufo Stage-3 propulsion live integration feed (Stage-1+ TBD)"
 
 // ── helpers ──────────────────────────────────────────────────────────────
@@ -180,7 +180,7 @@ let FALSIFIERS = [
     "F-AM-1: PET ¹⁸F regen rate vs cyclotron spec (T2 ×3 sat-1)",
     "F-AM-2: tabletop p̄ density σ·J₂=288 (T2 ×3 sat-1)",
     "F-AM-3: Dirac mirror 6-fold CPT measurement (T2 ×3 sat-1)",
-    "F-AM-4: hexa-ufo Stage-3 break-even (T1 partial, T2 pending)",
+    "F-AM-4: hexa-ufo Stage-3 break-even (T1 + T2 sat-1 closure)",
     "any roadmap §A.4 entry deleted → falsifier_check FAIL",
     "any T1/T2 script claimed but missing from disk → FAIL",
 ]
@@ -196,8 +196,8 @@ fn main() {
     println("    T2  numerical     closed-form via math_pure    (verify/numerics_*.hexa)")
     println("    T3  empirical     real bench / clinical data   (Stage-1+ TBD)")
     println("")
-    println("  At iter 15: T1 + T2 ×3 landed for F-AM-1/2/3 (67% sat-1).")
-    println("              F-AM-4 partial — T2 pending future break-even chunk.")
+    println("  At iter 17: T1 + T2 landed for ALL 4 falsifiers (4/4 sat-1).")
+    println("              F-AM-1/2/3 each at T2 ×3 · F-AM-4 at T1 + T2 ×1.")
     println("              T3 closes only when Stage-1+ build runs.")
     println("")
 
@@ -225,7 +225,8 @@ fn main() {
     check_tier_scripts_present(F2_ID, "T2", F2_T2_SCRIPTS)
     check_tier_scripts_present(F3_ID, "T1", F3_T1_SCRIPTS)
     check_tier_scripts_present(F3_ID, "T2", F3_T2_SCRIPTS)
-    // F-AM-4 has empty T1/T2 lists; no presence check needed (partial state).
+    check_tier_scripts_present(F4_ID, "T1", F4_T1_SCRIPTS)
+    check_tier_scripts_present(F4_ID, "T2", F4_T2_SCRIPTS)
 
     println("")
     println("  FALSIFIERS (" + _int_str(len(FALSIFIERS)) + "):")
@@ -245,6 +246,6 @@ fn main() {
         println("__HEXA_ANTIMATTER_FALSIFIER__ FAIL")
         exit(1)
     }
-    println("__HEXA_ANTIMATTER_FALSIFIER__ PASS — 4/4 preregistered, 3 sat-1 + 1 partial")
+    println("__HEXA_ANTIMATTER_FALSIFIER__ PASS — 4/4 preregistered, 4/4 sat-1 closure")
     exit(0)
 }

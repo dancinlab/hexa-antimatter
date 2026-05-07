@@ -73,6 +73,7 @@ let NUMERICS_SCRIPTS = [
     "numerics_pet_cyclotron_solver.hexa",
     "numerics_cross_pillar.hexa",
     "numerics_lattice_arithmetic.hexa",
+    "numerics_break_even.hexa",
 ]
 
 let REQ_IMPORT_MATH     = "use \"self/runtime/math_pure\""

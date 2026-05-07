@@ -9,6 +9,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 17) 🎯 F-AM-4 sat-1 — full sat-1 reached
+
+- `verify/calc_break_even.hexa` — F-AM-4 **T1** algebraic closure for
+  hexa-ufo Stage-3 propulsion break-even.  10/10 PASS.  Integer ledger:
+  · σ³ = 1728 (production cascade base)
+  · σ·τ = 48 (propulsion stage chain anchor)
+  · σ·τ² = 192 mo = 16 yr (Stage-3 horizon)
+  · n·τ = σ·φ = J₂ = 24 (master identity in propulsion ledger)
+  · σ·τ·2 ≈ 96 ng/yr (annual mass yield, ±10%)
+  · σ-φ = 10 fleet units → ≈ 1 μg/yr (break-even total)
+  · σ²·n = 864 (fuel·time anchor)
+  · σ³:σ²:σ = 1728:144:12 (production : storage : fuel ratio)
+- `verify/numerics_break_even.hexa` — F-AM-4 **T2** numerical closure.
+  16/16 PASS.  math_pure-derived:
+  · R = σ³·10⁹ = 1.728×10¹² p̄/s
+  · 2 m_p c² = 3.0064×10⁻¹⁰ J per p̄+p annihilation
+  · R · m_p · yr ≈ 91 ng/yr (1 unit annual mass)
+  · R · E_pair ≈ 519 W (instantaneous power)
+  · σ-φ = 10 units fleet → ≈ 0.91 μg/yr break-even
+  · Tsiolkovsky closed-form Δv/c = ln(2) ↔ m₀/m₁ = 2
+  · Stage-3 16-yr fleet energy ∈ [1, 10] TJ
+- `verify/falsifier_check.hexa` — F-AM-4 registered with T1+T2 → 67% sat-1.
+  **All 4 falsifiers (F-AM-1/2/3/4) now satisfy sat-1.**
+- `verify/lint_numerics.hexa` — inventory 11 → 12 (numerics_break_even).
+- `verify/all.hexa` — 20 → 22 steps (22/22 PASS).
+- `cli/hexa-antimatter.hexa` — `verify calc-break-even` + `numerics-break-even` sub-targets.
+- `tests/test_calculators.hexa` — 2 rows added (18 total).
+- `tests/test_verify_all.hexa` — expected 20/20 → 22/22.
+
 ### Added (2026-05-08 — RSC iteration 16) numerics meta-lint
 
 - `verify/lint_numerics.hexa` — meta-lint over all 11 numerics_*.hexa
