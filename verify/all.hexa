@@ -1,0 +1,110 @@
+#!hexa strict
+// verify/all.hexa — unified orchestrator for the verify/ surface.
+//
+// Runs the 4 verifiers + the selftest sweep in sequence and aggregates
+// PASS/FAIL into a single exit code:
+//
+//   verify/n6_arithmetic.hexa     →  __HEXA_ANTIMATTER_VERIFY_N6__
+//   verify/cross_doc_audit.hexa   →  __HEXA_ANTIMATTER_VERIFY_DOCS__
+//   verify/release_ladder.hexa    →  __HEXA_ANTIMATTER_VERIFY_LADDER__
+//   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
+//
+// Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
+//
+// Run:
+//     hexa run verify/all.hexa            # exit 0 = every verifier PASS
+//     hexa run verify/all.hexa --quiet    # one-line summary only
+
+fn root() -> str {
+    let r = env("HEXA_ANTIMATTER_ROOT")
+    if r.len() > 0 { return r }
+    return exec("pwd").trim()
+}
+
+fn quiet_mode(a: [str]) -> bool {
+    let mut i = 0
+    while i < len(a) {
+        if a[i] == "--quiet" || a[i] == "-q" { return true }
+        i = i + 1
+    }
+    return false
+}
+
+fn run_step(name: str, path: str, sentinel: str, quiet: bool) -> bool {
+    if !quiet {
+        println("")
+        println("--- " + name + " ---")
+    }
+    let out = exec("hexa run " + path + " 2>&1")
+    if !quiet {
+        println(out.trim())
+    }
+    return out.contains(sentinel)
+}
+
+fn main() {
+    let r = root()
+    let q = quiet_mode(args())
+    println("========================================================================")
+    println("  hexa-antimatter — verify/all (4-step orchestrator)")
+    println("  root: " + r)
+    println("========================================================================")
+
+    let mut pass_count = 0
+    let mut tot = 0
+    let mut summary: [str] = []
+
+    tot = tot + 1
+    if run_step("n6_arithmetic", r + "/verify/n6_arithmetic.hexa",
+                "__HEXA_ANTIMATTER_VERIFY_N6__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/n6_arithmetic"]
+    } else {
+        summary = summary + ["  [FAIL] verify/n6_arithmetic"]
+    }
+
+    tot = tot + 1
+    if run_step("cross_doc_audit", r + "/verify/cross_doc_audit.hexa",
+                "__HEXA_ANTIMATTER_VERIFY_DOCS__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/cross_doc_audit"]
+    } else {
+        summary = summary + ["  [FAIL] verify/cross_doc_audit"]
+    }
+
+    tot = tot + 1
+    if run_step("release_ladder", r + "/verify/release_ladder.hexa",
+                "__HEXA_ANTIMATTER_VERIFY_LADDER__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/release_ladder"]
+    } else {
+        summary = summary + ["  [FAIL] verify/release_ladder"]
+    }
+
+    tot = tot + 1
+    if run_step("selftest", r + "/selftest/selftest.hexa",
+                "__HEXA_ANTIMATTER_SELFTEST__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] selftest/selftest (3-verb sweep)"]
+    } else {
+        summary = summary + ["  [FAIL] selftest/selftest"]
+    }
+
+    println("")
+    println("========================================================================")
+    println("  hexa-antimatter — verify/all summary")
+    println("========================================================================")
+    let mut i = 0
+    while i < len(summary) {
+        println(summary[i])
+        i = i + 1
+    }
+    println("")
+    println("  " + ("" + pass_count) + "/" + ("" + tot) + " verifiers PASS")
+    if pass_count == tot {
+        println("__HEXA_ANTIMATTER_VERIFY_ALL__ PASS")
+    } else {
+        println("__HEXA_ANTIMATTER_VERIFY_ALL__ FAIL")
+        exit(1)
+    }
+}

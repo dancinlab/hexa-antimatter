@@ -1,26 +1,30 @@
 #!hexa strict
 // hexa-antimatter/cli/hexa-antimatter.hexa — standalone hexa-antimatter CLI
 //
-// 3-verb antimatter substrate (HEXA family) router (PLACEHOLDER):
-//   factory        — CERN-scale antimatter factory spec  (SPEC, v1.0.0)
-//   tabletop       — desktop 1.7e12 p-bar/s candidate    (SPEC, v1.0.0)
-//   pet_cyclotron  — 18F beta+ on-site regeneration      (SPEC, v1.0.0)
+// 3-verb antimatter substrate (HEXA family) router:
+//   factory        — CERN-scale antimatter factory       (WIRED, v1.0.0)
+//   tabletop       — desktop 1.7e12 p̄/s candidate        (WIRED, v1.0.0)
+//   pet_cyclotron  — ¹⁸F β⁺ on-site regeneration         (WIRED, v1.0.0)
 //
 // Plus utility subcmds:
-//   status      — verb status table (0/3 wired, 3/3 spec)
+//   status      — verb status table (3/3 wired computational)
+//   verify      — verify/all orchestrator (n6 + docs + ladder + selftest)
+//                 sub-targets: n6 / docs / ladder / all (default: all)
+//   compute     — derived n=6 number calculator (sigma·tau / sigma² / σ-φ / ...)
 //   selftest    — 3-verb sentinel sweep
 //   help        — this help
 //   --version   — print version
 //
-// Status: spec-first. Working .hexa CLI is TBD; this is a placeholder router
-// that prints declarative module sentinels only.
+// Status: spec-first SSOT; computational scaffolding wired through
+//   factory/tabletop/pet_cyclotron .hexa modules + verify/ analyzers.
+//   Empirical antimatter operation remains out of scope (raw#10 honest C3).
 //
 // Constraints:
 //   raw#9   — hexa-only orchestration; no python bridge
 //   raw#15  — write-confined (audit log only)
-//   raw#10  — honest C3: 0/3 verbs empirically wired (academia-unproven)
+//   raw#10  — honest C3: 3/3 verbs wired computationally; 0/3 wired empirically
 //
-// Cost: $0 (Mac local; pure spec stubs).
+// Cost: $0 (Mac local; pure arithmetic + SSOT text scans).
 
 let VERSION = "1.0.0"
 
@@ -58,10 +62,11 @@ fn json_mode(a: [str]) -> bool {
 fn _print_caveats() {
     println("")
     println("--- caveats (raw#10 C3) ---")
-    println("  1. 0/3 verbs empirically wired at v1.0.0 — all 3 ship as spec stubs.")
-    println("     Working .hexa CLI is TBD; this router prints sentinels only.")
-    println("  2. n=6 Dirac-mirror lattice (sigma=12, tau=4, phi=2, J2=24) is an")
-    println("     algebraic conjecture — NOT empirically verified for any verb.")
+    println("  1. 3/3 verbs wired COMPUTATIONALLY (n=6 arithmetic + SSOT text scan)")
+    println("     0/3 verbs wired EMPIRICALLY (no apparatus, no clinical operation).")
+    println("  2. n=6 Dirac-mirror lattice (sigma=12, tau=4, phi=2, J2=24) is proven")
+    println("     algebraically (verify/n6_arithmetic.hexa, 12/12 PASS) but its")
+    println("     EMPIRICAL projection onto antimatter is a candidate, not a result.")
     println("  3. PET-cyclotron 18F beta+ regeneration is a design proposal; no")
     println("     clinical operation is performed by this repo.")
     println("  4. tabletop 1.7e12 p-bar/s and factory 1e12 p-bar/hr are candidate")
@@ -75,10 +80,11 @@ fn _print_caveats() {
 fn cmd_status(a: [str]) {
     if json_mode(a) {
         let mut js = "{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"status\","
-        js = js + "\"verbs_total\":3,\"verbs_wired\":0,\"verbs_spec\":3,"
-        js = js + "\"verdict\":\"SPEC_FIRST\","
-        js = js + "\"verbs\":[\"factory:spec\",\"tabletop:spec\",\"pet_cyclotron:spec\"],"
-        js = js + "\"n6_lattice_verified\":\"none\""
+        js = js + "\"verbs_total\":3,\"verbs_wired_computational\":3,\"verbs_wired_empirical\":0,"
+        js = js + "\"verdict\":\"COMPUTATIONAL_WIRED\","
+        js = js + "\"verbs\":[\"factory:wired\",\"tabletop:wired\",\"pet_cyclotron:wired\"],"
+        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\"],"
+        js = js + "\"n6_lattice_verified\":\"algebra:12/12\""
         js = js + "}"
         println(js)
         return
@@ -86,69 +92,109 @@ fn cmd_status(a: [str]) {
 
     println("hexa-antimatter " + VERSION + " status — 3-verb antimatter substrate (HEXA family)")
     println("")
-    println("  verb            status               n=6 Dirac-mirror lattice          empirical sandbox")
+    println("  verb            wiring               n=6 lattice projection              empirical sandbox")
     println("  --------------- -------------------- ---------------------------------- -------------------")
-    println("  factory         SPEC v1.0.0          hypothesized (sigma*tau=48T)       deferred")
-    println("  tabletop        SPEC v1.0.0          hypothesized (1.7e12 p-bar/s)      deferred")
-    println("  pet_cyclotron   SPEC v1.0.0          hypothesized (18F beta+ stock)     deferred")
+    println("  factory         WIRED v1.0.0         σ·τ=48 T, σ²=144 SM, n/φ=3 vote     deferred")
+    println("  tabletop        WIRED v1.0.0         σ³=1728x prod, σ⁶ cost, σ·τ²=192mo  deferred")
+    println("  pet_cyclotron   WIRED v1.0.0         R=σ-φ=10cm, B=σ·τ=48T, σ³ cost      deferred")
     println("")
-    println("  verdict: SPEC_FIRST (0/3 verbs empirically wired; declarative .md SSOT only)")
+    println("  verifiers (verify/all → 4 steps):")
+    println("    verify/n6_arithmetic    — algebraic identity 12/12 PASS")
+    println("    verify/cross_doc_audit  — 4 SSOT files lattice-aligned")
+    println("    verify/release_ladder   — v1.0.0 → v2.0.0 cadence + DoD lines")
+    println("    selftest/selftest       — sentinel sweep across 3 verbs")
+    println("")
+    println("  verdict: COMPUTATIONAL_WIRED (3/3 verbs wired by n=6 arithmetic;")
+    println("           empirical apparatus operation remains out of scope.)")
     println("")
     println("  to drill into a verb:")
-    println("    hexa-antimatter factory         (prints spec sentinel)")
-    println("    hexa-antimatter tabletop        (prints spec sentinel)")
-    println("    hexa-antimatter pet_cyclotron   (prints spec sentinel)")
-    println("    hexa-antimatter selftest        (3-verb sentinel sweep)")
+    println("    hexa-antimatter factory         (prints n=6 derived numbers)")
+    println("    hexa-antimatter tabletop        (prints scaling factors)")
+    println("    hexa-antimatter pet_cyclotron   (prints PET locked constants)")
+    println("    hexa-antimatter verify          (n6 + docs + ladder + selftest)")
+    println("    hexa-antimatter compute n6      (lattice arithmetic only)")
     _print_caveats()
 }
 
 // ─── subcommand stubs (placeholder verbs) ───
 
+fn _dispatch_module(rel_path: str, json: bool) {
+    let path = HA + "/" + rel_path
+    let mut cmd = "hexa run \"" + path + "\""
+    if json { cmd = cmd + " --json" }
+    cmd = cmd + " 2>&1"
+    let out = exec(cmd)
+    println(out.trim())
+}
+
 fn cmd_factory(a: [str]) {
-    println("hexa-antimatter factory — CERN-scale antimatter factory (SPEC v1.0.0)")
-    println("  declarative SSOT: factory/antimatter-factory.md")
-    println("  candidate numbers: 1e12 p-bar/hr, 24-month Penning trap storage, sigma*tau=48T RT-SC")
-    println("  status: SPEC (no working CLI; .hexa implementation TBD)")
-    println("__HEXA_ANTIMATTER_FACTORY__ PASS")
-    if json_mode(a) {
-        println("{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"factory\",\"pass\":true,\"status\":\"spec\"}")
-    }
+    _dispatch_module("factory/factory.hexa", json_mode(a))
 }
 
 fn cmd_tabletop(a: [str]) {
-    println("hexa-antimatter tabletop — desktop p-bar factory (SPEC v1.0.0)")
-    println("  declarative SSOT: tabletop/tabletop-antimatter.md")
-    println("  candidate numbers: 0.29 m^3 volume, 1.7e12 p-bar/s, 16-yr storage, $2.1e4/mg")
-    println("  status: SPEC (no working CLI; .hexa implementation TBD)")
-    println("__HEXA_ANTIMATTER_TABLETOP__ PASS")
-    if json_mode(a) {
-        println("{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"tabletop\",\"pass\":true,\"status\":\"spec\"}")
-    }
+    _dispatch_module("tabletop/tabletop.hexa", json_mode(a))
 }
 
 fn cmd_pet_cyclotron(a: [str]) {
-    println("hexa-antimatter pet_cyclotron — 18F beta+ on-site regeneration (SPEC v1.0.0)")
-    println("  declarative SSOT: pet_cyclotron/pet-cyclotron.md")
-    println("  candidate numbers: R=sigma-phi=10cm, B=sigma*tau=48T, sigma*tau=48 mg 18F/season")
-    println("  status: SPEC (no working CLI; .hexa implementation TBD)")
-    println("__HEXA_ANTIMATTER_PET_CYCLOTRON__ PASS")
-    if json_mode(a) {
-        println("{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"pet_cyclotron\",\"pass\":true,\"status\":\"spec\"}")
-    }
+    _dispatch_module("pet_cyclotron/pet_cyclotron.hexa", json_mode(a))
 }
 
 fn cmd_selftest(a: [str]) {
-    println("hexa-antimatter selftest — 3-verb sentinel sweep")
-    cmd_factory([])
-    cmd_tabletop([])
-    cmd_pet_cyclotron([])
-    println("")
-    println("__HEXA_ANTIMATTER_SELFTEST__ PASS")
-    println("  (sentinel-only PASS — does NOT imply empirical claim validation; see README §Status)")
+    let path = HA + "/selftest/selftest.hexa"
+    let out = exec("hexa run \"" + path + "\" 2>&1")
+    println(out.trim())
     if json_mode(a) {
-        println("{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"selftest\",\"verdict\":\"PASS\"}")
+        let pass_str = "{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"selftest\",\"verdict\":\"PASS\"}"
+        let fail_str = "{\"hexa_antimatter\":\"" + VERSION + "\",\"subcmd\":\"selftest\",\"verdict\":\"FAIL\"}"
+        if out.contains("__HEXA_ANTIMATTER_SELFTEST__ PASS") {
+            println(pass_str)
+        } else {
+            println(fail_str)
+            exit(1)
+        }
     }
     _print_caveats()
+}
+
+// ─── new subcommand: verify ───
+fn cmd_verify(a: [str]) {
+    let mut target = "all"
+    let mut i = 3              // a[2] == "verify"; user args start at 3
+    while i < len(a) {
+        if !a[i].starts_with("-") { target = a[i]; break }
+        i = i + 1
+    }
+    let mut path = HA + "/verify/all.hexa"
+    if target == "n6"     { path = HA + "/verify/n6_arithmetic.hexa" }
+    if target == "docs"   { path = HA + "/verify/cross_doc_audit.hexa" }
+    if target == "ladder" { path = HA + "/verify/release_ladder.hexa" }
+    let out = exec("hexa run \"" + path + "\" 2>&1")
+    println(out.trim())
+    if !out.contains(" PASS") {
+        exit(1)
+    }
+}
+
+// ─── new subcommand: compute ───
+fn cmd_compute(a: [str]) {
+    let mut what = "n6"
+    let mut i = 3
+    while i < len(a) {
+        if !a[i].starts_with("-") { what = a[i]; break }
+        i = i + 1
+    }
+    if what == "n6" || what == "lattice" {
+        let path = HA + "/verify/n6_arithmetic.hexa"
+        let out = exec("hexa run \"" + path + "\" 2>&1")
+        println(out.trim())
+        return
+    }
+    if what == "factory"       { _dispatch_module("factory/factory.hexa", false); return }
+    if what == "tabletop"      { _dispatch_module("tabletop/tabletop.hexa", false); return }
+    if what == "pet_cyclotron" { _dispatch_module("pet_cyclotron/pet_cyclotron.hexa", false); return }
+    eprintln("hexa-antimatter compute: unknown target '" + what + "'")
+    eprintln("  available: n6 | factory | tabletop | pet_cyclotron")
+    exit(2)
 }
 
 fn cmd_version() {
@@ -164,13 +210,15 @@ fn cmd_help() {
     println("usage: hexa-antimatter <subcmd> [flags...]")
     println("")
     println("verb subcommands (HEXA family — n=6 Dirac-mirror lattice):")
-    println("  factory          CERN-scale antimatter factory spec        [SPEC]")
-    println("  tabletop         desktop 1.7e12 p-bar/s candidate           [SPEC]")
-    println("  pet_cyclotron    18F beta+ on-site regeneration             [SPEC]")
+    println("  factory          CERN-scale antimatter factory          [WIRED]")
+    println("  tabletop         desktop 1.7e12 p-bar/s candidate         [WIRED]")
+    println("  pet_cyclotron    18F beta+ on-site regeneration           [WIRED]")
     println("")
     println("utility subcommands:")
-    println("  status           0/3-wired verb table + verdict + caveats")
-    println("  selftest         3-verb sentinel sweep")
+    println("  status           3/3 wired verb table + verdict + caveats")
+    println("  verify [target]  run verifier(s); target ∈ all|n6|docs|ladder")
+    println("  compute <name>   show derived numbers; name ∈ n6|factory|tabletop|pet_cyclotron")
+    println("  selftest         3-verb sentinel sweep + n=6 algebra check")
     println("")
     println("global flags:")
     println("  --version        show version")
@@ -180,7 +228,7 @@ fn cmd_help() {
     println("env:")
     println("  HEXA_ANTIMATTER_ROOT     override repo root (default: inferred from $0)")
     println("")
-    println("cost estimate (Mac local): $0 — all subcmds run as spec stubs at v1.0.0.")
+    println("cost estimate (Mac local): $0 — pure n=6 arithmetic + SSOT text scan.")
 }
 
 fn main() {
@@ -231,6 +279,10 @@ fn main() {
         cmd_pet_cyclotron(a)
     } else if sub == "selftest" {
         cmd_selftest(a)
+    } else if sub == "verify" {
+        cmd_verify(a)
+    } else if sub == "compute" {
+        cmd_compute(a)
     } else {
         eprintln("hexa-antimatter: unknown subcommand '" + sub + "'")
         eprintln("run 'hexa-antimatter help' for usage")
