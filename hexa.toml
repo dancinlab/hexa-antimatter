@@ -30,6 +30,12 @@ path = "cli/hexa-antimatter.hexa"
 runner = "hexa"
 files = [
     "tests/test_selftest.hexa",
+    "tests/test_n6_lattice.hexa",
+    "tests/test_cross_doc_audit.hexa",
+    "tests/test_release_ladder.hexa",
+    "tests/test_modules_wired.hexa",
+    "tests/test_verify_all.hexa",
+    "tests/test_calculators.hexa",
 ]
 
 # ── hx install hook ───────────────────────────────────────

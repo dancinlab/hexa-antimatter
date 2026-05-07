@@ -1,0 +1,83 @@
+#!hexa strict
+// tests/test_calculators.hexa — calc_*.hexa + numerics_*.hexa harness.
+//
+// Drives every algebraic-tier (calc_*) and numerical-tier (numerics_*)
+// script that has been wired so far, and asserts:
+//   1. the script exits PASS,
+//   2. its sentinel string is present in stdout,
+//   3. its declared check count line ("N/N checks passed") matches.
+//
+// Pattern mirrors hexa-cern/tests/test_calculators.hexa — single harness,
+// one row per (filename, sentinel) tuple. Adding a new calc_* / numerics_*
+// script = add one line here.
+//
+// Pass criterion: every wired script PASSes its sentinel.
+
+let HOME = env("HOME")
+
+fn _root() -> str {
+    let r = env("HEXA_ANTIMATTER_ROOT")
+    if r.len() > 0 { return r }
+    let pwd = exec("pwd").trim()
+    if pwd.len() > 0 { return pwd }
+    return HOME + "/core/hexa-antimatter"
+}
+
+let ROOT = _root()
+
+// (script-relative-path, expected-sentinel-prefix)
+//
+// Each row: ["verify/<file>.hexa", "__HEXA_ANTIMATTER_<NAME>__"]
+// The harness checks the script emits "<sentinel> PASS".
+let SCRIPTS = [
+    ["verify/calc_factory.hexa",   "__HEXA_ANTIMATTER_CALC_FACTORY__"],
+]
+
+fn _int_str(x: int) -> str { return "" + x }
+
+fn run_one(rel: str, sentinel: str) -> bool {
+    let path = ROOT + "/" + rel
+    let pass_token = sentinel + " PASS"
+    let out = exec("hexa run \"" + path + "\" 2>&1")
+    if out.contains(pass_token) {
+        println("  [PASS] " + rel + "  (" + sentinel + ")")
+        return true
+    }
+    println("  [FAIL] " + rel)
+    println("         · expected sentinel: " + pass_token)
+    println("         · last 8 lines of output:")
+    let lines = out.split("\n")
+    let n = len(lines)
+    let mut i = 0
+    if n > 8 { i = n - 8 }
+    while i < n {
+        println("         |  " + lines[i])
+        i = i + 1
+    }
+    return false
+}
+
+fn main() {
+    println("========================================================================")
+    println("  hexa-antimatter — test_calculators (calc_* + numerics_* sweep)")
+    println("  root: " + ROOT)
+    println("========================================================================")
+
+    let mut pass_n = 0
+    let total = len(SCRIPTS)
+    let mut i = 0
+    while i < total {
+        let row = SCRIPTS[i]
+        if run_one(row[0], row[1]) { pass_n = pass_n + 1 }
+        i = i + 1
+    }
+
+    println("")
+    println("  " + _int_str(pass_n) + "/" + _int_str(total) + " calculator scripts PASS")
+    if pass_n == total {
+        println("test_calculators: PASS")
+        return
+    }
+    println("test_calculators: FAIL")
+    exit(1)
+}

@@ -1,12 +1,13 @@
 #!hexa strict
 // verify/all.hexa — unified orchestrator for the verify/ surface.
 //
-// Runs the 4 verifiers + the selftest sweep in sequence and aggregates
+// Runs the verifiers + the selftest sweep in sequence and aggregates
 // PASS/FAIL into a single exit code:
 //
 //   verify/n6_arithmetic.hexa     →  __HEXA_ANTIMATTER_VERIFY_N6__
 //   verify/cross_doc_audit.hexa   →  __HEXA_ANTIMATTER_VERIFY_DOCS__
 //   verify/release_ladder.hexa    →  __HEXA_ANTIMATTER_VERIFY_LADDER__
+//   verify/calc_factory.hexa      →  __HEXA_ANTIMATTER_CALC_FACTORY__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -46,7 +47,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (4-step orchestrator)")
+    println("  hexa-antimatter — verify/all (5-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -79,6 +80,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/release_ladder"]
     } else {
         summary = summary + ["  [FAIL] verify/release_ladder"]
+    }
+
+    tot = tot + 1
+    if run_step("calc_factory", r + "/verify/calc_factory.hexa",
+                "__HEXA_ANTIMATTER_CALC_FACTORY__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/calc_factory  (T1 algebraic, F-AM-3)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/calc_factory"]
     }
 
     tot = tot + 1
