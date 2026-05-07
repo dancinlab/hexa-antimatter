@@ -4,7 +4,7 @@
 > deadlines, pointers. Sister of `petite-cern` / `hexa-ufo` / `hexa-fusion`
 > under `need-singularity` org.
 
-**Last sync**: 2026-05-06 · **Current release**: v1.0.0 · **Branch**: `main`
+**Last sync**: 2026-05-08 · **Current release**: v1.0.0 (v1.1.0 RSC code-layer FINAL on `main`) · **Branch**: `main`
 
 ---
 
@@ -37,10 +37,10 @@ DoD:
 | Version | Date | Status | Highlights |
 |---------|------|--------|------------|
 | v1.0.0 | 2026-05-06 | RELEASED | 3 verb 시드 (factory + tabletop + pet_cyclotron) |
-| v1.1.0 | ~2026-08 (TARGET) | planned | `pet_cyclotron` ¹⁸F β⁺ regen .hexa 시뮬레이터 |
-| v1.2.0 | ~2026-10 | planned | `tabletop` p̄ trap 8.7 kW p-¹¹B 의존 cross-verify with hexa-fusion |
-| v1.3.0 | ~2026-12 | planned | `factory` scale-up spec (10¹⁴ p̄/s) |
-| v2.0.0 | ~2027-Q3 | ASPIRATIONAL | hexa-ufo Stage-3 propulsion fuel cross-verify |
+| v1.1.0 | 2026-05-08 | RSC code-layer FINAL on `main` | 25 verify scripts (T1 ×4 + T2 ×14 + T3 ×4 + meta ×3). All 4 falsifiers (F-AM-1/2/3/4) at **100% bookkeeping closure**. saturation_check 22/22 → `__HEXA_ANTIMATTER_RSC_FULL_CLOSURE__ 100%` + `__RSC_SATURATED__ STOP`. cli `verify all` 29/29. |
+| v1.2.0 | ~2026-10 | planned | `tabletop` p̄ trap 8.7 kW p-¹¹B 의존 cross-verify with hexa-fusion (T1/T2 within RSC, T3 paper-feed). |
+| v1.3.0 | ~2026-12 | planned | `factory` scale-up spec (10¹⁴ p̄/s) — RSC-internal 보강. |
+| v2.0.0 | ~2027-Q3 | ASPIRATIONAL | Stage-1+ benchtop raw-data fit. **Out of RSC code-layer**; see §A.6. |
 
 ## §A.3 Cycle history
 
@@ -58,3 +58,53 @@ DoD:
 - petite-cern (가속기 cousin) 와의 verb 중복 정리 (PET cyclotron 은 antimatter측에 귀속, accelerator 측은 reference만).
 - 반물질 가격 (현재 ~$62.5조/g) → 탁상 가격 모델.
 - CERN ALPHA collab 외부 partnership 시점.
+- §A.6 Stage-1 외부 collab 후보 선정 (CERN AEgIS / ALPHA / GBAR / BASE — F-AM-2/3 용; 의료 PET 시설 — F-AM-1 용; NASA NIAC / DARPA — F-AM-4 용) 중 우선순위.
+
+## §A.6 Stage-1+ hardware path  (post-RSC, **out of code-layer scope**)
+
+RSC (verify/* `.hexa`) 가 닫을 수 없는 영역. v1.1.0 100% closure 이후
+v2.0.0 까지의 하드웨어/외부-bound 단계. 본 path 는 `.hexa` 가 아니라
+funding · 외부 검증 · 실제 장비 실험으로 진행.
+
+| step | 내용 | 시점 (목표) | RSC 가능? | 결과물 |
+|:----:|:----|:-----------|:---------:|:-------|
+| 1 | 외부 collab 결정 (CERN AEgIS/ALPHA/GBAR/BASE · 의료 PET 시설 · NASA NIAC) | 2026-Q3 | ✗ | MOU / 합의서 |
+| 2 | Funding round (48 T RT-SC + UHV trap chamber + e+ source + 진단계 / 의료 cyclotron 임대 / propulsion bench) | 2026-Q4 | ✗ | grant / 투자 commitment |
+| 3 | Stage-1 시뮬레이션 parity (¹⁸F batch 실측 + p̄ trap density 시뮬 + CPT 정밀 측정 시뮬 + thrust 시뮬) | ~2026-08 | **부분 가능** (.hexa T2 보강) | numerics_*_relativistic.hexa 류, simulation parity 보고서 |
+| 4 | Stage-2/3 실제 benchtop 빌드 + 실증 (years out) | ~2027-Q1+ | ✗ | 펌웨어 · HDL · PCB · BOM · 캘리브레이션 로그 · raw 측정 데이터 |
+
+Step 3 까지가 본 repo 가 직접 다룰 수 있는 마지막 layer. Step 1 / 2 / 4
+는 hardware-ops · 외부-stakeholder · multi-month 작업으로 cron / loop
+firing 으로 닫히지 않음. 본 §A.6 는 `tracking only` — 진행 시 Cycle 항목
+(§A.3) 에 cross-referenced.
+
+**현재 (2026-05-08) 상태**: 모든 step 미착수. v2.0.0 = 종이 위 설계.
+factory/antimatter-factory.md / tabletop/tabletop-antimatter.md /
+pet_cyclotron/pet-cyclotron.md SSOT 가 빌드 후보 BOM 의 출발점.
+
+### §A.6.1 추천 작업 순서 (A → B → C → D)
+
+§A.6 step 1/2/4 가 외부-bound 인 동안에도 본 repo 안에서 진행 가능한
+사전 작업 4 단계. 펌웨어/HW 가 실제로 나오는 시점은 D 단계 이후이며,
+A → B → C 는 "v2.0.0 빌드 직전" 까지 본 repo 가 자체적으로 닫을 수 있는
+범위.
+
+| 단계 | 내용 | 결과물 | 외부 HW? | RSC 가능? | 가치 |
+|:----:|:----|:------|:--------:|:---------:|:----|
+| A | **종이 설계 강화** — `{factory,tabletop,pet_cyclotron}/doc/benchtop_v0_design.md` (4 falsifier 별 풀 BOM + 블록 다이어그램 + 인터페이스 표 + 안전 명세) | `.md` 3~6 개 + ASCII 그림 | ✗ | ✓ docs-layer | funding pitch deck 직전까지 |
+| B | **Stage-1 simulation parity** (= §A.6 Step 3) — 4 falsifier 별 numerical 보강: ¹⁸F batch real-decay sim · p̄ trap density relativistic · CPT precision Penning · thrust ODE | `verify/numerics_*_relativistic.hexa` 류 4~8 개 | ✗ | ✓ partial-RSC | 외부 collab 미팅 카드 (이미 sim-검증 됨) |
+| C | **Sim-펌웨어** — cyclotron 트리거 / Penning RF DAC-ADC 체인 / atomic clock counter / thrust sensor를 sim-only 로 모델링, hardware-in-the-loop 없이 동작 | `firmware/sim/*.hexa` (또는 `*.c` + cmocka) | ✗ | 부분 ✓ | 실제 MCU 펌웨어의 prototype layer |
+| D | **HDL/MCU skeleton** — Verilog (FPGA 타이밍 컨트롤러 — RF burst / shutter), Rust/C (MCU 트랩 컨트롤러 / cyclotron beam control). 컴파일은 되나 flash 할 보드 없음 | `firmware/hdl/*.v` + `firmware/mcu/*.rs` + Vivado/Cargo-embedded 셋업 | ✗ (지금) / ✓ (나중) | ✗ | toolchain 의존 무거움; 실제 보드 살 시점에 |
+
+**추천 진행 순서**: A → B → C → D.
+
+- A 는 1~2 commit (docs 만, RSC saturation 깨지 않음)
+- B 는 4~8 commit (.hexa 만, 거의 RSC 사다리 그대로 — saturation_check 갱신 필요)
+- C 는 새 디렉토리 (`firmware/sim/`) — 처음으로 verify/ 외 파일 추가 시작
+- D 는 본격 toolchain (vivado/cargo-embedded) — 실제 보드 살 시점에 다시
+
+**scope 옵션**:
+1. **A 만** — funding/collab 미팅 자료 수준. 1 일 작업
+2. **A + B** — Stage-1 sim parity 까지. 외부 collab 에 "이미 simulation 검증됨" 카드. 2~3 일
+3. **A + B + C** — sim-펌웨어까지. Stage-1 데모 가능 (모니터로 trap dynamics 시뮬). 1 주
+4. **풀 D** — 실제 HW 살 시점에. 지금은 보류 권장 (검증 불가)
