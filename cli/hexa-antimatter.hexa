@@ -83,7 +83,7 @@ fn cmd_status(a: [str]) {
         js = js + "\"verbs_total\":3,\"verbs_wired_computational\":3,\"verbs_wired_empirical\":0,"
         js = js + "\"verdict\":\"COMPUTATIONAL_WIRED\","
         js = js + "\"verbs\":[\"factory:wired\",\"tabletop:wired\",\"pet_cyclotron:wired\"],"
-        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\",\"numerics_cross_pillar\",\"numerics_lattice_arithmetic\",\"falsifier_check\",\"lint_numerics\",\"calc_break_even\",\"numerics_break_even\",\"numerics_break_even_parity\",\"numerics_break_even_solver\"],"
+        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\",\"numerics_cross_pillar\",\"numerics_lattice_arithmetic\",\"falsifier_check\",\"lint_numerics\",\"calc_break_even\",\"numerics_break_even\",\"numerics_break_even_parity\",\"numerics_break_even_solver\",\"saturation_check\"],"
         js = js + "\"n6_lattice_verified\":\"algebra:12/12\""
         js = js + "}"
         println(js)
@@ -122,6 +122,7 @@ fn cmd_status(a: [str]) {
     println("    verify/numerics_break_even     — T2 numerical (F-AM-4 closed-form Tsiolkovsky)")
     println("    verify/numerics_break_even_parity — T2×2 4-program parity (F-AM-4)")
     println("    verify/numerics_break_even_solver — T2×3 Tsiolkovsky ODE (F-AM-4 sat-1)")
+    println("    verify/saturation_check        — RSC self-stop signal (sat-1 + sat-2)")
     println("    selftest/selftest              — sentinel sweep across 3 verbs")
     println("")
     println("  verdict: COMPUTATIONAL_WIRED (3/3 verbs wired by n=6 arithmetic;")
@@ -208,6 +209,7 @@ fn cmd_verify(a: [str]) {
     if target == "numerics-break-even"            { path = HA + "/verify/numerics_break_even.hexa" }
     if target == "numerics-break-even-parity"     { path = HA + "/verify/numerics_break_even_parity.hexa" }
     if target == "numerics-break-even-solver"     { path = HA + "/verify/numerics_break_even_solver.hexa" }
+    if target == "saturation"                     { path = HA + "/verify/saturation_check.hexa" }
     let out = exec("hexa run \"" + path + "\" 2>&1")
     println(out.trim())
     if !out.contains(" PASS") {

@@ -27,6 +27,7 @@
 //   verify/numerics_break_even.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__
 //   verify/numerics_break_even_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__
 //   verify/numerics_break_even_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__
+//   verify/saturation_check.hexa  →  __HEXA_ANTIMATTER_RSC_SATURATED__ STOP
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -79,7 +80,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (24-step orchestrator)")
+    println("  hexa-antimatter — verify/all (25-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -292,6 +293,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_break_even_solver  (T2×3, F-AM-4 Tsiolkovsky)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_break_even_solver"]
+    }
+
+    tot = tot + 1
+    if run_step("saturation_check", r + "/verify/saturation_check.hexa",
+                "__HEXA_ANTIMATTER_RSC_SATURATED__ STOP", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/saturation_check  (RSC self-stop signal)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/saturation_check"]
     }
 
     tot = tot + 1

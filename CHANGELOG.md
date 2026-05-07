@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 20) 🎯 SATURATION — RSC loop terminates
+
+- `verify/saturation_check.hexa` — RSC self-stop signal (recipe §7.4 row 15).
+  18/18 PASS.  Confirms saturation across:
+  · sat-1: F-AM-1/2/3/4 each have T2 ×3 on disk (strict)
+  · sat-2: numerics inventory ≥ 9 (= 14 actual) + lint_numerics passes
+            + falsifier_check passes + 11 backbone scripts present
+  · sat-3: T3 always ✗ (Stage-1+ hardware, recipe §9 — out of code scope)
+  Emits `__HEXA_ANTIMATTER_RSC_SATURATED__ STOP` → CI/loop runners
+  parse and terminate the closure-depth-accumulation loop.
+- `verify/all.hexa` — 24 → 25 steps (25/25 PASS).
+- `cli/hexa-antimatter.hexa` — `verify saturation` sub-target.
+- `tests/test_calculators.hexa` — saturation_check uses STOP sentinel
+  (not __ PASS) so it's covered by verify/all sweep, not the calc harness.
+- `tests/test_verify_all.hexa` — expected 24/24 → 25/25.
+
+🎯 **RSC LOOP TERMINATES**: sat-1 + sat-2 met.  T3 (empirical) is
+hardware-layer, not code-layer — recipe §9 saturation handling.
+
+Closure-depth accumulation summary:
+  · 14 numerics_*.hexa scripts (T2 layer)
+  · 4 calc_*.hexa scripts (T1 layer)
+  · 4 F-AM falsifiers each at T1 + T2 ×3 = 67% closure (sat-1 strict)
+  · 3 meta scripts (falsifier_check + lint_numerics + saturation_check)
+  · 3 cross-cutters (n6_arithmetic + cross_doc_audit + release_ladder)
+  · 25-step verify/all aggregate orchestrator
+
 ### Added (2026-05-08 — RSC iteration 19) 🎯 strict sat-1 — F-AM-4 T2×3
 
 - `verify/numerics_break_even_solver.hexa` — F-AM-4 **T2 ×3** (strict

@@ -50,6 +50,8 @@ let SCRIPTS = [
     ["verify/numerics_break_even.hexa",            "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__"],
     ["verify/numerics_break_even_parity.hexa",     "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__"],
     ["verify/numerics_break_even_solver.hexa",     "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__"],
+    // saturation_check uses STOP sentinel (not __ PASS) — keep it out of this
+    // calculator-style harness; verify/all and saturation sub-target cover it.
 ]
 
 fn _int_str(x: int) -> str { return "" + x }
