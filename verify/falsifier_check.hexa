@@ -78,7 +78,8 @@ let F1_RETRACT       = "PET ¹⁸F regen rate ≠ closed-form fit (cyclotron spe
 let F1_T1_SCRIPTS    = ["calc_pet_cyclotron.hexa"]
 let F1_T2_SCRIPTS    = ["numerics_pet_cyclotron.hexa",
                         "numerics_pet_cyclotron_parity.hexa",
-                        "numerics_pet_cyclotron_solver.hexa"]
+                        "numerics_pet_cyclotron_solver.hexa",
+                        "numerics_pet_realistic.hexa"]
 let F1_T3_SCRIPTS    = ["empirical_pet_inspire.hexa"]
 let F1_T3_DESC       = "Inspire-HEP paper-existence proxy (clinical batch raw-data Stage-1+ TBD)"
 
@@ -87,7 +88,8 @@ let F2_RETRACT       = "tabletop p̄ density σ·J₂=288 ≠ AEgIS/ALPHA/GBAR r
 let F2_T1_SCRIPTS    = ["calc_tabletop.hexa"]
 let F2_T2_SCRIPTS    = ["numerics_tabletop.hexa",
                         "numerics_tabletop_parity.hexa",
-                        "numerics_tabletop_solver.hexa"]
+                        "numerics_tabletop_solver.hexa",
+                        "numerics_tabletop_relativistic.hexa"]
 let F2_T3_SCRIPTS    = ["empirical_tabletop_inspire.hexa"]
 let F2_T3_DESC       = "Inspire-HEP paper-existence proxy (1.7e12 p̄/s apparatus Stage-1+ TBD)"
 
@@ -96,7 +98,8 @@ let F3_RETRACT       = "Dirac mirror 6-fold closed-form ≠ CPT measurement"
 let F3_T1_SCRIPTS    = ["calc_factory.hexa"]
 let F3_T2_SCRIPTS    = ["numerics_factory.hexa",
                         "numerics_factory_parity.hexa",
-                        "numerics_factory_solver.hexa"]
+                        "numerics_factory_solver.hexa",
+                        "numerics_dirac_precision.hexa"]
 let F3_T3_SCRIPTS    = ["empirical_dirac_inspire.hexa"]
 let F3_T3_DESC       = "Inspire-HEP paper-existence proxy (CPT-precision raw-data Stage-1+ TBD)"
 
@@ -105,7 +108,8 @@ let F4_RETRACT       = "tabletop 1.7×10¹² p̄/s ≠ hexa-ufo Stage-3 propulsi
 let F4_T1_SCRIPTS    = ["calc_break_even.hexa"]
 let F4_T2_SCRIPTS    = ["numerics_break_even.hexa",
                         "numerics_break_even_parity.hexa",
-                        "numerics_break_even_solver.hexa"]
+                        "numerics_break_even_solver.hexa",
+                        "numerics_break_even_thrust.hexa"]
 let F4_T3_SCRIPTS    = ["empirical_break_even_inspire.hexa"]
 let F4_T3_DESC       = "Inspire-HEP paper-existence proxy (Stage-3 propulsion raw-data Stage-1+ TBD)"
 

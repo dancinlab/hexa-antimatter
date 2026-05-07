@@ -69,16 +69,20 @@ fn _check(ok: bool, label: str, detail: str) {
 // ── F-AM T2 stacks (must mirror falsifier_check.hexa) ───────────────────
 let F1_T2 = ["numerics_pet_cyclotron.hexa",
              "numerics_pet_cyclotron_parity.hexa",
-             "numerics_pet_cyclotron_solver.hexa"]
+             "numerics_pet_cyclotron_solver.hexa",
+             "numerics_pet_realistic.hexa"]
 let F2_T2 = ["numerics_tabletop.hexa",
              "numerics_tabletop_parity.hexa",
-             "numerics_tabletop_solver.hexa"]
+             "numerics_tabletop_solver.hexa",
+             "numerics_tabletop_relativistic.hexa"]
 let F3_T2 = ["numerics_factory.hexa",
              "numerics_factory_parity.hexa",
-             "numerics_factory_solver.hexa"]
+             "numerics_factory_solver.hexa",
+             "numerics_dirac_precision.hexa"]
 let F4_T2 = ["numerics_break_even.hexa",
              "numerics_break_even_parity.hexa",
-             "numerics_break_even_solver.hexa"]
+             "numerics_break_even_solver.hexa",
+             "numerics_break_even_thrust.hexa"]
 
 // T3 (empirical paper-feed proxy via Inspire-HEP)
 let F1_T3 = ["empirical_pet_inspire.hexa"]

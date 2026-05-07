@@ -9,6 +9,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iter 29–32) Phase B — Stage-1 simulation parity
+
+§A.6.1 Phase B per .roadmap.  4 falsifier 별 numerics_*_*.hexa 보강
+(T2 stack ×3 → ×4) — Stage-1 시뮬 parity 보고서로 사용 가능.
+
+- `verify/numerics_pet_realistic.hexa` (13/13 PASS, F-AM-1) — 16 MeV
+  cyclotron + Backhausen σ_pn=280 mb + carrier-free SA(¹⁸F)=3.5e15 Bq/mg
+  + 50 μA × 16 MeV = 800 W target heat + saturated 5 GBq/μAh.
+- `verify/numerics_tabletop_relativistic.hexa` (14/14 PASS, F-AM-2) —
+  ω_c = qB/m = 4.6e9 rad/s · f_c = 731 MHz @ 48 T · γ-1 ≈ 5e-7 thermal
+  · kT @ 4.2 K · Penning ω_+/ω_z/ω_- hierarchy + Brown-Gabrielse sum rule
+  · Larmor radius @ 4.2 K, 48 T.
+- `verify/numerics_dirac_precision.hexa` (14/14 PASS, F-AM-3) — H 1S-2S
+  2.466e15 Hz · BASE 2017 m_p̄/m_p ≤ 6.9e-11 + g_p̄/g_p ≤ 1.5e-9
+  · ASACUSA 1.42 GHz hyperfine · Cs clock σ ≤ 1e-15 · Rydberg.
+- `verify/numerics_break_even_thrust.hexa` (12/12 PASS, F-AM-4) —
+  per-event Δp ≈ 6.7e-19 N·s · 10⁹ p̄/1ms → F ≈ 0.67 μN · Watt-balance
+  SNR · BGO 7% FWHM · pion ToF Δβ/β · 8 T magnetic nozzle confinement.
+
+Wiring:
+  · verify/all.hexa: 29 → 33 steps (33/33 PASS).
+  · verify/falsifier_check.hexa: F-AM-1/2/3/4 T2 inventory ×3 → ×4 each.
+  · verify/saturation_check.hexa: T2 stack ×4 (sat-1 strict still T2 ≥ 3 met).
+  · verify/lint_numerics.hexa: numerics inventory 14 → 18.
+  · cli/hexa-antimatter.hexa: 4 `verify numerics-*` Stage-1 sub-targets.
+  · tests/test_calculators.hexa: 24 → 28 rows.
+  · tests/test_verify_all.hexa: 29/29 → 33/33.
+
+Sentinels: `__HEXA_ANTIMATTER_NUMERICS_PET_REALISTIC__` / `_TABLETOP_RELATIVISTIC__`
+/ `_DIRAC_PRECISION__` / `_BREAK_EVEN_THRUST__` PASS.
+
+§A.6 Step 3 (Stage-1 simulation parity) — RSC-internal portion landed.
+Strict raw-data fit still requires Stage-1+ hardware (v2.0.0, §A.6).
+
+### Added (2026-05-08 — Phase A) docs(design): 3-pillar benchtop v0 specs
+
+- `pet_cyclotron/doc/benchtop_v0_design.md` (HEXA-PET-01, F-AM-1) —
+  16 MeV cyclotron + H₂¹⁸O target + τ=4 batch reactor.  BOM ~$140k
+  (excl. cyclotron rental).
+- `tabletop/doc/benchtop_v0_design.md` (HEXA-TABLETOP-01, F-AM-2) —
+  0.29 m³ Penning trap + 48 T RT-SC + ²²Na e+ source.  BOM ~$3.5M;
+  CERN AD MoU.
+- `factory/doc/benchtop_v0_design.md` (HEXA-FACTORY-01 + HEXA-PROPULSION-01,
+  F-AM-3 + F-AM-4) — 5 T precision Penning + Cs clock + 243 nm laser
+  + BGO/PbWO₄ calorimeter + Watt-balance.  Combined BOM ~$6.5M.
+
+Each: BOM · ASCII block diagram · interface table · safety spec · n=6
+anchor cross-link · Stage-1 success criterion · external dependencies.
+Total v0 capex ≈ $11M (excl. CERN AD beam time).  Docs-layer only;
+RSC saturation untouched.
+
 ### Added (2026-05-08 — RSC iter 21–25) 🎯🎯 100% CLOSURE — T3 paper-feed proxy
 
 Bundled 5 chunks bringing all 4 falsifiers to T3 closure (paper-existence
