@@ -21,6 +21,7 @@
 //   verify/numerics_pet_cyclotron_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_SOLVER__
 //   verify/numerics_cross_pillar.hexa → __HEXA_ANTIMATTER_NUMERICS_CROSS_PILLAR__
 //   verify/numerics_lattice_arithmetic.hexa → __HEXA_ANTIMATTER_NUMERICS_LATTICE_ARITHMETIC__
+//   verify/falsifier_check.hexa   →  __HEXA_ANTIMATTER_FALSIFIER__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -73,7 +74,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (18-step orchestrator)")
+    println("  hexa-antimatter — verify/all (19-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -232,6 +233,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_lattice_arithmetic  (math_pure stability floor)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_lattice_arithmetic"]
+    }
+
+    tot = tot + 1
+    if run_step("falsifier_check", r + "/verify/falsifier_check.hexa",
+                "__HEXA_ANTIMATTER_FALSIFIER__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/falsifier_check  (4/4 F-AM closure tracker)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/falsifier_check"]
     }
 
     tot = tot + 1

@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 15) falsifier closure tracker
+
+- `verify/falsifier_check.hexa` — preregistered F-AM-1/2/3/4 checklist +
+  3-tier closure-progress tracker.  16/16 PASS.  Asserts:
+  · 4/4 falsifiers registered in .roadmap.hexa_antimatter §A.4
+  · F-AM-1/2/3 each have T1 (calc_*) + T2 ×3 (numerics + parity + solver)
+    on disk → 67% sat-1 closure
+  · F-AM-4 (Stage-3 break-even) — partial T1, T2 pending (next chunk)
+  · T3 always ✗ until Stage-1+ hardware (per recipe §3 / §9)
+  Sentinel `__HEXA_ANTIMATTER_FALSIFIER__ PASS` + 6 FALSIFIERS.
+- `verify/all.hexa` — 18 → 19 steps (19/19 PASS).
+- `cli/hexa-antimatter.hexa` — `verify falsifier` sub-target.
+- `tests/test_calculators.hexa` — falsifier_check row added (15 rows).
+- `tests/test_verify_all.hexa` — expected 18/18 → 19/19.
+
 ### Added (2026-05-08 — RSC iteration 14) math_pure stability floor
 
 - `verify/numerics_lattice_arithmetic.hexa` — n=6 lattice float ↔ int
