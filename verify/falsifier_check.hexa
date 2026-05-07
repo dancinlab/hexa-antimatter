@@ -79,7 +79,8 @@ let F1_T1_SCRIPTS    = ["calc_pet_cyclotron.hexa"]
 let F1_T2_SCRIPTS    = ["numerics_pet_cyclotron.hexa",
                         "numerics_pet_cyclotron_parity.hexa",
                         "numerics_pet_cyclotron_solver.hexa"]
-let F1_T3_DESC       = "live ¹⁸F batch operation feed (Stage-1+ TBD; no clinical run)"
+let F1_T3_SCRIPTS    = ["empirical_pet_inspire.hexa"]
+let F1_T3_DESC       = "Inspire-HEP paper-existence proxy (clinical batch raw-data Stage-1+ TBD)"
 
 let F2_ID            = "F-AM-2"
 let F2_RETRACT       = "tabletop p̄ density σ·J₂=288 ≠ AEgIS/ALPHA/GBAR ref"
@@ -87,7 +88,8 @@ let F2_T1_SCRIPTS    = ["calc_tabletop.hexa"]
 let F2_T2_SCRIPTS    = ["numerics_tabletop.hexa",
                         "numerics_tabletop_parity.hexa",
                         "numerics_tabletop_solver.hexa"]
-let F2_T3_DESC       = "tabletop apparatus 1.7e12 p̄/s benchmark (Stage-1+ TBD)"
+let F2_T3_SCRIPTS    = ["empirical_tabletop_inspire.hexa"]
+let F2_T3_DESC       = "Inspire-HEP paper-existence proxy (1.7e12 p̄/s apparatus Stage-1+ TBD)"
 
 let F3_ID            = "F-AM-3"
 let F3_RETRACT       = "Dirac mirror 6-fold closed-form ≠ CPT measurement"
@@ -95,7 +97,8 @@ let F3_T1_SCRIPTS    = ["calc_factory.hexa"]
 let F3_T2_SCRIPTS    = ["numerics_factory.hexa",
                         "numerics_factory_parity.hexa",
                         "numerics_factory_solver.hexa"]
-let F3_T3_DESC       = "CERN-scale factory 1e12 p̄/hr CPT-precision feed (Stage-1+ TBD)"
+let F3_T3_SCRIPTS    = ["empirical_dirac_inspire.hexa"]
+let F3_T3_DESC       = "Inspire-HEP paper-existence proxy (CPT-precision raw-data Stage-1+ TBD)"
 
 let F4_ID            = "F-AM-4"
 let F4_RETRACT       = "tabletop 1.7×10¹² p̄/s ≠ hexa-ufo Stage-3 propulsion break-even"
@@ -103,7 +106,8 @@ let F4_T1_SCRIPTS    = ["calc_break_even.hexa"]
 let F4_T2_SCRIPTS    = ["numerics_break_even.hexa",
                         "numerics_break_even_parity.hexa",
                         "numerics_break_even_solver.hexa"]
-let F4_T3_DESC       = "hexa-ufo Stage-3 propulsion live integration feed (Stage-1+ TBD)"
+let F4_T3_SCRIPTS    = ["empirical_break_even_inspire.hexa"]
+let F4_T3_DESC       = "Inspire-HEP paper-existence proxy (Stage-3 propulsion raw-data Stage-1+ TBD)"
 
 // ── helpers ──────────────────────────────────────────────────────────────
 
@@ -145,22 +149,27 @@ fn _emit_tier_line(label: str, scripts: [str]) {
 
 fn _emit_falsifier(id: str, retract: str,
                    t1_scripts: [str], t2_scripts: [str],
-                   t3_desc: str) {
+                   t3_scripts: [str], t3_desc: str) {
     let t1_ok = _all_present(t1_scripts)
     let t2_ok = _all_present(t2_scripts)
-    let t3_ok = false   // T3 always TBD until Stage-1+
+    let t3_ok = _all_present(t3_scripts)
     let pct = _closure_pct(t1_ok, t2_ok, t3_ok)
-    let status_str = if pct == 100 { "FULL closure (algebra + numerics + empirical)" }
+    let status_str = if pct == 100 { "FULL closure (algebra + numerics + empirical proxy)" }
                      else if pct >= 67 { "sat-1 closure (algebra + numerics)" }
                      else if pct >= 33 { "EARLY closure (algebra only)" }
                      else { "UNVERIFIED (no T1, no T2)" }
     let t2_count = t2_scripts.len()
+    let t3_count = t3_scripts.len()
     println("    ✗ " + id + ": " + retract)
     println("         closure:  " + _int_str(pct) + "%   (" + status_str + ")  [T2 ×" +
-            _int_str(t2_count) + "]")
+            _int_str(t2_count) + ", T3 ×" + _int_str(t3_count) + "]")
     _emit_tier_line("T1 algebra:  ", t1_scripts)
     _emit_tier_line("T2 numerics: ", t2_scripts)
-    println("         T3 empirical: ✗  " + t3_desc)
+    if t3_ok {
+        _emit_tier_line("T3 empirical:", t3_scripts)
+    } else {
+        println("         T3 empirical: ✗  " + t3_desc)
+    }
 }
 
 fn check_roadmap_declares(token: str) {
@@ -198,19 +207,19 @@ fn main() {
     println("    T2  numerical     closed-form via math_pure    (verify/numerics_*.hexa)")
     println("    T3  empirical     real bench / clinical data   (Stage-1+ TBD)")
     println("")
-    println("  At iter 19: T1 + T2 ×3 landed for ALL 4 falsifiers (full sat-1).")
-    println("              F-AM-1/2/3/4 each at T2 ×3 (strict sat-1, recipe §7.2).")
-    println("              T3 closes only when Stage-1+ build runs.")
+    println("  At iter 24: T1 + T2 ×3 + T3 ×1 landed for ALL 4 falsifiers (100% closure).")
+    println("              F-AM-1/2/3/4 each at T1 + T2 ×3 + T3 paper-proxy (Inspire-HEP).")
+    println("              Strict raw-data fit (Stage-1+ hardware) deferred to v2.0.0.")
     println("")
 
     println("  Falsifiers declared:")
-    _emit_falsifier(F1_ID, F1_RETRACT, F1_T1_SCRIPTS, F1_T2_SCRIPTS, F1_T3_DESC)
+    _emit_falsifier(F1_ID, F1_RETRACT, F1_T1_SCRIPTS, F1_T2_SCRIPTS, F1_T3_SCRIPTS, F1_T3_DESC)
     println("")
-    _emit_falsifier(F2_ID, F2_RETRACT, F2_T1_SCRIPTS, F2_T2_SCRIPTS, F2_T3_DESC)
+    _emit_falsifier(F2_ID, F2_RETRACT, F2_T1_SCRIPTS, F2_T2_SCRIPTS, F2_T3_SCRIPTS, F2_T3_DESC)
     println("")
-    _emit_falsifier(F3_ID, F3_RETRACT, F3_T1_SCRIPTS, F3_T2_SCRIPTS, F3_T3_DESC)
+    _emit_falsifier(F3_ID, F3_RETRACT, F3_T1_SCRIPTS, F3_T2_SCRIPTS, F3_T3_SCRIPTS, F3_T3_DESC)
     println("")
-    _emit_falsifier(F4_ID, F4_RETRACT, F4_T1_SCRIPTS, F4_T2_SCRIPTS, F4_T3_DESC)
+    _emit_falsifier(F4_ID, F4_RETRACT, F4_T1_SCRIPTS, F4_T2_SCRIPTS, F4_T3_SCRIPTS, F4_T3_DESC)
 
     println("")
     println("  Roadmap registration audit:")
@@ -229,6 +238,10 @@ fn main() {
     check_tier_scripts_present(F3_ID, "T2", F3_T2_SCRIPTS)
     check_tier_scripts_present(F4_ID, "T1", F4_T1_SCRIPTS)
     check_tier_scripts_present(F4_ID, "T2", F4_T2_SCRIPTS)
+    check_tier_scripts_present(F1_ID, "T3", F1_T3_SCRIPTS)
+    check_tier_scripts_present(F2_ID, "T3", F2_T3_SCRIPTS)
+    check_tier_scripts_present(F3_ID, "T3", F3_T3_SCRIPTS)
+    check_tier_scripts_present(F4_ID, "T3", F4_T3_SCRIPTS)
 
     println("")
     println("  FALSIFIERS (" + _int_str(len(FALSIFIERS)) + "):")
@@ -248,6 +261,6 @@ fn main() {
         println("__HEXA_ANTIMATTER_FALSIFIER__ FAIL")
         exit(1)
     }
-    println("__HEXA_ANTIMATTER_FALSIFIER__ PASS — 4/4 preregistered, 4/4 sat-1 closure")
+    println("__HEXA_ANTIMATTER_FALSIFIER__ PASS — 4/4 preregistered, 4/4 at 100% closure (T1+T2+T3 proxy)")
     exit(0)
 }

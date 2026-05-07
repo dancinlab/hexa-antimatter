@@ -50,6 +50,10 @@ let SCRIPTS = [
     ["verify/numerics_break_even.hexa",            "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__"],
     ["verify/numerics_break_even_parity.hexa",     "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__"],
     ["verify/numerics_break_even_solver.hexa",     "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__"],
+    ["verify/empirical_pet_inspire.hexa",          "__HEXA_ANTIMATTER_EMPIRICAL_PET_INSPIRE__"],
+    ["verify/empirical_tabletop_inspire.hexa",     "__HEXA_ANTIMATTER_EMPIRICAL_TABLETOP_INSPIRE__"],
+    ["verify/empirical_dirac_inspire.hexa",        "__HEXA_ANTIMATTER_EMPIRICAL_DIRAC_INSPIRE__"],
+    ["verify/empirical_break_even_inspire.hexa",   "__HEXA_ANTIMATTER_EMPIRICAL_BREAK_EVEN_INSPIRE__"],
     // saturation_check uses STOP sentinel (not __ PASS) — keep it out of this
     // calculator-style harness; verify/all and saturation sub-target cover it.
 ]

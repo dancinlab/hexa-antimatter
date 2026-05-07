@@ -27,6 +27,10 @@
 //   verify/numerics_break_even.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__
 //   verify/numerics_break_even_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__
 //   verify/numerics_break_even_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__
+//   verify/empirical_pet_inspire.hexa → __HEXA_ANTIMATTER_EMPIRICAL_PET_INSPIRE__
+//   verify/empirical_tabletop_inspire.hexa → __HEXA_ANTIMATTER_EMPIRICAL_TABLETOP_INSPIRE__
+//   verify/empirical_dirac_inspire.hexa → __HEXA_ANTIMATTER_EMPIRICAL_DIRAC_INSPIRE__
+//   verify/empirical_break_even_inspire.hexa → __HEXA_ANTIMATTER_EMPIRICAL_BREAK_EVEN_INSPIRE__
 //   verify/saturation_check.hexa  →  __HEXA_ANTIMATTER_RSC_SATURATED__ STOP
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
@@ -80,7 +84,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (25-step orchestrator)")
+    println("  hexa-antimatter — verify/all (29-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -293,6 +297,42 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_break_even_solver  (T2×3, F-AM-4 Tsiolkovsky)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_break_even_solver"]
+    }
+
+    tot = tot + 1
+    if run_step("empirical_pet_inspire", r + "/verify/empirical_pet_inspire.hexa",
+                "__HEXA_ANTIMATTER_EMPIRICAL_PET_INSPIRE__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/empirical_pet_inspire  (T3 paper-feed, F-AM-1)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/empirical_pet_inspire"]
+    }
+
+    tot = tot + 1
+    if run_step("empirical_tabletop_inspire", r + "/verify/empirical_tabletop_inspire.hexa",
+                "__HEXA_ANTIMATTER_EMPIRICAL_TABLETOP_INSPIRE__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/empirical_tabletop_inspire  (T3 paper-feed, F-AM-2)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/empirical_tabletop_inspire"]
+    }
+
+    tot = tot + 1
+    if run_step("empirical_dirac_inspire", r + "/verify/empirical_dirac_inspire.hexa",
+                "__HEXA_ANTIMATTER_EMPIRICAL_DIRAC_INSPIRE__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/empirical_dirac_inspire  (T3 paper-feed, F-AM-3)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/empirical_dirac_inspire"]
+    }
+
+    tot = tot + 1
+    if run_step("empirical_break_even_inspire", r + "/verify/empirical_break_even_inspire.hexa",
+                "__HEXA_ANTIMATTER_EMPIRICAL_BREAK_EVEN_INSPIRE__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/empirical_break_even_inspire  (T3 paper-feed, F-AM-4)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/empirical_break_even_inspire"]
     }
 
     tot = tot + 1
