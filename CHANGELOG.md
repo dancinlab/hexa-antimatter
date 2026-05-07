@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 10) 🎯 sat-1 first-falsifier milestone
+
+- `verify/numerics_factory_solver.hexa` — F-AM-3 **T2 ×3** (sat-1 condition
+  for first falsifier).  10/10 PASS.  velocity-Verlet leapfrog symplectic
+  integrator on 1-DOF Penning-trap-like harmonic oscillator H = ½(p² + ω²q²)
+  over τ=4 phase quadrants (capture · cool · store · extract):
+  · 1024 leapfrog steps per period (256 per quadrant)
+  · per-quadrant energy drift < 5×10⁻⁵ (Verlet O(Δt²) floor)
+  · full-period total drift < 1×10⁻⁴
+  · closed-orbit q/p return |Δq| ≤ 1e-3 (measured 4.86e-11)
+  · phase-space volume preservation (Liouville |J| ≈ 1 ± 0.1%)
+  · math_pure π and pow stability floor.
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_FACTORY_SOLVER__ PASS`.  Pattern lifted
+  from hexa-cern/verify/numerics_classical.hexa, antimatter-Penning-flavored.
+- `verify/all.hexa` — 13 → 14 steps (14/14).
+- `cli/hexa-antimatter.hexa` — `verify numerics-factory-solver` sub-target.
+- `tests/test_calculators.hexa` — solver row added (10/10 PASS).
+- `tests/test_verify_all.hexa` — expected 13/13 → 14/14.
+
 ### Added (2026-05-08 — RSC iteration 9)
 
 - `verify/numerics_pet_cyclotron_parity.hexa` — F-AM-1 **T2 ×2**
