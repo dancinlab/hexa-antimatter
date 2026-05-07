@@ -15,6 +15,7 @@
 //   verify/numerics_pet_cyclotron.hexa → __HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON__
 //   verify/numerics_factory_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_FACTORY_PARITY__
 //   verify/numerics_tabletop_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_TABLETOP_PARITY__
+//   verify/numerics_pet_cyclotron_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_PARITY__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -54,7 +55,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (12-step orchestrator)")
+    println("  hexa-antimatter — verify/all (13-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -159,6 +160,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_tabletop_parity  (T2×2, F-AM-2 ref parity)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_tabletop_parity"]
+    }
+
+    tot = tot + 1
+    if run_step("numerics_pet_cyclotron_parity", r + "/verify/numerics_pet_cyclotron_parity.hexa",
+                "__HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_PARITY__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/numerics_pet_cyclotron_parity  (T2×2, F-AM-1 ref parity)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/numerics_pet_cyclotron_parity"]
     }
 
     tot = tot + 1

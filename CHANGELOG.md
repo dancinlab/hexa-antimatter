@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 9)
+
+- `verify/numerics_pet_cyclotron_parity.hexa` — F-AM-1 **T2 ×2**
+  (PET pillar 2nd T2 stack, recipe §7.4 row 5 last).  14/14 PASS.
+  4-machine medical-PET reference parity:
+  · Varian/IBA R 0.5–1.5 m vs HEXA σ-φ = 0.10 m  (ratio 5..15 within σ-τ=8)
+  · Medical PET B 2 T vs HEXA σ·τ = 48 T  (ratio = J₂ = 24× exact)
+  · ¹⁸F-FDG cost $4M/season vs HEXA $4M/σ³ ≈ $2,315/season
+  · Medical vacuum 10⁻³ Torr vs HEXA 10⁻³/(σ²·τ) ≈ 1.74×10⁻⁶ Torr
+  · Clinical H̄ ~ 0 /s vs HEXA σ²·10⁶ = 1.44×10⁸ /s (∞ ratio floor)
+  Plus n=6 factor consistency.  Sentinel
+  `__HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_PARITY__ PASS` + 9-row FALSIFIERS.
+- `verify/all.hexa` — 12 → 13 steps (13/13).
+- `cli/hexa-antimatter.hexa` — `verify numerics-pet-cyclotron-parity` sub-target.
+- `tests/test_calculators.hexa` — 9th row (9/9 PASS).
+- `tests/test_verify_all.hexa` — expected 12/12 → 13/13.
+
 ### Added (2026-05-08 — RSC iteration 8)
 
 - `verify/numerics_tabletop_parity.hexa` — F-AM-2 **T2 ×2**
