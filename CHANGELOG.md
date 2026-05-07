@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 8)
+
+- `verify/numerics_tabletop_parity.hexa` — F-AM-2 **T2 ×2**
+  (tabletop pillar 2nd T2 stack, recipe §7.4 row 5).  19/19 PASS.
+  4-machine published-reference parity table:
+  · CERN AD vol 200 m³ ÷ (σ²·σ·τ/(σ-φ)) = 0.2894 m³  (ratio 691×, SSOT 0.29 m³ within 5%)
+  · CERN AD prod 3×10⁷ p̄/s × σ³·10⁹/3e7 = 1.728×10¹² p̄/s  (within 2% of cited 1.7e12)
+  · ALPHA H̄ × σ²·10⁵ = 1.44×10⁸ H̄/s
+  · NASA-99 $6.25×10¹³/g ÷ σ⁶ = $2.093×10⁷/g (= $2.093×10⁴/mg)
+    matches SSOT $2.1e4/mg within 1%
+  · ELENA hold × σ·τ² months = 4.977×10⁸ s (≥4000× cryo-free extension)
+  Plus n=6 factor consistency (σ⁶ = σ³·σ³, vol-reduction factor 691.2)
+  and math_pure stability floor.  Sentinel
+  `__HEXA_ANTIMATTER_NUMERICS_TABLETOP_PARITY__ PASS` + 10-row FALSIFIERS.
+- `verify/all.hexa` — orchestrator sweeps **12 steps** (11/11 → 12/12).
+- `cli/hexa-antimatter.hexa` — `verify numerics-tabletop-parity` sub-target.
+- `tests/test_calculators.hexa` — parity row added (8/8 PASS).
+- `tests/test_verify_all.hexa` — expected 11/11 → 12/12.
+
 ### Added (2026-05-07 — RSC iteration 7)
 
 - `verify/numerics_factory_parity.hexa` — F-AM-3 **T2 ×2**
@@ -157,17 +176,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → 5/5 → 6/6 → 7/7 → 8/8 → 9/9 → 10/10 → 11/11` to match orchestrator.
+  bumped `4/4 → … → 12/12` to match orchestrator surface.
 
-### Closure progress (RSC recipe §3) — after iter 7 (1st T2-stack thickening)
-- F-AM-3 (Dirac mirror n=6):       T1 ✓ · **T2 ×2** (numerics_factory + factory_parity) · T3 ✗ → **67%**.
+### Closure progress (RSC recipe §3) — after iter 8
+- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · **T2 ×2** (numerics_tabletop + tabletop_parity) · T3 ✗ → **67%**.
+- F-AM-3 (Dirac mirror n=6):       T1 ✓ · **T2 ×2** (numerics_factory + factory_parity)   · T3 ✗ → **67%**.
 - F-AM-1 (PET ¹⁸F regen):          T1 ✓ · T2 ×1 · T3 ✗ → **67%**.
-- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · T2 ×1 · T3 ✗ → **67%**.
 - F-AM-4 (Stage-3 break-even):     T1 partial · T2 ✗ · T3 ✗.
 
-F-AM-3 now has T2 ×2 (closed-form math_pure + 4-machine ref parity).
-Toward sat-1 (T2 ×3 each): need numerics_factory_solver, plus parity
-for tabletop and pet_cyclotron.
+2 of 3 pillar falsifiers now have T2 ×2 (closed-form + parity).
+Next iter for sat-1: numerics_pet_cyclotron_parity (F-AM-1 → T2×2)
+followed by solver scripts to reach T2 ×3.
 
 ---
 
