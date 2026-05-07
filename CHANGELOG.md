@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 16) numerics meta-lint
+
+- `verify/lint_numerics.hexa` — meta-lint over all 11 numerics_*.hexa
+  scripts.  56/56 PASS.  Enforces recipe §4 invariants per script:
+  · `use "self/runtime/math_pure"` import
+  · `__HEXA_ANTIMATTER_<NAME>__ PASS` sentinel
+  · `FALSIFIERS` list declaration
+  · `exit(0)` on PASS path
+  · `let mut RUN = 0` + `let mut FAIL = 0` counters
+  Plus inventory completeness: NUMERICS_SCRIPTS list count == on-disk
+  glob count (catches stale meta-lint when new numerics_*.hexa lands).
+  Sentinel `__HEXA_ANTIMATTER_LINT_NUMERICS__ PASS` + 6 FALSIFIERS.
+- `verify/all.hexa` — 19 → 20 steps (20/20 PASS).
+- `cli/hexa-antimatter.hexa` — `verify lint-numerics` sub-target.
+- `tests/test_calculators.hexa` — lint_numerics row added (16 rows).
+- `tests/test_verify_all.hexa` — expected 19/19 → 20/20.
+
 ### Added (2026-05-08 — RSC iteration 15) falsifier closure tracker
 
 - `verify/falsifier_check.hexa` — preregistered F-AM-1/2/3/4 checklist +

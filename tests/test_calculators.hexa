@@ -45,6 +45,7 @@ let SCRIPTS = [
     ["verify/numerics_cross_pillar.hexa",          "__HEXA_ANTIMATTER_NUMERICS_CROSS_PILLAR__"],
     ["verify/numerics_lattice_arithmetic.hexa",    "__HEXA_ANTIMATTER_NUMERICS_LATTICE_ARITHMETIC__"],
     ["verify/falsifier_check.hexa",                "__HEXA_ANTIMATTER_FALSIFIER__"],
+    ["verify/lint_numerics.hexa",                  "__HEXA_ANTIMATTER_LINT_NUMERICS__"],
 ]
 
 fn _int_str(x: int) -> str { return "" + x }
