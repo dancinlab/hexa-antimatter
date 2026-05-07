@@ -36,6 +36,7 @@ let SCRIPTS = [
     ["verify/numerics_factory.hexa",        "__HEXA_ANTIMATTER_NUMERICS_FACTORY__"],
     ["verify/numerics_tabletop.hexa",       "__HEXA_ANTIMATTER_NUMERICS_TABLETOP__"],
     ["verify/numerics_pet_cyclotron.hexa",  "__HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON__"],
+    ["verify/numerics_factory_parity.hexa", "__HEXA_ANTIMATTER_NUMERICS_FACTORY_PARITY__"],
 ]
 
 fn _int_str(x: int) -> str { return "" + x }

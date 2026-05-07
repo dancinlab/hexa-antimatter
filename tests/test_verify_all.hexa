@@ -9,7 +9,7 @@ fn main() {
     if root.len() > 0 { p = root + "/verify/all.hexa" }
 
     let raw = exec("hexa run " + p + " --quiet 2>&1")
-    if raw.contains("__HEXA_ANTIMATTER_VERIFY_ALL__ PASS") && raw.contains("10/10 verifiers PASS") {
+    if raw.contains("__HEXA_ANTIMATTER_VERIFY_ALL__ PASS") && raw.contains("11/11 verifiers PASS") {
         println("test_verify_all: PASS")
         return
     }

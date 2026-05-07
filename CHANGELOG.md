@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-07 — RSC iteration 7)
+
+- `verify/numerics_factory_parity.hexa` — F-AM-3 **T2 ×2**
+  (factory pillar 2nd T2 stack, recipe §7.4 row 5).  14/14 PASS.
+  4-machine published-reference parity table:
+  · CERN AD baseline 3×10⁷ p̄/s × σ² = 4.32×10⁹ p̄/s
+    (matches factory SSOT §8.1 verbatim)
+  · CERN ELENA hold 10⁵ s × σ·τ months = 1.244×10⁸ s
+    (HEXA / ELENA ratio ≈ 1244, SSOT cites "~1,400×" — within 50% rel)
+  · CERN ALPHA H̄ rate × σ²·10⁶ = 1.44×10⁸ /s (5-order-of-magnitude lift)
+  · NASA-99 cost $6.25×10¹³/g ÷ σ³ = $3.617×10¹⁰/g
+  Plus n=6 factor consistency (σ²·σ = σ³, time-unit conversion
+  σ·τ months = 1.24416×10⁸ s) and math_pure stability floor.
+  Decade-band parity tolerance ±50% (½-decade) following hexa-cern
+  parity-script convention.  Sentinel
+  `__HEXA_ANTIMATTER_NUMERICS_FACTORY_PARITY__ PASS` + 9-row FALSIFIERS.
+- `verify/all.hexa` — orchestrator sweeps **11 steps** (10/10 → 11/11).
+- `cli/hexa-antimatter.hexa` — `verify numerics-factory-parity` sub-target.
+- `tests/test_calculators.hexa` — parity row added (7/7 PASS).
+- `tests/test_verify_all.hexa` — expected 10/10 → 11/11.
+
 ### Added (2026-05-07 — RSC iteration 6)
 
 - `verify/numerics_pet_cyclotron.hexa` — T2 (numerical) closure for F-AM-1.
@@ -136,18 +157,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → 5/5 → 6/6 → 7/7 → 8/8 → 9/9 → 10/10` to match orchestrator surface.
+  bumped `4/4 → 5/5 → 6/6 → 7/7 → 8/8 → 9/9 → 10/10 → 11/11` to match orchestrator.
 
-### Closure progress (RSC recipe §3) — after iter 6 (recipe §7.4 row 4 complete)
-- F-AM-1 (PET ¹⁸F regen):          T1 ✓ · T2 ✓ (numerics_pet_cyclotron) · T3 ✗ → **67%**.
-- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · T2 ✓ (numerics_tabletop)       · T3 ✗ → **67%**.
-- F-AM-3 (Dirac mirror n=6):       T1 ✓ · T2 ✓ (numerics_factory)        · T3 ✗ → **67%**.
+### Closure progress (RSC recipe §3) — after iter 7 (1st T2-stack thickening)
+- F-AM-3 (Dirac mirror n=6):       T1 ✓ · **T2 ×2** (numerics_factory + factory_parity) · T3 ✗ → **67%**.
+- F-AM-1 (PET ¹⁸F regen):          T1 ✓ · T2 ×1 · T3 ✗ → **67%**.
+- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · T2 ×1 · T3 ✗ → **67%**.
 - F-AM-4 (Stage-3 break-even):     T1 partial · T2 ✗ · T3 ✗.
 
-**3 of 4 falsifiers now at 67% PARTIAL closure** — recipe §7.4 row 4
-(numerics_<pillar> × N) complete.  Next: row 5 (numerics_<pillar>_parity)
-or row 7 (numerics_cross_pillar) for second-T2-stack accumulation toward
-sat-1 condition (each falsifier T2 ×3).
+F-AM-3 now has T2 ×2 (closed-form math_pure + 4-machine ref parity).
+Toward sat-1 (T2 ×3 each): need numerics_factory_solver, plus parity
+for tabletop and pet_cyclotron.
 
 ---
 
