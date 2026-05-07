@@ -8,6 +8,7 @@
 //   verify/cross_doc_audit.hexa   →  __HEXA_ANTIMATTER_VERIFY_DOCS__
 //   verify/release_ladder.hexa    →  __HEXA_ANTIMATTER_VERIFY_LADDER__
 //   verify/calc_factory.hexa      →  __HEXA_ANTIMATTER_CALC_FACTORY__
+//   verify/calc_tabletop.hexa     →  __HEXA_ANTIMATTER_CALC_TABLETOP__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -47,7 +48,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (5-step orchestrator)")
+    println("  hexa-antimatter — verify/all (6-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -89,6 +90,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/calc_factory  (T1 algebraic, F-AM-3)"]
     } else {
         summary = summary + ["  [FAIL] verify/calc_factory"]
+    }
+
+    tot = tot + 1
+    if run_step("calc_tabletop", r + "/verify/calc_tabletop.hexa",
+                "__HEXA_ANTIMATTER_CALC_TABLETOP__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/calc_tabletop  (T1 algebraic, F-AM-2)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/calc_tabletop"]
     }
 
     tot = tot + 1

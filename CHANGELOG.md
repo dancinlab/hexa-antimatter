@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-07 — RSC iteration 2)
+
+- `verify/calc_tabletop.hexa` — T1 (algebraic) closure for F-AM-2
+  (tabletop p̄ density σ·J₂=288 fit vs CERN AEgIS / ALPHA / GBAR).
+  41/41 PASS: σ·J₂=288 + σ³=1728 production cascade + σ²=144
+  anti-H synth + σ·τ²=192 mo storage + σ⁶=2,985,984 cost reduction
+  + tabletop design parameters (B=σ·τ=48 T, R=σ-φ=10 cm,
+  Γ_loss=1/(σ²·τ)=1/576, vacuum φ²·τ+2 = 18 → 10⁻¹⁸ Torr,
+  PET ¹⁸F σ·τ=48 mg/day) + compact-ring momentum 0.3·B·R = 1.44 GeV/c +
+  η_trap τ/σ = 1/3 ratio + 14-line spec-anchor sweep against
+  `tabletop/tabletop-antimatter.md`. Sentinel
+  `__HEXA_ANTIMATTER_CALC_TABLETOP__ PASS` + 10-row FALSIFIERS
+  registry tied to F-AM-2 / F-AM-4.
+- `verify/all.hexa` — orchestrator sweeps **6 steps** (5/5 → 6/6
+  verifiers PASS).
+- `cli/hexa-antimatter.hexa` — `verify calc-tabletop` sub-target,
+  status / help / JSON updated.
+- `tests/test_calculators.hexa` — calc_tabletop row added (2/2 PASS).
+
 ### Added (2026-05-07 — RSC iteration 1)
 
 - `verify/calc_factory.hexa` — T1 (algebraic) closure for F-AM-3
@@ -32,12 +51,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → 5/5` to match new orchestrator surface.
+  bumped `4/4 → 5/5 → 6/6` to match orchestrator surface.
 
-### Closure progress (RSC recipe §3)
-- F-AM-3 (Dirac mirror): T1 ✓ (calc_factory) · T2 ✗ · T3 ✗ → **33%**.
-- F-AM-1 (PET ¹⁸F regen):  T1 partial (calc_factory cites σ·τ=48 T BT-401 ladder) · T2 ✗ · T3 ✗.
-- F-AM-2, F-AM-4: no T1/T2 yet.
+### Closure progress (RSC recipe §3) — after iter 2
+- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ (calc_tabletop) · T2 ✗ · T3 ✗ → **33%**.
+- F-AM-3 (Dirac mirror n=6):       T1 ✓ (calc_factory)  · T2 ✗ · T3 ✗ → **33%**.
+- F-AM-1 (PET ¹⁸F regen):          T1 partial (BT-401 σ·τ=48 T cited) · T2 ✗ · T3 ✗.
+- F-AM-4 (Stage-3 break-even):     T1 partial (1.7e12 p̄/s closure cited) · T2 ✗ · T3 ✗.
 
 ---
 

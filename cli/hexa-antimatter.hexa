@@ -83,7 +83,7 @@ fn cmd_status(a: [str]) {
         js = js + "\"verbs_total\":3,\"verbs_wired_computational\":3,\"verbs_wired_empirical\":0,"
         js = js + "\"verdict\":\"COMPUTATIONAL_WIRED\","
         js = js + "\"verbs\":[\"factory:wired\",\"tabletop:wired\",\"pet_cyclotron:wired\"],"
-        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\"],"
+        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\"],"
         js = js + "\"n6_lattice_verified\":\"algebra:12/12\""
         js = js + "}"
         println(js)
@@ -98,11 +98,12 @@ fn cmd_status(a: [str]) {
     println("  tabletop        WIRED v1.0.0         σ³=1728x prod, σ⁶ cost, σ·τ²=192mo  deferred")
     println("  pet_cyclotron   WIRED v1.0.0         R=σ-φ=10cm, B=σ·τ=48T, σ³ cost      deferred")
     println("")
-    println("  verifiers (verify/all → 5 steps):")
+    println("  verifiers (verify/all → 6 steps):")
     println("    verify/n6_arithmetic    — algebraic identity 12/12 PASS")
     println("    verify/cross_doc_audit  — 4 SSOT files lattice-aligned")
     println("    verify/release_ladder   — v1.0.0 → v2.0.0 cadence + DoD lines")
     println("    verify/calc_factory     — T1 algebraic for F-AM-3 (Dirac mirror)")
+    println("    verify/calc_tabletop    — T1 algebraic for F-AM-2 (σ·J₂=288)")
     println("    selftest/selftest       — sentinel sweep across 3 verbs")
     println("")
     println("  verdict: COMPUTATIONAL_WIRED (3/3 verbs wired by n=6 arithmetic;")
@@ -169,7 +170,8 @@ fn cmd_verify(a: [str]) {
     if target == "n6"           { path = HA + "/verify/n6_arithmetic.hexa" }
     if target == "docs"         { path = HA + "/verify/cross_doc_audit.hexa" }
     if target == "ladder"       { path = HA + "/verify/release_ladder.hexa" }
-    if target == "calc-factory" { path = HA + "/verify/calc_factory.hexa" }
+    if target == "calc-factory"  { path = HA + "/verify/calc_factory.hexa" }
+    if target == "calc-tabletop" { path = HA + "/verify/calc_tabletop.hexa" }
     let out = exec("hexa run \"" + path + "\" 2>&1")
     println(out.trim())
     if !out.contains(" PASS") {
@@ -218,7 +220,7 @@ fn cmd_help() {
     println("")
     println("utility subcommands:")
     println("  status           3/3 wired verb table + verdict + caveats")
-    println("  verify [target]  run verifier(s); target ∈ all|n6|docs|ladder|calc-factory")
+    println("  verify [target]  run verifier(s); target ∈ all|n6|docs|ladder|calc-factory|calc-tabletop")
     println("  compute <name>   show derived numbers; name ∈ n6|factory|tabletop|pet_cyclotron")
     println("  selftest         3-verb sentinel sweep + n=6 algebra check")
     println("")
