@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-07 — RSC iteration 6)
+
+- `verify/numerics_pet_cyclotron.hexa` — T2 (numerical) closure for F-AM-1.
+  16/16 PASS. PET-pillar float-only chains:
+  · HEXA-PET-02: σ·τ × 2×10⁹ = 9.6×10¹⁰ e+/s (1ppm rel)
+  · HEXA-PET-06: σ² × 10⁶ = 1.44×10⁸ H̄/s (§9.2 c cite)
+  · PET cost mid-chain: $_factory/σ³ ≈ $3.617×10⁷/mg (between
+    factory $6.25e10/mg and tabletop $2.1e4/mg, σ⁶ = σ³·σ³ split)
+  · σ³ path-independence: pow_pure(σ, 3) = σ²·σ = 1728
+  · ¹⁸F decay constant λ = ln(2)/109.8 min ≈ 6.312×10⁻³ /min
+    via log_pure + half-life inversion (math_pure self-inverse)
+  · τ=4 batch retention 2^(-1/τ) ≈ 0.8409 (¹⁸F half-life mitigation)
+  · B/B_med ratio σ·τ/2 = J₂ = 24× (RT-SC vs medical PET)
+  · vacuum suppression σ²·τ = 576 (vs medical 10⁻³ Torr)
+  · log-log σ³ vs σ slope = 3.0 (math_pure power-law floor)
+  · math_pure stability floor.
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON__ PASS` + 10-row
+  FALSIFIERS.
+- `verify/all.hexa` — orchestrator sweeps **10 steps** (9/9 → 10/10).
+- `cli/hexa-antimatter.hexa` — `verify numerics-pet-cyclotron` sub-target.
+- `tests/test_calculators.hexa` — numerics_pet_cyclotron row added (6/6 PASS).
+- `tests/test_verify_all.hexa` — expected 9/9 → 10/10.
+
 ### Added (2026-05-07 — RSC iteration 5)
 
 - `verify/numerics_tabletop.hexa` — T2 (numerical) closure for F-AM-2.
@@ -113,16 +136,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → 5/5 → 6/6 → 7/7 → 8/8 → 9/9` to match orchestrator surface.
+  bumped `4/4 → 5/5 → 6/6 → 7/7 → 8/8 → 9/9 → 10/10` to match orchestrator surface.
 
-### Closure progress (RSC recipe §3) — after iter 5 (2nd T2 landed)
-- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · T2 ✓ (numerics_tabletop) · T3 ✗ → **67%**.
-- F-AM-3 (Dirac mirror n=6):       T1 ✓ · T2 ✓ (numerics_factory)  · T3 ✗ → **67%**.
-- F-AM-1 (PET ¹⁸F regen):          T1 ✓ · T2 ✗ · T3 ✗ → **33%**.
+### Closure progress (RSC recipe §3) — after iter 6 (recipe §7.4 row 4 complete)
+- F-AM-1 (PET ¹⁸F regen):          T1 ✓ · T2 ✓ (numerics_pet_cyclotron) · T3 ✗ → **67%**.
+- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · T2 ✓ (numerics_tabletop)       · T3 ✗ → **67%**.
+- F-AM-3 (Dirac mirror n=6):       T1 ✓ · T2 ✓ (numerics_factory)        · T3 ✗ → **67%**.
 - F-AM-4 (Stage-3 break-even):     T1 partial · T2 ✗ · T3 ✗.
 
-2 of 4 falsifiers now at PARTIAL closure.  Recipe §7.4 row 4 continues
-with numerics_pet_cyclotron next (would lift F-AM-1 to 67%).
+**3 of 4 falsifiers now at 67% PARTIAL closure** — recipe §7.4 row 4
+(numerics_<pillar> × N) complete.  Next: row 5 (numerics_<pillar>_parity)
+or row 7 (numerics_cross_pillar) for second-T2-stack accumulation toward
+sat-1 condition (each falsifier T2 ×3).
 
 ---
 
