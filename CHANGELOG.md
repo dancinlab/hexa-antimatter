@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 19) 🎯 strict sat-1 — F-AM-4 T2×3
+
+- `verify/numerics_break_even_solver.hexa` — F-AM-4 **T2 ×3** (strict
+  sat-1 condition).  11/11 PASS.  Forward-Euler ODE on Tsiolkovsky:
+  · single-burn Δv ≈ v_e·ln(m₀/m₁) (±0.5%)
+  · 4 staged burns sum == single-burn Δv (linearity)
+  · 50% mass-frac → Δv = v_e·ln(2) ≈ 0.693
+  · 256 vs 4096 step Euler agree (±0.5%)
+  · σ-φ = 10 fuel-fraction → m_ratio 0.9 → Δv ≈ 0.105·v_e
+  · τ=4 per-stage Δv = v_e·ln(m_pre/m_post)
+  · 40% recipe scenario → Δv ≈ 0.51·v_e
+  · log_pure/exp_pure inverse identity
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__ PASS` + 9 FALSIFIERS.
+- `verify/falsifier_check.hexa` — F-AM-4 T2 inventory ×2 → ×3 (strict sat-1).
+- `verify/lint_numerics.hexa` — inventory 13 → 14.
+- `verify/all.hexa` — 23 → 24 steps (24/24 PASS).
+- `cli/hexa-antimatter.hexa` — `verify numerics-break-even-solver` sub-target.
+- `tests/test_calculators.hexa` — break_even_solver row added (20 rows).
+- `tests/test_verify_all.hexa` — expected 23/23 → 24/24.
+
+🎯 **Strict sat-1**: F-AM-1/2/3/4 each have T1 + T2 ×3 (recipe §7.2 met).
+
 ### Added (2026-05-08 — RSC iteration 18) F-AM-4 T2×2 (4-program parity)
 
 - `verify/numerics_break_even_parity.hexa` — F-AM-4 **T2×2** parity vs

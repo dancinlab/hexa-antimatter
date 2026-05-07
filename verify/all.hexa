@@ -26,6 +26,7 @@
 //   verify/calc_break_even.hexa   →  __HEXA_ANTIMATTER_CALC_BREAK_EVEN__
 //   verify/numerics_break_even.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__
 //   verify/numerics_break_even_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__
+//   verify/numerics_break_even_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -78,7 +79,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (23-step orchestrator)")
+    println("  hexa-antimatter — verify/all (24-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -282,6 +283,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_break_even_parity  (T2×2, F-AM-4 4-program parity)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_break_even_parity"]
+    }
+
+    tot = tot + 1
+    if run_step("numerics_break_even_solver", r + "/verify/numerics_break_even_solver.hexa",
+                "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_SOLVER__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/numerics_break_even_solver  (T2×3, F-AM-4 Tsiolkovsky)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/numerics_break_even_solver"]
     }
 
     tot = tot + 1

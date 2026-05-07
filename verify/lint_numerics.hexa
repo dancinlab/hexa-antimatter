@@ -75,6 +75,7 @@ let NUMERICS_SCRIPTS = [
     "numerics_lattice_arithmetic.hexa",
     "numerics_break_even.hexa",
     "numerics_break_even_parity.hexa",
+    "numerics_break_even_solver.hexa",
 ]
 
 let REQ_IMPORT_MATH     = "use \"self/runtime/math_pure\""
