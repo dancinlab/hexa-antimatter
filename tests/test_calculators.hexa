@@ -58,6 +58,10 @@ let SCRIPTS = [
     ["verify/numerics_tabletop_relativistic.hexa", "__HEXA_ANTIMATTER_NUMERICS_TABLETOP_RELATIVISTIC__"],
     ["verify/numerics_dirac_precision.hexa",       "__HEXA_ANTIMATTER_NUMERICS_DIRAC_PRECISION__"],
     ["verify/numerics_break_even_thrust.hexa",     "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_THRUST__"],
+    ["firmware/sim/cyclotron_trigger.hexa",        "__HEXA_ANTIMATTER_FIRMWARE_CYCLOTRON_TRIGGER__"],
+    ["firmware/sim/penning_rf.hexa",               "__HEXA_ANTIMATTER_FIRMWARE_PENNING_RF__"],
+    ["firmware/sim/atomic_clock_counter.hexa",     "__HEXA_ANTIMATTER_FIRMWARE_ATOMIC_CLOCK__"],
+    ["firmware/sim/thrust_acquisition.hexa",       "__HEXA_ANTIMATTER_FIRMWARE_THRUST_ACQ__"],
     // saturation_check uses STOP sentinel (not __ PASS) — keep it out of this
     // calculator-style harness; verify/all and saturation sub-target cover it.
 ]

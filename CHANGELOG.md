@@ -9,6 +9,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iter 33–35) Phase C — sim-firmware ×4
+
+§A.6.1 Phase C per .roadmap.  New `firmware/sim/` directory with
+sim-only firmware models for the 4 Stage-1 benchtop controllers.
+Pure-software state-machine + DAC/ADC pipeline + safety interlock
+verification; no real hardware exists (Phase D requires funding).
+
+- `firmware/sim/cyclotron_trigger.hexa` (13/13 PASS, F-AM-1) —
+  HEXA-PET-01 STM32H7 controller.  7-state machine
+  (IDLE → ARMED → RF_RAMP → BEAM_ON → BEAM_OFF → COOLDOWN → ACQUIRE).
+  16-bit DAC range bounds · σ·τ = 48 normalized scaling · ≤ 10 ms safety
+  interlock · 1 kHz telemetry.
+- `firmware/sim/penning_rf.hexa` (11/11 PASS, F-AM-2) — HEXA-TABLETOP-01
+  Xilinx UltraScale+ + AD9162/AD9208.  7-state w/ CERN AD handshake
+  enforcement · 5 GS/s DAC Nyquist on 731 MHz drive · DDS frequency
+  resolution · 24 hr STORE state · cryo interlock.
+- `firmware/sim/atomic_clock_counter.hexa` (11/11 PASS, F-AM-3) —
+  HEXA-FACTORY-01 CPT bench.  Cs 5071A 10 MHz ref · 1 ps TDC · 24-bit
+  ADC · 100,000 cavity finesse · 243 nm → 1S-2S two-photon · σ·φ=J₂
+  master identity in firmware register.
+- `firmware/sim/thrust_acquisition.hexa` (10/10 PASS, F-AM-4) —
+  HEXA-PROPULSION-01 thrust bench.  16× 10 GS/s ADCs · 100 ns FPGA
+  trigger · 50 ns ToF cosmic-bg gate · 1 ns trigger fan-out · DAQ
+  budget ~2.4 GB/s avg.
+- `firmware/doc/README.md` — Phase C scope + Phase D readiness path.
+
+Wiring:
+  · verify/all.hexa: 33 → 37 steps (37/37 PASS).
+  · cli/hexa-antimatter.hexa: 4 `verify firmware-*` sub-targets.
+  · tests/test_calculators.hexa: 28 → 32 rows.
+  · tests/test_verify_all.hexa: 33/33 → 37/37.
+
+§A.6.1 Phase C complete.  Sim-firmware = specification source for
+Phase D MCU/FPGA implementations (post-funding, real boards).
+
 ### Added (2026-05-08 — RSC iter 29–32) Phase B — Stage-1 simulation parity
 
 §A.6.1 Phase B per .roadmap.  4 falsifier 별 numerics_*_*.hexa 보강

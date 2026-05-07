@@ -83,7 +83,7 @@ fn cmd_status(a: [str]) {
         js = js + "\"verbs_total\":3,\"verbs_wired_computational\":3,\"verbs_wired_empirical\":0,"
         js = js + "\"verdict\":\"COMPUTATIONAL_WIRED\","
         js = js + "\"verbs\":[\"factory:wired\",\"tabletop:wired\",\"pet_cyclotron:wired\"],"
-        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\",\"numerics_cross_pillar\",\"numerics_lattice_arithmetic\",\"falsifier_check\",\"lint_numerics\",\"calc_break_even\",\"numerics_break_even\",\"numerics_break_even_parity\",\"numerics_break_even_solver\",\"saturation_check\",\"empirical_pet_inspire\",\"empirical_tabletop_inspire\",\"empirical_dirac_inspire\",\"empirical_break_even_inspire\",\"numerics_pet_realistic\",\"numerics_tabletop_relativistic\",\"numerics_dirac_precision\",\"numerics_break_even_thrust\"],"
+        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\",\"numerics_cross_pillar\",\"numerics_lattice_arithmetic\",\"falsifier_check\",\"lint_numerics\",\"calc_break_even\",\"numerics_break_even\",\"numerics_break_even_parity\",\"numerics_break_even_solver\",\"saturation_check\",\"empirical_pet_inspire\",\"empirical_tabletop_inspire\",\"empirical_dirac_inspire\",\"empirical_break_even_inspire\",\"numerics_pet_realistic\",\"numerics_tabletop_relativistic\",\"numerics_dirac_precision\",\"numerics_break_even_thrust\",\"firmware_cyclotron_trigger\",\"firmware_penning_rf\",\"firmware_atomic_clock\",\"firmware_thrust_acquisition\"],"
         js = js + "\"n6_lattice_verified\":\"algebra:12/12\""
         js = js + "}"
         println(js)
@@ -125,6 +125,7 @@ fn cmd_status(a: [str]) {
     println("    verify/saturation_check        — RSC self-stop signal (sat-1 + sat-2 + sat-3)")
     println("    verify/empirical_*_inspire     — T3 paper-feed (F-AM-1/2/3/4 via Inspire-HEP)")
     println("    verify/numerics_*_{realistic,relativistic,precision,thrust} — T2×4 Stage-1 sim parity")
+    println("    firmware/sim/{cyclotron_trigger,penning_rf,atomic_clock_counter,thrust_acquisition} — Phase C sim-fw")
     println("    selftest/selftest              — sentinel sweep across 3 verbs")
     println("")
     println("  verdict: COMPUTATIONAL_WIRED (3/3 verbs wired by n=6 arithmetic;")
@@ -220,6 +221,10 @@ fn cmd_verify(a: [str]) {
     if target == "numerics-tabletop-relativistic" { path = HA + "/verify/numerics_tabletop_relativistic.hexa" }
     if target == "numerics-dirac-precision"       { path = HA + "/verify/numerics_dirac_precision.hexa" }
     if target == "numerics-break-even-thrust"     { path = HA + "/verify/numerics_break_even_thrust.hexa" }
+    if target == "firmware-cyclotron"             { path = HA + "/firmware/sim/cyclotron_trigger.hexa" }
+    if target == "firmware-penning"               { path = HA + "/firmware/sim/penning_rf.hexa" }
+    if target == "firmware-atomic-clock"          { path = HA + "/firmware/sim/atomic_clock_counter.hexa" }
+    if target == "firmware-thrust"                { path = HA + "/firmware/sim/thrust_acquisition.hexa" }
     let out = exec("hexa run \"" + path + "\" 2>&1")
     println(out.trim())
     if !out.contains(" PASS") {
