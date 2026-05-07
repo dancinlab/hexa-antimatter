@@ -9,6 +9,7 @@
 //   verify/release_ladder.hexa    →  __HEXA_ANTIMATTER_VERIFY_LADDER__
 //   verify/calc_factory.hexa      →  __HEXA_ANTIMATTER_CALC_FACTORY__
 //   verify/calc_tabletop.hexa     →  __HEXA_ANTIMATTER_CALC_TABLETOP__
+//   verify/calc_pet_cyclotron.hexa → __HEXA_ANTIMATTER_CALC_PET_CYCLOTRON__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -48,7 +49,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (6-step orchestrator)")
+    println("  hexa-antimatter — verify/all (7-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -99,6 +100,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/calc_tabletop  (T1 algebraic, F-AM-2)"]
     } else {
         summary = summary + ["  [FAIL] verify/calc_tabletop"]
+    }
+
+    tot = tot + 1
+    if run_step("calc_pet_cyclotron", r + "/verify/calc_pet_cyclotron.hexa",
+                "__HEXA_ANTIMATTER_CALC_PET_CYCLOTRON__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/calc_pet_cyclotron  (T1 algebraic, F-AM-1)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/calc_pet_cyclotron"]
     }
 
     tot = tot + 1

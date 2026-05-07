@@ -30,8 +30,9 @@ let ROOT = _root()
 // Each row: ["verify/<file>.hexa", "__HEXA_ANTIMATTER_<NAME>__"]
 // The harness checks the script emits "<sentinel> PASS".
 let SCRIPTS = [
-    ["verify/calc_factory.hexa",   "__HEXA_ANTIMATTER_CALC_FACTORY__"],
-    ["verify/calc_tabletop.hexa",  "__HEXA_ANTIMATTER_CALC_TABLETOP__"],
+    ["verify/calc_factory.hexa",        "__HEXA_ANTIMATTER_CALC_FACTORY__"],
+    ["verify/calc_tabletop.hexa",       "__HEXA_ANTIMATTER_CALC_TABLETOP__"],
+    ["verify/calc_pet_cyclotron.hexa",  "__HEXA_ANTIMATTER_CALC_PET_CYCLOTRON__"],
 ]
 
 fn _int_str(x: int) -> str { return "" + x }

@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-07 — RSC iteration 3)
+
+- `verify/calc_pet_cyclotron.hexa` — T1 (algebraic) closure for F-AM-1
+  (PET ¹⁸F regen rate closed-form fit vs hospital cyclotron public spec).
+  36/36 PASS: HEXA-PET-01..06 locked-constant re-derivation
+  (¹⁸F stock σ·τ=48 mg/season, R=σ-φ=10 cm, B=σ·τ=48 T,
+  cost-denom σ³=1728, synth factor σ²=144 → 1.44e8 H̄/s,
+  e+ rate σ·τ → 9.6e10 /s) + ancillary chain (τ=4 batch stack,
+  σ²·τ=576× vacuum suppression, σ³=1728 daily H̄ cascade,
+  B/B_med = σ·τ/φ = J₂ = 24×) + cost-split σ⁶ = σ³·σ³ (factory ×
+  PET) + 13-line spec-anchor sweep against `pet_cyclotron/pet-cyclotron.md`.
+  Sentinel `__HEXA_ANTIMATTER_CALC_PET_CYCLOTRON__ PASS` + 13-row
+  FALSIFIERS registry tied to F-AM-1 + SSOT §7 retract conditions.
+- `verify/all.hexa` — orchestrator sweeps **7 steps** (6/6 → 7/7).
+- `cli/hexa-antimatter.hexa` — `verify calc-pet-cyclotron` sub-target.
+- `tests/test_calculators.hexa` — calc_pet_cyclotron row added (3/3 PASS).
+- `tests/test_verify_all.hexa` — expected 6/6 → 7/7.
+
 ### Added (2026-05-07 — RSC iteration 2)
 
 - `verify/calc_tabletop.hexa` — T1 (algebraic) closure for F-AM-2
@@ -51,13 +69,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → 5/5 → 6/6` to match orchestrator surface.
+  bumped `4/4 → 5/5 → 6/6 → 7/7` to match orchestrator surface.
 
-### Closure progress (RSC recipe §3) — after iter 2
-- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ (calc_tabletop) · T2 ✗ · T3 ✗ → **33%**.
-- F-AM-3 (Dirac mirror n=6):       T1 ✓ (calc_factory)  · T2 ✗ · T3 ✗ → **33%**.
-- F-AM-1 (PET ¹⁸F regen):          T1 partial (BT-401 σ·τ=48 T cited) · T2 ✗ · T3 ✗.
+### Closure progress (RSC recipe §3) — after iter 3 (recipe §7.4 row 3 complete)
+- F-AM-1 (PET ¹⁸F regen):          T1 ✓ (calc_pet_cyclotron) · T2 ✗ · T3 ✗ → **33%**.
+- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ (calc_tabletop)      · T2 ✗ · T3 ✗ → **33%**.
+- F-AM-3 (Dirac mirror n=6):       T1 ✓ (calc_factory)       · T2 ✗ · T3 ✗ → **33%**.
 - F-AM-4 (Stage-3 break-even):     T1 partial (1.7e12 p̄/s closure cited) · T2 ✗ · T3 ✗.
+
+All 3 pillar T1 slots filled. Recipe §7.4 row 4 (numerics_*) is the next
+ladder rung.
 
 ---
 
