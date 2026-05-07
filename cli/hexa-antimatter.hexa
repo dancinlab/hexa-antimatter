@@ -83,7 +83,7 @@ fn cmd_status(a: [str]) {
         js = js + "\"verbs_total\":3,\"verbs_wired_computational\":3,\"verbs_wired_empirical\":0,"
         js = js + "\"verdict\":\"COMPUTATIONAL_WIRED\","
         js = js + "\"verbs\":[\"factory:wired\",\"tabletop:wired\",\"pet_cyclotron:wired\"],"
-        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\",\"numerics_cross_pillar\"],"
+        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\",\"numerics_cross_pillar\",\"numerics_lattice_arithmetic\"],"
         js = js + "\"n6_lattice_verified\":\"algebra:12/12\""
         js = js + "}"
         println(js)
@@ -115,6 +115,7 @@ fn cmd_status(a: [str]) {
     println("    verify/numerics_tabletop_solver — T2×3 2-DOF Verlet (F-AM-2 sat-1)")
     println("    verify/numerics_pet_cyclotron_solver — T2×3 ¹⁸F decay ODE (F-AM-1 sat-1)")
     println("    verify/numerics_cross_pillar   — cross-cutter T2 (F-AM-1/2/3/4 anchor agreement)")
+    println("    verify/numerics_lattice_arithmetic — math_pure float↔int stability floor")
     println("    selftest/selftest              — sentinel sweep across 3 verbs")
     println("")
     println("  verdict: COMPUTATIONAL_WIRED (3/3 verbs wired by n=6 arithmetic;")
@@ -194,6 +195,7 @@ fn cmd_verify(a: [str]) {
     if target == "numerics-tabletop-solver"       { path = HA + "/verify/numerics_tabletop_solver.hexa" }
     if target == "numerics-pet-cyclotron-solver"  { path = HA + "/verify/numerics_pet_cyclotron_solver.hexa" }
     if target == "numerics-cross-pillar"          { path = HA + "/verify/numerics_cross_pillar.hexa" }
+    if target == "numerics-lattice-arithmetic"    { path = HA + "/verify/numerics_lattice_arithmetic.hexa" }
     let out = exec("hexa run \"" + path + "\" 2>&1")
     println(out.trim())
     if !out.contains(" PASS") {

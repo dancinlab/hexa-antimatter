@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 14) math_pure stability floor
+
+- `verify/numerics_lattice_arithmetic.hexa` — n=6 lattice float ↔ int
+  precision cross-check.  15/15 PASS.  Re-derives every n=6 anchor
+  through math_pure (sqrt/pow/log/log10/exp) and asserts rel_err < 1e-9
+  against the integer ledger from `verify/n6_arithmetic.hexa`:
+  · sqrt_pure(σ²) = σ · pow_pure(σ, 2/3/6) = 144/1728/2,985,984
+  · log10_pure(10⁷) = 7 · log10(σ²) = 2·log10(σ)  homomorphism
+  · exp_pure(log_pure(σ)) = σ  roundtrip
+  · sqrt(σ³) = σ^(3/2)  cross-consistency
+  · float n=6 closure σ·φ = n·τ = J₂ = 24
+  · float ↔ int parity round(σ²) = 144 / round(σ³) = 1728
+  · σ·J₂ = 288 cross-pillar 288 anchor in float
+  · math_pure floor identities (log_pure(e)=1, exp_pure(0)=1, pow(σ,0)=1)
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_LATTICE_ARITHMETIC__ PASS` + 10 FALSIFIERS.
+- `verify/all.hexa` — 17 → 18 steps (18/18 PASS).
+- `cli/hexa-antimatter.hexa` — `verify numerics-lattice-arithmetic` sub-target.
+- `tests/test_calculators.hexa` — lattice_arithmetic row added (14 rows).
+- `tests/test_verify_all.hexa` — expected 17/17 → 18/18.
+
 ### Added (2026-05-08 — RSC iteration 13) cross-pillar cross-cutter
 
 - `verify/numerics_cross_pillar.hexa` — cross-cutter T2 across F-AM-1/2/3/4.
