@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 13) cross-pillar cross-cutter
+
+- `verify/numerics_cross_pillar.hexa` — cross-cutter T2 across F-AM-1/2/3/4.
+  31/31 PASS.  Asserts the 3 pillar numerics_*.hexa scripts share the same
+  n=6 lattice (σ=12, τ=4, φ=2, n=6, J₂=24) and re-derive shared σ-tower
+  numbers via independent paths:
+  · master identity σ·φ = n·τ = J₂ = 24 (3 paths)
+  · σ² = 144 = J₂·n (3 paths)
+  · σ·τ = 48 across factory/tabletop/pet
+  · σ³ = 1728 via pow_pure AND σ²·σ (path-independence)
+  · σ⁶ = (σ³)² = 2,985,984 (factory cost ↔ tabletop production closure)
+  · σ·τ·n = σ·J₂ = 288 (cross-pillar 288 anchor)
+  · cost cascade $6.25e10 / σ³ → $3.617e7 → $2.094e4
+  · production cascade σ³·10⁹ ≈ 1.7e12 p̄/s
+  · Carnot bound η ∈ [0,1] per pillar
+  · math_pure floor: log/exp/pow inverse identities
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_CROSS_PILLAR__ PASS` + 15-row FALSIFIERS.
+- `verify/all.hexa` — 16 → 17 steps (17/17 PASS).
+- `cli/hexa-antimatter.hexa` — `verify numerics-cross-pillar` sub-target.
+- `tests/test_calculators.hexa` — cross-pillar row added (13 rows).
+- `tests/test_verify_all.hexa` — expected 16/16 → 17/17.
+
 ### Added (2026-05-08 — RSC iteration 11) 🎯 sat-1 2nd-falsifier milestone
 
 - `verify/numerics_tabletop_solver.hexa` — F-AM-2 **T2 ×3** (sat-1 2nd

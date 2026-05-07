@@ -19,6 +19,7 @@
 //   verify/numerics_factory_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_FACTORY_SOLVER__
 //   verify/numerics_tabletop_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_TABLETOP_SOLVER__
 //   verify/numerics_pet_cyclotron_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_SOLVER__
+//   verify/numerics_cross_pillar.hexa → __HEXA_ANTIMATTER_NUMERICS_CROSS_PILLAR__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -71,7 +72,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (16-step orchestrator)")
+    println("  hexa-antimatter — verify/all (17-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -212,6 +213,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_pet_cyclotron_solver  (T2×3, F-AM-1 ¹⁸F decay)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_pet_cyclotron_solver"]
+    }
+
+    tot = tot + 1
+    if run_step("numerics_cross_pillar", r + "/verify/numerics_cross_pillar.hexa",
+                "__HEXA_ANTIMATTER_NUMERICS_CROSS_PILLAR__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/numerics_cross_pillar  (T2 cross-cutter, F-AM-1/2/3/4)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/numerics_cross_pillar"]
     }
 
     tot = tot + 1
