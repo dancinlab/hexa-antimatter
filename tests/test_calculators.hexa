@@ -48,6 +48,7 @@ let SCRIPTS = [
     ["verify/lint_numerics.hexa",                  "__HEXA_ANTIMATTER_LINT_NUMERICS__"],
     ["verify/calc_break_even.hexa",                "__HEXA_ANTIMATTER_CALC_BREAK_EVEN__"],
     ["verify/numerics_break_even.hexa",            "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN__"],
+    ["verify/numerics_break_even_parity.hexa",     "__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__"],
 ]
 
 fn _int_str(x: int) -> str { return "" + x }

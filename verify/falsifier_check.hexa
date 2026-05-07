@@ -100,7 +100,8 @@ let F3_T3_DESC       = "CERN-scale factory 1e12 p̄/hr CPT-precision feed (Stage
 let F4_ID            = "F-AM-4"
 let F4_RETRACT       = "tabletop 1.7×10¹² p̄/s ≠ hexa-ufo Stage-3 propulsion break-even"
 let F4_T1_SCRIPTS    = ["calc_break_even.hexa"]
-let F4_T2_SCRIPTS    = ["numerics_break_even.hexa"]
+let F4_T2_SCRIPTS    = ["numerics_break_even.hexa",
+                        "numerics_break_even_parity.hexa"]
 let F4_T3_DESC       = "hexa-ufo Stage-3 propulsion live integration feed (Stage-1+ TBD)"
 
 // ── helpers ──────────────────────────────────────────────────────────────

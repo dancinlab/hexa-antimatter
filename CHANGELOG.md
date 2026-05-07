@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 18) F-AM-4 T2×2 (4-program parity)
+
+- `verify/numerics_break_even_parity.hexa` — F-AM-4 **T2×2** parity vs
+  4 published antimatter propulsion programs.  10/10 PASS.  Pegs HEXA
+  σ³·m_p·yr ≈ 91 ng/yr against:
+  · NASA NIAC AIMSTAR (2002) global supply ≈ 30 ng/yr → ratio ≈ 3
+  · Penn State LEPS (2005) research ≈ 5 ng/yr → ratio ≈ 18 ≈ σ/φ·τ
+  · GR-1 mission spec ≈ 100 ng → 1 unit/yr ≈ 1 mission
+  · ICAN-II catalyzed concept ≈ 140 ng → 1 unit ≈ 0.65 missions
+  · σ-φ fleet → ≈ 9 GR-1 missions/yr (Stage-3 cadence)
+  · σ³ × NASA = 51.84 μg/yr break-even target
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_BREAK_EVEN_PARITY__ PASS` + 9 FALSIFIERS.
+- `verify/falsifier_check.hexa` — F-AM-4 T2 inventory ×1 → ×2 (sat-1 path).
+- `verify/lint_numerics.hexa` — inventory 12 → 13.
+- `verify/all.hexa` — 22 → 23 steps (23/23 PASS).
+- `cli/hexa-antimatter.hexa` — `verify numerics-break-even-parity` sub-target.
+- `tests/test_calculators.hexa` — break_even_parity row added (19 rows).
+- `tests/test_verify_all.hexa` — expected 22/22 → 23/23.
+
 ### Added (2026-05-08 — RSC iteration 17) 🎯 F-AM-4 sat-1 — full sat-1 reached
 
 - `verify/calc_break_even.hexa` — F-AM-4 **T1** algebraic closure for
