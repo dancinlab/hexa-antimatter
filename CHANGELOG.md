@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — RSC iteration 11) 🎯 sat-1 2nd-falsifier milestone
+
+- `verify/numerics_tabletop_solver.hexa` — F-AM-2 **T2 ×3** (sat-1 2nd
+  falsifier).  9/9 PASS.  2-DOF Penning-trap symplectic Verlet:
+  · axial mode ω_z = 1 (T_z = 2π) — drift < 1e-4
+  · cyclotron mode ω_+ = τ = 4 (T_+ = π/2) — drift < 5e-4
+    (∝ ω²·Δt² floor; faster mode → 16× larger drift)
+  · ω_+/ω_z = τ = 4 (n=6 lattice trap-mode ratio)
+  · 2-DOF total energy E_z + E_+ drift < 2e-4 over T_z
+  · both modes close after one axial period (cyclotron does 4 cycles)
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_TABLETOP_SOLVER__ PASS` + 8-row FALSIFIERS.
+- `verify/all.hexa` — orchestrator `run_step` now injects
+  `HEXA_SHIM_NO_DARWIN_LANDING=1 RESOURCE_LOCAL_HEXA=1` env so child
+  `hexa run` calls work on Mac bare host.  Sweep grows 14→15 (15/15).
+- `cli/hexa-antimatter.hexa` — `verify numerics-tabletop-solver` sub-target.
+- `tests/test_calculators.hexa` — solver row added (11/11 PASS).
+- `tests/test_verify_all.hexa` — expected 14/14 → 15/15.
+
 ### Added (2026-05-08 — RSC iteration 10) 🎯 sat-1 first-falsifier milestone
 
 - `verify/numerics_factory_solver.hexa` — F-AM-3 **T2 ×3** (sat-1 condition
