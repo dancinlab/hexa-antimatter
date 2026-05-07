@@ -11,6 +11,7 @@
 //   verify/calc_tabletop.hexa     →  __HEXA_ANTIMATTER_CALC_TABLETOP__
 //   verify/calc_pet_cyclotron.hexa → __HEXA_ANTIMATTER_CALC_PET_CYCLOTRON__
 //   verify/numerics_factory.hexa  →  __HEXA_ANTIMATTER_NUMERICS_FACTORY__
+//   verify/numerics_tabletop.hexa →  __HEXA_ANTIMATTER_NUMERICS_TABLETOP__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -50,7 +51,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (8-step orchestrator)")
+    println("  hexa-antimatter — verify/all (9-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -119,6 +120,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_factory  (T2 numerical, F-AM-3)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_factory"]
+    }
+
+    tot = tot + 1
+    if run_step("numerics_tabletop", r + "/verify/numerics_tabletop.hexa",
+                "__HEXA_ANTIMATTER_NUMERICS_TABLETOP__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/numerics_tabletop  (T2 numerical, F-AM-2)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/numerics_tabletop"]
     }
 
     tot = tot + 1
