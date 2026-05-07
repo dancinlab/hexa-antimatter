@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-07 — RSC iteration 4)
+
+- `verify/numerics_factory.hexa` — T2 (numerical) closure for F-AM-3
+  via `self/runtime/math_pure`. 21/21 PASS. First T2-tier script.
+  Independent re-derivation of factory ledger through math_pure
+  (sqrt/exp/log/pow) and cumulative-sum loops:
+  · pow_pure(12, k) for k ∈ {2,3,4,6} agrees with int σ^k to ≤1e-9
+  · σ⁶ = (σ³)² independent-path agreement
+  · cumulative-sum σ² and σ·τ agree with pow_pure path
+  · master identity σ·φ = n·τ = J₂ in float domain
+  · **B⁴ confinement scaling**: log-log linreg slope on
+    [10, 20, 30, 40, 48] T returns 4.0 ± 0.05 (TP-7 closure)
+  · Carnot η = 1 - T_c/T_h ∈ (0, 1) for T_h=1e8/T_c=300 (TP-6, no
+    2nd-law breach)
+  · math_pure stability floor: sqrt_pure(144), exp_pure(0),
+    log_pure(e), pi_pure, pow_pure(2,10) all within 1e-9.
+  Sentinel `__HEXA_ANTIMATTER_NUMERICS_FACTORY__ PASS` + 8-row
+  FALSIFIERS (path-divergence, B⁴ slope, Carnot breach, math_pure floor).
+- `verify/all.hexa` — orchestrator sweeps **8 steps** (7/7 → 8/8).
+- `cli/hexa-antimatter.hexa` — `verify numerics-factory` sub-target.
+- `tests/test_calculators.hexa` — numerics_factory row added (4/4 PASS).
+- `tests/test_verify_all.hexa` — expected 7/7 → 8/8.
+
 ### Added (2026-05-07 — RSC iteration 3)
 
 - `verify/calc_pet_cyclotron.hexa` — T1 (algebraic) closure for F-AM-1
@@ -69,16 +92,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → 5/5 → 6/6 → 7/7` to match orchestrator surface.
+  bumped `4/4 → 5/5 → 6/6 → 7/7 → 8/8` to match orchestrator surface.
 
-### Closure progress (RSC recipe §3) — after iter 3 (recipe §7.4 row 3 complete)
-- F-AM-1 (PET ¹⁸F regen):          T1 ✓ (calc_pet_cyclotron) · T2 ✗ · T3 ✗ → **33%**.
-- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ (calc_tabletop)      · T2 ✗ · T3 ✗ → **33%**.
-- F-AM-3 (Dirac mirror n=6):       T1 ✓ (calc_factory)       · T2 ✗ · T3 ✗ → **33%**.
-- F-AM-4 (Stage-3 break-even):     T1 partial (1.7e12 p̄/s closure cited) · T2 ✗ · T3 ✗.
+### Closure progress (RSC recipe §3) — after iter 4 (first T2 landed)
+- F-AM-3 (Dirac mirror n=6):       T1 ✓ (calc_factory)        · T2 ✓ (numerics_factory) · T3 ✗ → **67%**.
+- F-AM-1 (PET ¹⁸F regen):          T1 ✓ (calc_pet_cyclotron)  · T2 ✗ · T3 ✗ → **33%**.
+- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ (calc_tabletop)        · T2 ✗ · T3 ✗ → **33%**.
+- F-AM-4 (Stage-3 break-even):     T1 partial · T2 ✗ · T3 ✗.
 
-All 3 pillar T1 slots filled. Recipe §7.4 row 4 (numerics_*) is the next
-ladder rung.
+F-AM-3 reaches **67% closure** — first falsifier to enter the PARTIAL
+(algebra + numerics) tier.  Recipe §7.4 row 4 continues with
+numerics_tabletop / numerics_pet_cyclotron next.
 
 ---
 
