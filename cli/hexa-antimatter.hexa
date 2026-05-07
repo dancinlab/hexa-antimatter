@@ -83,7 +83,7 @@ fn cmd_status(a: [str]) {
         js = js + "\"verbs_total\":3,\"verbs_wired_computational\":3,\"verbs_wired_empirical\":0,"
         js = js + "\"verdict\":\"COMPUTATIONAL_WIRED\","
         js = js + "\"verbs\":[\"factory:wired\",\"tabletop:wired\",\"pet_cyclotron:wired\"],"
-        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\"],"
+        js = js + "\"verifiers\":[\"n6_arithmetic\",\"cross_doc_audit\",\"release_ladder\",\"calc_factory\",\"calc_tabletop\",\"calc_pet_cyclotron\",\"numerics_factory\",\"numerics_tabletop\",\"numerics_pet_cyclotron\",\"numerics_factory_parity\",\"numerics_tabletop_parity\",\"numerics_pet_cyclotron_parity\",\"numerics_factory_solver\",\"numerics_tabletop_solver\",\"numerics_pet_cyclotron_solver\"],"
         js = js + "\"n6_lattice_verified\":\"algebra:12/12\""
         js = js + "}"
         println(js)
@@ -98,7 +98,7 @@ fn cmd_status(a: [str]) {
     println("  tabletop        WIRED v1.0.0         σ³=1728x prod, σ⁶ cost, σ·τ²=192mo  deferred")
     println("  pet_cyclotron   WIRED v1.0.0         R=σ-φ=10cm, B=σ·τ=48T, σ³ cost      deferred")
     println("")
-    println("  verifiers (verify/all → 15 steps):")
+    println("  verifiers (verify/all → 16 steps):")
     println("    verify/n6_arithmetic           — algebraic identity 12/12 PASS")
     println("    verify/cross_doc_audit         — 4 SSOT files lattice-aligned")
     println("    verify/release_ladder          — v1.0.0 → v2.0.0 cadence + DoD lines")
@@ -113,6 +113,7 @@ fn cmd_status(a: [str]) {
     println("    verify/numerics_pet_cyclotron_parity — T2×2 medical-PET parity (F-AM-1)")
     println("    verify/numerics_factory_solver — T2×3 Verlet symplectic (F-AM-3 sat-1)")
     println("    verify/numerics_tabletop_solver — T2×3 2-DOF Verlet (F-AM-2 sat-1)")
+    println("    verify/numerics_pet_cyclotron_solver — T2×3 ¹⁸F decay ODE (F-AM-1 sat-1)")
     println("    selftest/selftest              — sentinel sweep across 3 verbs")
     println("")
     println("  verdict: COMPUTATIONAL_WIRED (3/3 verbs wired by n=6 arithmetic;")
@@ -190,6 +191,7 @@ fn cmd_verify(a: [str]) {
     if target == "numerics-pet-cyclotron-parity" { path = HA + "/verify/numerics_pet_cyclotron_parity.hexa" }
     if target == "numerics-factory-solver"        { path = HA + "/verify/numerics_factory_solver.hexa" }
     if target == "numerics-tabletop-solver"       { path = HA + "/verify/numerics_tabletop_solver.hexa" }
+    if target == "numerics-pet-cyclotron-solver"  { path = HA + "/verify/numerics_pet_cyclotron_solver.hexa" }
     let out = exec("hexa run \"" + path + "\" 2>&1")
     println(out.trim())
     if !out.contains(" PASS") {

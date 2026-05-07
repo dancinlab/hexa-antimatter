@@ -19,9 +19,20 @@ fn root() -> str {
     return exec("pwd").trim()
 }
 
+fn _hexa_bin() -> str {
+    // Mac dispatch shim sometimes refuses bare-host exec; prefer the
+    // real interpreter binary when present.
+    let direct = env("HOME") + "/.hx/packages/hexa/build/hexa_interp.real"
+    let probe = exec("test -x \"" + direct + "\" && echo OK").trim()
+    if probe == "OK" { return direct }
+    return "HEXA_SHIM_NO_DARWIN_LANDING=1 RESOURCE_LOCAL_HEXA=1 hexa run"
+}
+
+let HEXA_BIN = _hexa_bin()
+
 fn run_module(name: str, path: str, sentinel: str) -> bool {
     println("  -- " + name + " --")
-    let raw = exec("hexa run " + path + " 2>&1")
+    let raw = exec(HEXA_BIN + " " + path + " 2>&1")
     let last_lines = raw.trim()
     println(last_lines)
     println("")

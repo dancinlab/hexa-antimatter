@@ -18,6 +18,7 @@
 //   verify/numerics_pet_cyclotron_parity.hexa → __HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_PARITY__
 //   verify/numerics_factory_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_FACTORY_SOLVER__
 //   verify/numerics_tabletop_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_TABLETOP_SOLVER__
+//   verify/numerics_pet_cyclotron_solver.hexa → __HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_SOLVER__
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
 // Patterned on hexa-sscb/verify/sscb_verify.py — single-command sweep.
@@ -41,16 +42,25 @@ fn quiet_mode(a: [str]) -> bool {
     return false
 }
 
+// Resolve the hexa interpreter binary.  On Mac the dispatch shim
+// (`hexa run`) refuses bare-host exec and silently produces no output;
+// fall back to the real interpreter directly when present.
+fn _hexa_bin() -> str {
+    let direct = env("HOME") + "/.hx/packages/hexa/build/hexa_interp.real"
+    let probe = exec("test -x \"" + direct + "\" && echo OK").trim()
+    if probe == "OK" { return direct }
+    // Last resort: shim with both env overrides.
+    return "HEXA_SHIM_NO_DARWIN_LANDING=1 RESOURCE_LOCAL_HEXA=1 hexa run"
+}
+
+let HEXA_BIN = _hexa_bin()
+
 fn run_step(name: str, path: str, sentinel: str, quiet: bool) -> bool {
     if !quiet {
         println("")
         println("--- " + name + " ---")
     }
-    // Mac dispatch shim refuses bare-host exec without RESOURCE_LOCAL_HEXA=1
-    // + HEXA_SHIM_NO_DARWIN_LANDING=1.  Inject inline so the orchestrator
-    // works regardless of caller's env.
-    let env_prefix = "HEXA_SHIM_NO_DARWIN_LANDING=1 RESOURCE_LOCAL_HEXA=1 "
-    let out = exec(env_prefix + "hexa run " + path + " 2>&1")
+    let out = exec(HEXA_BIN + " " + path + " 2>&1")
     if !quiet {
         println(out.trim())
     }
@@ -61,7 +71,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (15-step orchestrator)")
+    println("  hexa-antimatter — verify/all (16-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -193,6 +203,15 @@ fn main() {
         summary = summary + ["  [PASS] verify/numerics_tabletop_solver  (T2×3, F-AM-2 2-DOF)"]
     } else {
         summary = summary + ["  [FAIL] verify/numerics_tabletop_solver"]
+    }
+
+    tot = tot + 1
+    if run_step("numerics_pet_cyclotron_solver", r + "/verify/numerics_pet_cyclotron_solver.hexa",
+                "__HEXA_ANTIMATTER_NUMERICS_PET_CYCLOTRON_SOLVER__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/numerics_pet_cyclotron_solver  (T2×3, F-AM-1 ¹⁸F decay)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/numerics_pet_cyclotron_solver"]
     }
 
     tot = tot + 1
