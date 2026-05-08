@@ -93,18 +93,19 @@ A → B → C 는 "v2.0.0 빌드 직전" 까지 본 repo 가 자체적으로 닫
 |:----:|:----|:------|:--------:|:---------:|:----|
 | A | **종이 설계 강화** — `{factory,tabletop,pet_cyclotron}/doc/benchtop_v0_design.md` (4 falsifier 별 풀 BOM + 블록 다이어그램 + 인터페이스 표 + 안전 명세) | `.md` 3~6 개 + ASCII 그림 | ✗ | ✓ docs-layer | funding pitch deck 직전까지 |
 | B | **Stage-1 simulation parity** (= §A.6 Step 3) — 4 falsifier 별 numerical 보강: ¹⁸F batch real-decay sim · p̄ trap density relativistic · CPT precision Penning · thrust ODE | `verify/numerics_*_relativistic.hexa` 류 4~8 개 | ✗ | ✓ partial-RSC | 외부 collab 미팅 카드 (이미 sim-검증 됨) |
-| C | **Sim-펌웨어** — cyclotron 트리거 / Penning RF DAC-ADC 체인 / atomic clock counter / thrust sensor를 sim-only 로 모델링, hardware-in-the-loop 없이 동작 | `firmware/sim/*.hexa` (또는 `*.c` + cmocka) | ✗ | 부분 ✓ | 실제 MCU 펌웨어의 prototype layer |
-| D | **HDL/MCU skeleton** — Verilog (FPGA 타이밍 컨트롤러 — RF burst / shutter), Rust/C (MCU 트랩 컨트롤러 / cyclotron beam control). 컴파일은 되나 flash 할 보드 없음 | `firmware/hdl/*.v` + `firmware/mcu/*.rs` + Vivado/Cargo-embedded 셋업 | ✗ (지금) / ✓ (나중) | ✗ | toolchain 의존 무거움; 실제 보드 살 시점에 |
+| C | **Sim-펌웨어** — cyclotron 트리거 / Penning RF DAC-ADC 체인 / atomic clock counter / thrust sensor를 sim-only 로 모델링, hardware-in-the-loop 없이 동작 | `firmware/sim/*.hexa` | ✗ | 부분 ✓ | 실제 MCU 펌웨어의 prototype layer |
+| C.5 | **보드-수준 paper spec** — 4 보드 별 핀맵 (53–100+ 핀) + catalog SKU BOM (Digi-Key/Mouser/Avnet) + 전원 버짓 + bring-up 체크리스트 + 블록 schematic | `firmware/doc/board_v0_*.md` + `firmware/doc/schematic_v0_*.md` (8 md files) | ✗ | ✓ docs-layer | KiCad 입력 + 발주 가능 |
+| D | **HDL/MCU skeleton** — Verilog (FPGA 타이밍 컨트롤러 — RF burst / shutter), Rust/C (MCU 트랩 컨트롤러 / cyclotron beam control). 컴파일 가능 + cargo test 통과; flash 할 보드 없음 | `firmware/hdl/{*.v, *.xdc, build.tcl}` + `firmware/mcu/{*.rs, Cargo.toml, lib.rs}` | ✗ (지금) / ✓ (나중) | ✓ skeleton | toolchain 정합성; 보드 사이드 step |
+| **E** | **실제 KiCad / PCB / 보드 검증** — KiCad 8.0+ project source + PCB layout + Gerber + SMT 발주 + 수령 + AOI/X-ray + bring-up + sim parity 측정 | `firmware/kicad/<board>/*.kicad_*` + `firmware/doc/phase_e_*.md` (계획서 4개) | **✓ post-funding** | ✗ | 실제 보드 검증 — Stage-1+ 진입 |
 
-**추천 진행 순서**: A → B → C → D.
+**추천 진행 순서**: A → B → C → C.5 → D → **E (funding gate)**.
 
-- A 는 1~2 commit (docs 만, RSC saturation 깨지 않음)
-- B 는 4~8 commit (.hexa 만, 거의 RSC 사다리 그대로 — saturation_check 갱신 필요)
-- C 는 새 디렉토리 (`firmware/sim/`) — 처음으로 verify/ 외 파일 추가 시작
-- D 는 본격 toolchain (vivado/cargo-embedded) — 실제 보드 살 시점에 다시
+- A → D: paper specifications + compilable skeletons. 본 repo 가 자체적으로 닫을 수 있는 범위.
+- E: ~$225k 발주 자금 + 6 person-month 레이아웃 + AT&S/Kimball/PCBWay/JLCPCB 발주.  funding (§A.6 step 2) 합의 후에만 진행.
 
 **scope 옵션**:
 1. **A 만** — funding/collab 미팅 자료 수준. 1 일 작업
-2. **A + B** — Stage-1 sim parity 까지. 외부 collab 에 "이미 simulation 검증됨" 카드. 2~3 일
-3. **A + B + C** — sim-펌웨어까지. Stage-1 데모 가능 (모니터로 trap dynamics 시뮬). 1 주
-4. **풀 D** — 실제 HW 살 시점에. 지금은 보류 권장 (검증 불가)
+2. **A + B** — Stage-1 sim parity 까지. 외부 collab 미팅 카드 ("이미 simulation 검증됨"). 2~3 일
+3. **A + B + C** — sim-펌웨어까지. 1 주
+4. **A → D 풀** — paper-spec + skeleton 모두 (현재 상태, 2026-05-08).  **funding 직전까지 본 repo 단독 가능**.
+5. **E (실제 보드)** — funding gate 이후.  Phase E1 (~$15k pet+atomic_clock) → E2 (~$30k tabletop) → E3 (~$90k thrust) 단계적 발주.
