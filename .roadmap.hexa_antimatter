@@ -44,7 +44,35 @@ DoD:
 
 ## §A.3 Cycle history
 
-- **Cycle 0 (2026-05-06)** — v1.0.0 initial extraction from n6-architecture@c0f1f570. Commit `f91c153`. 11 files / 2094+ insertions.
+- **Cycle 0 (2026-05-06)** — v1.0.0 initial extraction from n6-architecture@c0f1f570.  Commit `f91c153`.  11 files / 2094+ insertions.
+
+- **Cycle 1 (2026-05-08, RSC iter 1–12)** — RSC bootstrap.  4 calc_*.hexa T1 + 9 numerics_*.hexa T2 (basic + parity + solver per pillar) + 3 cross-cutters.  All 3 pillar falsifiers (F-AM-1/2/3) reach T1 + T2 ×3 sat-1 (recipe §7.2).  Commits 7c2dd6b → 65f68c5.
+
+- **Cycle 2 (2026-05-08, RSC iter 13–20)** — strict sat-1 + sat-2 saturation.  +numerics_cross_pillar + numerics_lattice_arithmetic + falsifier_check + lint_numerics + (calc/numerics)_break_even (×3 for F-AM-4) + saturation_check.  All 4 falsifiers at T1+T2×3 (strict).  `__HEXA_ANTIMATTER_RSC_SATURATED__ STOP` emits.  Commits 51d957e → 691006f.
+
+- **Cycle 3 (2026-05-08, RSC iter 21–25)** — T3 paper-feed + 100% closure.  4 empirical_*_inspire.hexa (Inspire-HEP API + 16 cached fixture JSONs) + saturation_check sat-3 condition.  `__HEXA_ANTIMATTER_RSC_FULL_CLOSURE__ 100%` emits.  Commit `e291529`.  → §A.6 + §A.6.1 added (commit `7ff0469`).
+
+- **Cycle 4 (2026-05-08, Phase A → C.5 → D)** — paper firmware surface.
+  - Phase A: 3 pillar `doc/benchtop_v0_design.md` (~$11M abstract BOM).  Commit `3e0a3b2`.
+  - Phase B: 4 numerics_*_*.hexa Stage-1 sim parity (T2 ×4 each).  Commit `2ee9119`.
+  - Phase C: 4 firmware/sim/*.hexa golden behavioral.  Commit `062009f`.
+  - Phase C.5: 4 board_v0_*.md + 4 schematic_v0_*.md + 3 .xdc (Vivado constraints).  Commits `ebe94aa` / `435cdf7` / `7551ed0`.
+  - Phase D: HDL skeletons (`firmware/hdl/`, Vivado-synth) + MCU skeletons (`firmware/mcu/`, cargo-test) + `firmware_phase_d_lint.hexa` drift catcher.  Commits `ebe94aa` / `afd04af`.
+
+- **Cycle 5 (2026-05-08, repo hygiene + Phase E plans)** — top-level docs (CONTRIBUTING / ARCHITECTURE / SECURITY / FAQ / RELEASE_NOTES_v1.1.0) + pillar SSOT §10–§15 fill (RISKS / DEPENDENCIES / TIMELINE / TOOLS / TEAM / REFERENCES) + Phase E plans (PHASE_E_HARDWARE_PATH umbrella + 4 phase_e_*.md detail + firmware/kicad/ project skeleton tree).  Commits `a3c74b0` → `ed4a985`.
+
+**Cumulative state (2026-05-08, post-Cycle 5)**:
+- 25+ verify scripts (38/38 PASS aggregate)
+- 35 markdown files (README + 4 top-level meta + 3 pillar SSOTs + 3 pillar Phase A docs + firmware/{doc,hdl,mcu,kicad}/ READMEs + 8 board+schematic v0 + 5 Phase E plans + 2 release notes)
+- 4 firmware/sim/*.hexa Phase C goldens
+- 4 firmware/hdl/*.v + 3 .xdc + build.tcl Phase D HDL
+- 4 firmware/mcu/*.rs + Cargo.toml + lib.rs Phase D MCU
+- 4 firmware/kicad/<board>/ Phase E skeleton dirs
+- 16 verify/fixtures/*.json T3 paper-feed cache
+- F-AM-1/2/3/4 all at 100% bookkeeping closure
+- `__RSC_FULL_CLOSURE__ 100%` + `__RSC_SATURATED__ STOP` both PASS
+
+**Next code-layer cycle**: none (paper-spec saturated).  **Next hardware-layer cycle**: §A.6 step 1 (external collab decision) → step 2 (funding) → Phase E1 (~$15k pet+atomic_clock proto) → E2/E3.  All gated outside this repo.
 
 ## §A.4 Falsifier preregister
 
