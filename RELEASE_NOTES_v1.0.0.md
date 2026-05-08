@@ -10,7 +10,7 @@
 
 `hexa-antimatter` v1.0.0 is the initial standalone extraction of the antimatter
 substrate from `n6-architecture/domains/physics/` into a public GitHub repo
-under the `need-singularity` org. The package ships a **3-verb spec-first
+under the `dancinlab` org. The package ships a **3-verb spec-first
 scaffold** organized around the n=6 Dirac-mirror lattice.
 
 ```
@@ -43,9 +43,9 @@ master identity:   σ · φ = n · τ = 24
 
 ## Cross-links
 
-- Accelerator cousin: `need-singularity/hexa-cern`
-- Stage-3 propulsion fuel consumer: `need-singularity/hexa-ufo`
-- HEXA family sister: `need-singularity/hexa-bio` (molecular toolkit)
+- Accelerator cousin: `dancinlab/hexa-cern`
+- Stage-3 propulsion fuel consumer: `dancinlab/hexa-ufo`
+- HEXA family sister: `dancinlab/hexa-bio` (molecular toolkit)
 - Upstream `.md` SSOTs in `n6-architecture/domains/physics/`:
   - `antimatter-factory/antimatter-factory.md`
   - `tabletop-antimatter/tabletop-antimatter.md`

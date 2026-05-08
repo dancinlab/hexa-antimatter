@@ -173,7 +173,7 @@ hexa-antimatter --version             # → 1.0.0
 ### Via git clone (raw fallback)
 
 ```bash
-git clone https://github.com/need-singularity/hexa-antimatter.git ~/.hexa-antimatter
+git clone https://github.com/dancinlab/hexa-antimatter.git ~/.hexa-antimatter
 export HEXA_ANTIMATTER_ROOT=~/.hexa-antimatter
 export PATH="$HEXA_ANTIMATTER_ROOT/cli:$PATH"
 
@@ -200,9 +200,9 @@ hexa-antimatter pet_cyclotron           # R=σ-φ=10 cm, B=σ·τ=48 T, ¹⁸F s
 
 ## § Cross-link
 
-- **`need-singularity/hexa-cern`** — accelerator cousin (compact-accelerator substrate)
-- **`need-singularity/hexa-ufo`** — Stage-3 propulsion fuel dependency (UFO substrate sources its antimatter fuel from this repo)
-- Sister substrate: [`need-singularity/hexa-bio`](https://github.com/need-singularity/hexa-bio) (molecular toolkit, HEXA family)
+- **`dancinlab/hexa-cern`** — accelerator cousin (compact-accelerator substrate)
+- **`dancinlab/hexa-ufo`** — Stage-3 propulsion fuel dependency (UFO substrate sources its antimatter fuel from this repo)
+- Sister substrate: [`dancinlab/hexa-bio`](https://github.com/dancinlab/hexa-bio) (molecular toolkit, HEXA family)
 - Upstream concept SSOTs (declarative):
   - `n6-architecture/domains/physics/antimatter-factory/antimatter-factory.md`
   - `n6-architecture/domains/physics/tabletop-antimatter/tabletop-antimatter.md`

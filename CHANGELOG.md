@@ -585,17 +585,16 @@ Closure-depth accumulation summary:
 
 ### Changed
 - `tests/test_verify_all.hexa` — expected aggregate count
-  bumped `4/4 → … → 12/12` to match orchestrator surface.
+  bumped `4/4 → … → 15/15` to match orchestrator surface.
 
-### Closure progress (RSC recipe §3) — after iter 8
-- F-AM-2 (tabletop σ·J₂=288):     T1 ✓ · **T2 ×2** (numerics_tabletop + tabletop_parity) · T3 ✗ → **67%**.
-- F-AM-3 (Dirac mirror n=6):       T1 ✓ · **T2 ×2** (numerics_factory + factory_parity)   · T3 ✗ → **67%**.
-- F-AM-1 (PET ¹⁸F regen):          T1 ✓ · T2 ×1 · T3 ✗ → **67%**.
-- F-AM-4 (Stage-3 break-even):     T1 partial · T2 ✗ · T3 ✗.
+### Closure progress (RSC recipe §3) — after iter 11 (sat-1 2nd-falsifier)
+- F-AM-2 (tabletop σ·J₂=288):  T1 ✓ · **T2 ×3** (numerics + parity + 2-DOF solver) · T3 ✗ → **67% sat-1 OK** ← new
+- F-AM-3 (Dirac mirror n=6):    T1 ✓ · T2 ×3 (numerics + parity + solver)              · T3 ✗ → **67% sat-1 OK**.
+- F-AM-1 (PET ¹⁸F regen):       T1 ✓ · T2 ×2 · T3 ✗ → **67%**.
+- F-AM-4 (Stage-3 break-even):  T1 partial · T2 ✗ · T3 ✗.
 
-2 of 3 pillar falsifiers now have T2 ×2 (closed-form + parity).
-Next iter for sat-1: numerics_pet_cyclotron_parity (F-AM-1 → T2×2)
-followed by solver scripts to reach T2 ×3.
+🎯 **2 of 3 pillar falsifiers now satisfy sat-1** (T2 ×3).
+Toward full sat-1: numerics_pet_cyclotron_solver lifts F-AM-1 → T2×3.
 
 ---
 
@@ -623,4 +622,4 @@ followed by solver scripts to reach T2 ×3.
 - All headline numbers are academia-unproven candidates from the declarative
   `.md` SSOT (factory 1e12 p-bar/hr; tabletop 1.7e12 p-bar/s; PET 48 T / 48 mg).
 
-[1.0.0]: https://github.com/need-singularity/hexa-antimatter/releases/tag/v1.0.0
+[1.0.0]: https://github.com/dancinlab/hexa-antimatter/releases/tag/v1.0.0
