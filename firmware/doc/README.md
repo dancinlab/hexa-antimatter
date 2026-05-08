@@ -1,9 +1,11 @@
-# `firmware/` — sim + board specs + Phase D scaffolding
+# `firmware/` — sim + board specs + Phase D scaffolding + Phase E plans
 
-> §A.6.1 Phase C + C.5 + Phase D scope.  Three layers:
+> §A.6.1 Phase C + C.5 + D + E scope.  Five layers:
 >   · `sim/`  — Phase C behavioral sim (golden spec, 4 boards)
->   · `doc/board_v0_*.md` — Phase C.5 board-spec (pinout + BOM + power + bring-up)
+>   · `doc/board_v0_*.md` + `doc/schematic_v0_*.md` — Phase C.5 board-spec (pinout + BOM + power + bring-up + block schematic)
 >   · `hdl/` + `mcu/` — Phase D synthesizable / cross-compilable skeletons
+>   · `doc/PHASE_E_HARDWARE_PATH.md` — single consolidated Phase E roadmap
+>     (KiCad / PCB / procurement / vendor matrix / funding ladder / bring-up)
 
 **Status**: paper firmware (2026-05-08) · **HW-in-the-loop**: ✗ (no boards) · **Compiles + tests**: ✓ via `hexa run`
 
@@ -87,10 +89,10 @@ or MCU bring-up (board test step 14–15 per `doc/board_v0_*.md §7`).
 firmware/
 ├─ doc/
 │  ├─ README.md                          (this file)
-│  ├─ board_v0_pet_cyclotron.md          (Phase C.5: STM32H743 board spec)
-│  ├─ board_v0_tabletop_penning.md       (Phase C.5: XCZU9EG board spec)
-│  ├─ board_v0_atomic_clock.md           (Phase C.5: XCKU040 board spec)
-│  └─ board_v0_thrust_acquisition.md     (Phase C.5: XCVU13P board spec)
+│  ├─ board_v0_<board>.md           ×4   (Phase C.5: pinout + BOM + power + bring-up)
+│  ├─ schematic_v0_<board>.md       ×4   (Phase C.5: block schematic + net list)
+│  └─ PHASE_E_HARDWARE_PATH.md           (Phase E roadmap: KiCad → fab → bring-up
+│                                        + vendor matrix + funding ladder + entry criteria)
 ├─ sim/                                   (Phase C: golden behavioral)
 │  ├─ cyclotron_trigger.hexa
 │  ├─ penning_rf.hexa
@@ -99,22 +101,24 @@ firmware/
 ├─ hdl/                                   (Phase D: Verilog skeletons)
 │  ├─ README.md
 │  ├─ build.tcl                           (Vivado batch)
-│  ├─ cyclotron_trigger.v                 (placeholder — MCU-only board)
-│  ├─ penning_rf.v
-│  ├─ atomic_clock.v
-│  └─ thrust_acq.v
-└─ mcu/                                   (Phase D: Rust no_std)
-   ├─ README.md
-   ├─ Cargo.toml
-   ├─ lib.rs
-   ├─ pet_cyclotron.rs                    (STM32H743 cortex-m7)
-   ├─ tabletop.rs                         (MPSoC PS cortex-a53)
-   ├─ cpt_bench.rs                        (STM32H723 + XCKU040)
-   └─ thrust_bench.rs                     (STM32H743 + XCVU13P)
+│  ├─ <board>.v                           (top + spec + 7-state FSM stub)
+│  └─ <board>.xdc                    ×3   (Vivado pin constraints)
+├─ mcu/                                   (Phase D: Rust no_std)
+│  ├─ README.md · Cargo.toml · lib.rs
+│  ├─ pet_cyclotron.rs                    (STM32H743 cortex-m7)
+│  ├─ tabletop.rs                         (MPSoC PS cortex-a53)
+│  ├─ cpt_bench.rs                        (STM32H723 + XCKU040)
+│  └─ thrust_bench.rs                     (STM32H743 + XCVU13P)
+└─ (Phase E artefacts — created when funding lands; see
+   firmware/doc/PHASE_E_HARDWARE_PATH.md §7 for target paths:
+   pcb/<board>/{*.kicad_sch,*.kicad_pcb,gerbers/,BOM.csv} ×4 +
+   state/<live>_LOG.hexa ×4 + firmware/build/{*.elf,*.bit})
 ```
 
 ## §7 Cross-link
 
 - `verify/numerics_*_{realistic,relativistic,precision,thrust}.hexa` — Phase B sim parity (T2×4)
+- `verify/firmware_phase_d_lint.hexa` — Phase D paper-spec drift catcher
 - `{factory,tabletop,pet_cyclotron}/doc/benchtop_v0_design.md` — Phase A abstract BOM
 - `.roadmap.hexa_antimatter §A.6 + §A.6.1` — overall hardware path
+- `firmware/kicad/README.md` — Phase E KiCad source skeleton entry
