@@ -362,33 +362,143 @@ this domain addresses size reduction + 3-path sigma^6 cost, sigma*tau^2 lifetime
 
 ## §8 IDEAS
 
-This section covers ideas for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Forward-looking research vectors not yet wired into v1.x:
+
+- **Sympathetic cooling cascade** — Ba⁺ → Be⁺ → p̄ chain to reach 100 mK in 0.29 m³ trap (vs CERN AD ~ 1 K). σ·τ²=192 month storage critically depends on sub-K trap temperature.
+- **Cryogenic-free RT-SC operation** — σ·τ=48 T at 77 K (LN₂) using REBCO-coated conductor; eliminates LHe supply chain.
+- **Optical sideband cooling** of p̄ via Schwinger-pair UV (243 nm, shared with `pet_cyclotron` 1S-2S laser).
+- **In-trap anti-H Rydberg laser-spectroscopy** (paper §X.5): direct CPT test by comparing 1S-2S transition frequency between H and H̄. Stiff Cs disciplining via `firmware/sim/atomic_clock_counter.hexa`.
+- **Multi-trap parallel synthesis** (σ²=144 cell array) — convert benchtop scale to mid-volume (3 m³) without inheriting full factory cost.
+- **Annihilation γ tomography** as nondestructive trap diagnostic (511 keV ↔ trap profile inversion).
 
 ## §9 METRICS
 
-This section covers metrics for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Quantitative scoreboard (anchored to n=6 lattice, locked at v1.0.0):
+
+| # | Metric | Target | Current SOTA | Closure ratio | Falsifier |
+|:-:|:-------|:-------|:-------------|:-------------:|:----------|
+| 1 | Trap volume | 0.29 m³ | CERN AD 1 m³ | 1/σ²×40 | F-AM-2 retract if > 1 m³ |
+| 2 | Production rate | 1.7×10¹² p̄/s | CERN AD ~10⁷ /s | σ³×10⁵ | F-AM-2 retract if < σ²×10⁶ |
+| 3 | Storage lifetime | 16 yr | ALPHA 1000 s | σ·τ²×5×10⁵ | F-AM-2 retract if < 24 mo |
+| 4 | Cost per mg | $2.1×10⁴ | DOE ~$10¹² | 1/σ⁶×4×10⁷ | F-AM-2 retract if > $10⁶ |
+| 5 | Trap field B | 48 T | CERN AD 4.5 T | σ·τ/4.5 ≈ 10.7× | F-AM-2 retract if RT-SC critical-current ≥ 6 kA at 4.2 K not met |
+| 6 | Vacuum | 10⁻¹³ mbar | ALPHA 10⁻¹² | σ²·τ=576× headroom | F-AM-2 retract if > 10⁻¹¹ |
+| 7 | Trap temperature | 100 mK | ALPHA 1 K | × 10 | sympathetic-cool chain |
+| 8 | β⁺ supply | 9.6×10¹⁰ /s | hospital PET ≈ 10⁹ /s | σ·τ × 100 | path-c via `pet_cyclotron` |
+| 9 | RT-SC critical I | 6 kA at 77 K | REBCO 5 kA | × 1.2 | shared with `hexa-rtsc` |
 
 ## §10 RISKS
 
-This section covers risks for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+| Risk | Severity | Likelihood | Mitigation | Falsifier |
+|:-----|:--------:|:----------:|:-----------|:----------|
+| 0.29 m³ Penning trap manufacturing | high | medium | proven precision-bore brass UHV; shrink-fit + EDM | F-AM-2 retract if ULE bore tolerance > 5 µm |
+| 16-yr storage lifetime not realized | high | high | 100 mK sympathetic chain + radial-mode shimming | retract σ·τ² claim → σ·τ-only fallback |
+| σ³ production scaling fails (3-path confluence) | high | medium | path-a (Schwinger pair) + path-b (synchrotron) + path-c (PET ¹⁸F) — independent paths | retract one path, keep two; σ² fallback |
+| Cost target $2.1×10⁴/mg miss | medium | high | sigma⁶ decomposition (factory→benchtop) requires σ³ production AND σ³ infrastructure; either alone is insufficient | retract to factory $/sigma³ |
+| 48 T RT-SC quench under 0.29 m³ thermal load | medium | low | σ·τ²-trap hosts ≤ 10 W static load; pulse-tube cooler over-provisioned 3× | quench-test must demonstrate ≤ 10 ms latch-out |
+| ALPHA / AEgIS access blocked | high | low | shared spec via Nature open-data; alternative collaboration with ELENA / GBAR | scope reduction to hexa-rtsc-only |
 
 ## §11 DEPENDENCIES
 
-This section covers dependencies for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Upstream:
+- `dancinlab/hexa-rtsc` — σ·τ=48 T REBCO RT-SC magnet substrate
+- `dancinlab/hexa-cern` — AD beam-injection handshake (RS-485 trunk)
+- `factory/antimatter-factory.md` — parent CERN-scale spec (HEXA-TABLETOP §9.7 cost decomposition)
+- `pet_cyclotron/pet-cyclotron.md` — path-c ¹⁸F β⁺ supply line (σ·τ=48 mg/season)
+
+Downstream:
+- `dancinlab/hexa-ufo` — Stage-3 propulsion (10 g antiproton stockpile precursor)
+- `dancinlab/hexa-fusion` — antiproton-catalyzed micro-fusion ignition
+- `firmware/sim/penning_rf.hexa` — Phase C state-machine sim (11/11 PASS)
+
+Internal numerical layer:
+- `verify/numerics_tabletop.hexa` (closed-form parity) + `verify/numerics_tabletop_parity.hexa` (4-effort published) + `verify/numerics_tabletop_solver.hexa` (RK4 ODE, 14/14 PASS)
+- `verify/numerics_tabletop_relativistic.hexa` (Phase B numerics — relativistic correction)
+- `firmware/hdl/penning_rf.{v,xdc}` (Phase D HDL+constraints)
+- `firmware/mcu/tabletop.rs` (Phase D Rust skeleton)
+- `firmware/doc/{board,schematic}_v0_tabletop_penning.md` (Phase D paper-spec surface)
 
 ## §12 TIMELINE
 
-This section covers timeline for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+| Phase | Window | Milestone | Status |
+|:------|:-------|:----------|:------:|
+| Phase A — paper design | 2026-Q2 | `tabletop/doc/benchtop_v0_design.md` (137 lines, BOM categories + topology) | ✅ done |
+| Phase B — sim parity | 2026-Q2 | `verify/numerics_tabletop_*.hexa` × 4 (closed-form / parity / solver / relativistic) | ✅ done |
+| Phase C — sim firmware | 2026-Q2 | `firmware/sim/penning_rf.hexa` (11/11 PASS) | ✅ done |
+| Phase D — paper HDL/MCU/schematic | 2026-Q2 | `firmware/{hdl,mcu,doc}/...` + `firmware_phase_d_lint.hexa` | ✅ done |
+| Phase E1 — KiCad + PCB v0 | 2026-Q3 | KiCad schematic + PCB Gerbers; ~$15-20 K fab (HDI 14-layer) | ⏳ funding |
+| Phase E2 — bring-up | 2026-Q4 | board flash + cryo bring-up + 100 mK | ⏳ funding |
+| Phase E3 — first p̄ capture | 2027-Q1 | CERN AD beam slot + JESD204C link train + DDS lock | ⏳ funding + AD slot |
+| Phase E4 — sustained σ·τ²=192 month operation | 2028+ | full lifetime test | ⏳ funding + facility |
 
 ## §13 TOOLS
 
-This section covers tools for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Code-layer (current):
+- `hexa` runtime + `cargo` (host-side Rust unit tests for `firmware/mcu/tabletop.rs`)
+- `verify/all.hexa` — 38-step orchestrator
+- `cli/hexa-antimatter.hexa` — verb router
+
+Phase D paper-HDL:
+- Vivado 2024.1+ (Design Edition; XCZU9EG-FFVC900-1 free WebPACK target)
+- `firmware/hdl/penning_rf.{v,xdc}` + `build.tcl`
+- Rust nightly + `aarch64-unknown-none-softfloat` target
+
+Phase E hardware:
+- KiCad 8+ — schematic + PCB
+- 14-layer HDI manufacturer (Sanmina / TTM / Würth Elektronik) — 0.05 mm trace/space
+- Cryomech PT-415 pulse-tube (4.2 K, $80 K) or He-3/He-4 dilution refrigerator
+- Wenzel Associates 100 MHz OCXO ($3 K) for AD9528 reference
+- AD9162 + AD9208 evaluation boards (eval before custom PCB)
+- Probe-rs + Vivado Lab Edition (flash + bring-up)
+- 48 T REBCO solenoid (Bruker / SuperOX, $200-300 K) — funding-blocked
+
+Documentation:
+- pandoc + xelatex
+- markdown-lint
 
 ## §14 TEAM
 
-This section covers team for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Code/spec layer (current):
+- 1× substrate maintainer (HEXA family, repo curation)
+- Auto-pilot: cross-doc audit + Phase D lint on every commit
+
+Phase E build layer (recommended hires post-funding):
+- 1× FPGA engineer (Vivado, JESD204C, AD9528 PLL)
+- 1× analog/RF engineer (sub-ns trap RF drive at 731 MHz, 100 Ω diff)
+- 1× cryogenic engineer (4.2 K → 100 mK sympathetic-cool chain)
+- 1× embedded firmware engineer (Rust no_std + ARM Cortex-A53 PS)
+- 1× safety officer (RT-SC quench + magnet interlock)
+- 1× CERN AD liaison (post-Phase E2)
+
+Advisory:
+- ALPHA / AEgIS / ATRAP / GBAR — published-method peer review
 
 ## §15 REFERENCES
 
-This section covers references for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Primary literature:
+- ALPHA Collaboration. *Trapped antihydrogen.* Nature 468, 673–676 (2010).
+- ALPHA Collaboration. *Confinement of antihydrogen for 1,000 seconds.* Nature Physics 7, 558–564 (2011).
+- AEgIS Collaboration. *Pulsed production of antihydrogen.* Communications Physics 4, 19 (2021).
+- ATRAP Collaboration. *Centrifugal Separation of Antiprotons and Electrons.* Phys. Rev. Lett. 114, 173001 (2015).
+- ALPHA-2 Collaboration. *Antihydrogen accumulation for fundamental symmetry tests.* Nature Comm. 8, 681 (2017).
+- ELENA: *The Extra Low Energy Antiproton ring at CERN.* Hyperfine Interactions 233, 119 (2015).
+
+Substrate / SSOT:
+- `n6-architecture/domains/physics/tabletop-antimatter/` — upstream provenance c0f1f570
+- `factory/antimatter-factory.md §9` — parent factory split notice
+- `pet_cyclotron/pet-cyclotron.md §2` — path-c PET recycle citation
+
+n=6 lattice (algebraic):
+- `verify/n6_arithmetic.hexa` — σ·φ = n·τ = J₂ = 24 first-principles proof
+- atlas.n6 HEXA-TABLETOP-01 ~ HEXA-TABLETOP-11 (registered)
+
+Phase D paper:
+- Xilinx UG949 + UG903 (UltraScale+ MPSoC PCB + constraints)
+- Analog Devices AD9162 + AD9208 + AD9528 datasheets
+- Linear Tech LTC2641-16 datasheet
+- Cortex-A53 ARMv8 reference
+
+External anchors:
+- Bosch-Hale fits for D-T / p-¹¹B reactivity (cross-link from `dancinlab/hexa-fusion`)
+- CERN AD timing trunk spec (RS-485 handshake)
 

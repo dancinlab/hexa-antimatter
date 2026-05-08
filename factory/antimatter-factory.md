@@ -847,26 +847,114 @@ Details of HEXA-TABLETOP Theorem, TP-18~TP-25, 3-path (laser-Schwinger * compact
 
 ## §10 RISKS
 
-This section covers risks for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+| Risk | Severity | Likelihood | Mitigation | Falsifier |
+|:-----|:--------:|:----------:|:-----------|:----------|
+| 200 m³ cryostat construction failure | high | medium | RT-SC σ·τ=48 T moves cryo budget down; two-stage pulse-tube as fallback | F-AM-1 retract if RT-SC critical-current target not met |
+| Penning-trap loss-rate exceeds 1%/24-month spec | high | medium | redundant trap chains (σ²=144 cell array), online vacuum scrub | F-AM-1 24-month closure failure documented as honest negative |
+| 1e12 p̄/hr production rate not achievable on AD line | high | medium | factory-mode parallel injection + σ-φ=10× gain via cascade trap | F-AM-1 retracts σ²·N₀ scaling claim |
+| 511 keV γ background contaminates synthesis line | medium | high | concrete + lead + B₄C tri-shield, opto-isolated DAQ | F-AM-1 SNR ≤ 10 → instrumentation rebuild |
+| RT-SC quench → cryogenic boil-off cascade | medium | low | LHe level interlock (firmware EXTI13, 10 ms deadline) | F-AM-1 quench-test must demonstrate ≤ 10 ms latch-out |
+| Funding gap on Phase E (~$50M total) | high | high | staged build: tabletop (Phase E1, $0.5M) → cyclotron (Phase E2, $5M) → factory (Phase E3, $50M) | scope reduction documented; v2.0.0 retract if Phase E1 fails to attract funding |
 
 ## §11 DEPENDENCIES
 
-This section covers dependencies for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Upstream:
+- `dancinlab/hexa-cern` — CERN AD beam-injection handshake (RS-485 timing trunk, paraphrased in `firmware/sim/penning_rf.hexa`)
+- `dancinlab/hexa-rtsc` — σ·τ=48 T RT-SC magnet substrate (current capacity ≥ 6 kA at 4.2 K)
+- `n6-architecture/domains/physics/room-temp-sc/` — RT-SC alien_index ≥ 10 prerequisite
+- `n6-architecture/domains/physics/particle-accelerator/` — small-ring σ-φ=10 cm cyclotron upstream
+
+Downstream:
+- `dancinlab/hexa-ufo` — propulsion fuel consumer (Stage-3 dependency on factory-grade p̄ supply)
+- `dancinlab/hexa-fusion` — antiproton-catalyzed micro-fusion ignition (long-tail R&D)
+- `pet_cyclotron/pet-cyclotron.md` — path-c ¹⁸F β⁺ recycle line, σ²·10⁶ H̄/s contribution
+
+Internal:
+- `tabletop/tabletop-antimatter.md` — independent domain split (HEXA-TABLETOP §9.7 cost decomposition)
+- `firmware/sim/penning_rf.hexa` — Phase C state-machine sim (11/11 PASS)
+- `firmware/hdl/penning_rf.v` + `firmware/hdl/penning_rf.xdc` — Phase D HDL+constraints
 
 ## §12 TIMELINE
 
-This section covers timeline for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+| Phase | Window | Milestone | Status |
+|:------|:-------|:----------|:------:|
+| Phase A — paper design | 2026-Q2 | `factory/doc/benchtop_v0_design.md` (180 lines, BOM categories + topology) | ✅ done |
+| Phase B — sim parity | 2026-Q2 | `verify/numerics_factory_*.hexa` × 3 (closed-form / parity / solver) | ✅ done |
+| Phase C — sim firmware | 2026-Q2 | `firmware/sim/penning_rf.hexa` (11/11 PASS) | ✅ done |
+| Phase D — paper HDL/MCU/schematic | 2026-Q2 | `firmware/{hdl,mcu,doc}/...` + `firmware_phase_d_lint.hexa` | ✅ done |
+| Phase E1 — KiCad + PCB v0 (tabletop precursor) | 2026-Q3 | KiCad schematic + PCB Gerbers; ~$30 K fab | ⏳ funding |
+| Phase E2 — bring-up + first p̄ capture | 2026-Q4 | physical board + 4.2 K cryostat + AD beam slot | ⏳ funding |
+| Phase E3 — factory-scale construction | 2027-Q3+ | 200 m³ cryostat + σ²=144 trap array + AD trunk | ⏳ funding |
+| Phase E4 — 1e12 p̄/hr operation | 2028+ | sustained operation + sigma·tau = 48 month storage | ⏳ funding + facility |
 
 ## §13 TOOLS
 
-This section covers tools for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Code-layer:
+- `hexa` runtime (interpreter + 5-invariant lint) — current
+- `verify/all.hexa` — 38-step orchestrator
+- `cli/hexa-antimatter.hexa` — verb router (`status`, `verify`, `compute`, `selftest`, `factory`)
+
+Phase D paper-HDL:
+- Vivado 2024.1+ (Design Edition, no license required for XCZU9EG WebPACK target)
+- `xczu9eg-ffvc900-1` device family
+- `firmware/hdl/penning_rf.{v,xdc}` + `build.tcl`
+- `cargo` + `rustc nightly` (host-side compile of `firmware/mcu/tabletop.rs`)
+
+Phase E hardware:
+- KiCad 8+ (free) — schematic + PCB layout
+- HDI manufacturer (Sanmina / TTM Technologies / Würth Elektronik) — 14-layer impedance-controlled
+- Probe-rs + ST-LINK V3 / Xilinx Vivado JTAG / Vivado Lab Edition (free) — flash + bring-up
+- Cryogenic test stand: Cryomech PT-415 pulse-tube (4.2 K, $80 K) or LHe transfer rig
+- Watt-balance reference (post-Phase E2): NIST tri-axis 100 nN floor
+
+Documentation:
+- pandoc + xelatex (PDF rebuild via `build/Makefile`)
+- markdown-lint (cross-doc audit)
 
 ## §14 TEAM
 
-This section covers team for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Code/spec layer (current):
+- 1 substrate maintainer (HEXA family, repo curation + spec drift management)
+- Auto-pilot: `verify/firmware_phase_d_lint.hexa` + cross-doc audit on every commit
+
+Phase E build layer (recommended hires post-funding):
+- 1× FPGA engineer (Vivado, JESD204C, sub-ns timing)
+- 1× hardware engineer (HDI PCB, RF/analog co-design)
+- 1× cryogenic engineer (4.2 K Penning trap, LHe handling)
+- 1× embedded firmware engineer (Rust no_std, real-time control)
+- 1× safety officer (radiation + cryo + 48 T magnet interlock)
+- 1× CERN AD liaison (beam slot allocation, handshake protocol)
+
+Advisory:
+- ALPHA / AEgIS collaboration peer-review (anti-H synthesis std, ALPHA 2011 Nature 468)
 
 ## §15 REFERENCES
 
-This section covers references for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Primary:
+- ALPHA Collaboration. *Trapped antihydrogen.* Nature 468, 673–676 (2010).
+- ALPHA Collaboration. *Confinement of antihydrogen for 1,000 seconds.* Nature Physics 7, 558–564 (2011).
+- AEgIS Collaboration. *Pulsed production of antihydrogen.* Communications Physics 4, 19 (2021).
+- ATRAP Collaboration. *Centrifugal Separation of Antiprotons and Electrons.* Phys. Rev. Lett. 114, 173001 (2015).
+
+Substrate / SSOT:
+- `n6-architecture/domains/physics/antimatter-factory/antimatter-factory.md` — provenance c0f1f570
+- `n6-architecture/domains/physics/tabletop-antimatter/tabletop-antimatter.md` — split-domain reference
+- `n6-architecture/domains/physics/pet-cyclotron/pet-cyclotron.md` — path-c 18F supply
+
+n=6 lattice (algebraic):
+- `verify/n6_arithmetic.hexa` — σ·φ = n·τ = J₂ = 24 first-principles proof
+- `J₂ = 24` — octahedral O ⊂ icosahedral I subgroup; cf. Sloane OEIS A047229 (Mathieu)
+- `σ(6) = 12` — divisor sum (perfect number anchor)
+
+Phase D paper:
+- Xilinx UG949 (UltraScale+ MPSoC PCB design guide)
+- Xilinx UG903 (Vivado constraints)
+- Analog Devices AD9162 + AD9208 + AD9528 datasheets (DAC + ADC + clock)
+- Linear Tech LTC2387, LTC2641 datasheets (24-bit ADC, 16-bit DAC)
+- ST RM0433 (STM32H743 reference manual)
+
+External:
+- atlas.n6 HEXA-FACTORY-01 ~ HEXA-FACTORY-12 (registration ledger)
+- CERN AD timing trunk spec (RS-485, beam-arrival latency)
 
 

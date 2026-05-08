@@ -178,21 +178,109 @@ HEXA-PET-06  anti-H synthesis rate   = sigma^2*10^6 H-bar/s   = 1.44x10^8 /s
 
 ## §11 DEPENDENCIES
 
-This section covers dependencies for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Upstream:
+- `factory/antimatter-factory.md §9.2 (c)` — sole internal cite, defines path-c branch
+- `tabletop/tabletop-antimatter.md` — sigma³ vs sigma⁶ cost decomposition (this domain provides the σ³ half)
+- `dancinlab/hexa-rtsc` — σ·τ=48 T RT-SC magnet shared with tabletop (Penning trap)
+- `n6-architecture/domains/physics/particle-accelerator/` — small-ring σ-φ=10 cm cyclotron physics
+- Hospital PET infrastructure (Varian/IBA/GE PETtrace) — external; ¹⁸F production via ¹⁸O(p,n)¹⁸F
+
+Downstream:
+- `tabletop/tabletop-antimatter.md` — receives 9.6×10¹⁰ e⁺/s/mg β⁺ supply through path-c
+- `dancinlab/hexa-bio` — ¹⁸F-FDG diagnostic line (medical use, parallel)
+- `firmware/sim/cyclotron_trigger.hexa` — Phase C state-machine sim (13/13 PASS)
+- `firmware/mcu/pet_cyclotron.rs` — Phase D Rust skeleton (STM32H743VIT6 controller)
+
+Internal numerical layer:
+- `verify/calc_pet_cyclotron.hexa` — T1 algebraic derivation
+- `verify/numerics_pet_cyclotron.hexa` + `verify/numerics_pet_cyclotron_parity.hexa` + `verify/numerics_pet_cyclotron_solver.hexa` — T2 numerical (3 stack)
+- `verify/numerics_pet_realistic.hexa` — Phase B numerics (realistic loss model)
+- `verify/empirical_pet_inspire.hexa` — T3 empirical paper-feed (INSPIRE-HEP literature scan)
+- `firmware/doc/{board,schematic}_v0_pet_cyclotron.md` — Phase D paper-spec surface
 
 ## §12 TIMELINE
 
-This section covers timeline for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+| Phase | Window | Milestone | Status |
+|:------|:-------|:----------|:------:|
+| Phase A — paper design | 2026-Q2 | `pet_cyclotron/doc/benchtop_v0_design.md` (127 lines) | ✅ done |
+| Phase B — sim parity | 2026-Q2 | `verify/numerics_pet_cyclotron_*.hexa` + `numerics_pet_realistic.hexa` (4 scripts) | ✅ done |
+| Phase C — sim firmware | 2026-Q2 | `firmware/sim/cyclotron_trigger.hexa` (13/13 PASS, 7-state machine) | ✅ done |
+| Phase D — paper schematic + MCU | 2026-Q2 | `firmware/doc/{board,schematic}_v0_pet_cyclotron.md` + `firmware/mcu/pet_cyclotron.rs` | ✅ done |
+| Phase E1 — KiCad + PCB v0 | 2026-Q3 | KiCad schematic + 6-layer PCB; ~$3-5 K fab | ⏳ funding |
+| Phase E2 — bench bring-up | 2026-Q4 | board flash + STM32H743 + LTC2641 DAC sanity | ⏳ funding |
+| Phase E3 — hospital pilot | 2027-Q1 | partner with one PET-capable hospital, hijack residual ¹⁸F | ⏳ funding + ethics review |
+| Phase E4 — σ·τ=48 mg/season production | 2028+ | full season cycle + 9.6×10¹⁰ e⁺/s/mg supply demonstrated | ⏳ funding |
+
+This is the **lowest-cost** of the 3 verbs (PET infrastructure already exists in hospitals; this domain only adds the recycle loop, not the cyclotron itself).
 
 ## §13 TOOLS
 
-This section covers tools for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Code-layer (current):
+- `hexa` runtime + `cargo` (host-side Rust unit tests for `firmware/mcu/pet_cyclotron.rs`)
+- `verify/all.hexa` — 38-step orchestrator
+- `cli/hexa-antimatter.hexa pet_cyclotron` — verb dispatch
+
+Phase D paper:
+- STM32H743VIT6 (no FPGA on this board — MCU-only); `cyclotron_trigger.v` is a placeholder
+- `firmware/mcu/pet_cyclotron.rs` — `no_std` Rust skeleton (state machine + DAC ramp + safety interlock)
+- `cargo build --target thumbv7em-none-eabihf --release --bin pet_cyclotron` (compiles, not flashable)
+
+Phase E hardware:
+- KiCad 8+ — 6-layer impedance-controlled PCB (cheaper stack than tabletop board)
+- JLCPCB / OSH Park — fab + assembly ($3-5 K typical run)
+- ST-LINK V3 + probe-rs + Vivado Lab Edition (no FPGA, just for SVF/JTAG cross-utilities)
+- Hospital PET cyclotron access (one of: Varian / IBA / GE PETtrace) — partner agreement
+- ¹⁸F separation chemistry kit (off-board, hospital pharmacy supply)
+- NaI(Tl) 3"×3" detector + LEMO 00B preamp ($1.5 K) — γ counter
+
+Documentation:
+- pandoc + xelatex
+- markdown-lint
 
 ## §14 TEAM
 
-This section covers team for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Code/spec layer (current):
+- 1× substrate maintainer (HEXA family)
+- Auto-pilot: Phase D lint + cross-doc audit on every commit
+
+Phase E build layer (recommended hires post-funding):
+- 1× embedded firmware engineer (Rust no_std + STM32H7 + RTIC)
+- 1× hardware engineer (6-layer PCB + ADC/DAC + opto-isolated safety)
+- 1× radiation safety officer (¹⁸F handling, NaI(Tl) calibration)
+- 1× hospital partner liaison (HIPAA / IRB / cyclotron access)
+
+Advisory:
+- One PET-capable hospital research collaborator (radiology + medical physics)
+- ALPHA / AEgIS β⁺ supply spec peer review
 
 ## §15 REFERENCES
 
-This section covers references for the domain. Initial scaffold content — expand with domain-specific data, references, and verification in subsequent revisions.
+Primary literature:
+- ALPHA Collaboration. *Trapped antihydrogen.* Nature 468, 673–676 (2010).
+- ALPHA Collaboration. *Confinement of antihydrogen for 1,000 seconds.* Nature Physics 7, 558–564 (2011).
+- AEgIS Collaboration. *Pulsed production of antihydrogen.* Communications Physics 4, 19 (2021).
+- Czarnecki, A., Krause, B., & Marciano, W. J. *Recoil corrections to the muon-decay spectrum.* Phys. Rev. Lett. 76, 3267 (1996). [β⁺ kinematics]
+- IAEA TRS-471 (2009) — ¹⁸F-FDG production and quality control reference
+
+Substrate / SSOT:
+- `n6-architecture/domains/physics/pet-cyclotron/` — provenance c0f1f570:domains/physics/pet-cyclotron
+- `factory/antimatter-factory.md §9.2 (c)` — path-c parent (sole external cite per §10 reduction notice)
+- `tabletop/tabletop-antimatter.md` — sigma³ vs sigma⁶ cost decomposition
+
+n=6 lattice (algebraic):
+- `verify/n6_arithmetic.hexa` — σ·φ = n·τ = J₂ = 24 first-principles proof
+- atlas.n6 HEXA-PET-01 ~ HEXA-PET-06 (append-only registration)
+
+Phase D paper:
+- ST RM0433 (STM32H743 reference manual)
+- Linear Tech LTC2641-16 + LTC2378-16 datasheets
+- Analog Devices ADuM4160 USB isolator datasheet
+- TI TPS65987DDH PMIC datasheet
+- Cortex-M7 ARMv7-M reference
+
+External anchors:
+- Varian / IBA / GE PETtrace cyclotron specs (off-board hospital infrastructure)
+- ¹⁸F half-life: 109.77 min (NIST)
+- β⁺ branching ratio for ¹⁸F: 96.7% (NUDAT 2.7)
+- Hospital PET workflow (Sokoloff et al.) — clinical baseline
 
