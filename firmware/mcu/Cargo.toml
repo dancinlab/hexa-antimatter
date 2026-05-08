@@ -1,0 +1,30 @@
+# firmware/mcu/Cargo.toml — Phase D scaffold (workspace placeholder).
+#
+# Real Phase D will split into per-board crates with vendor-specific
+# HALs.  This top-level Cargo.toml is a placeholder so each *.rs file
+# can `cargo check --tests` against host-side stdlib stubs (no-std
+# bring-up requires per-board target/runtime config).
+#
+# Phase D will replace this with:
+#   - workspace declaration listing per-board crates
+#   - resolver = "2"
+#   - vendor HAL deps (stm32h7xx-hal, xilinx-zynqmp-hal, etc.)
+#   - cortex-m-rt + memory.x linker scripts per board
+
+[package]
+name        = "hexa-antimatter-firmware-mcu"
+version     = "0.1.0"
+edition     = "2021"
+publish     = false
+description = "HEXA antimatter MCU firmware skeletons (Phase D, paper)."
+
+[lib]
+path = "lib.rs"
+
+[features]
+default = []
+
+# Each module compiles as a host-side library when run under `cargo test`
+# (state-machine + arithmetic checks only).  Cross-compile to
+# thumbv7em-none-eabihf / aarch64-unknown-none-softfloat happens in
+# Phase D when board exists + vendor HAL is wired in.

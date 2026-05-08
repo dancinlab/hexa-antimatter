@@ -9,6 +9,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (2026-05-08 — Phase C.5 + Phase D scaffold)
+
+§A.6.1 Phase C.5 (board spec) + Phase D HDL/MCU skeletons.  Bridges the
+abstract Phase A BOM and the future real-hardware build (post-funding).
+No physical boards exist; all files are paper specifications +
+compilable skeletons.
+
+**Phase C.5 — board specs** (`firmware/doc/board_v0_*.md`):
+- `board_v0_pet_cyclotron.md` (HEXA-PET-FW-01) — STM32H743VIT6.  100-pin
+  pinout (53 nets specified) · 24-line BOM with Digi-Key/Mouser SKUs +
+  lead times (~$220/unit at 5-piece run) · 7-rail power budget (~4 W) ·
+  13-step bring-up checklist.
+- `board_v0_tabletop_penning.md` (HEXA-TABLETOP-FW-01) — XCZU9EG MPSoC.
+  Banks 224–230 LVDS pinout · 23-line BOM (~$5,400/unit, 18 wk worst-case)
+  including Wenzel ULN-OCXO + AD9162/AD9208 · 11-rail power (~105 W) ·
+  14-step bring-up.
+- `board_v0_atomic_clock.md` (HEXA-FACTORY-FW-01 CPT bench) — XCKU040 +
+  STM32H723 + TDC7201 + LTC2387-24 + ADF4356.  19-line BOM (~$2,400/unit) ·
+  ~50 W · 13-step bring-up.
+- `board_v0_thrust_acquisition.md` (HEXA-PROPULSION-FW-01) — XCVU13P
+  Virtex UltraScale+.  21-line BOM (~$28k/unit) · 16-channel JESD204C
+  capture · PCIe Gen4 ×16 to host · ~310 W steady · 15-step bring-up.
+
+**Phase D — HDL skeletons** (`firmware/hdl/`):
+- `penning_rf.v` — XCZU9EG top with DDS phase accumulator (32-bit,
+  pre-computed phase-inc for 731.4 MHz from 156.25 MHz ref) + 7-state FSM.
+- `atomic_clock.v` — XCKU040 top with TDC7201 SPI handler + ν_c
+  cumulative counter + photodiode pulse counter.
+- `thrust_acq.v` — XCVU13P top with BGO ∧ ToF coincidence (12-cycle
+  shift register, 48 ns window @ 250 MHz) + 16-channel LVDS trigger
+  fan-out + JESD204C ADC capture stub.
+- `cyclotron_trigger.v` — placeholder (board is MCU-only).
+- `build.tcl` — Vivado batch entry (3 boards).
+
+**Phase D — MCU skeletons** (`firmware/mcu/`):
+- `pet_cyclotron.rs` — STM32H7 thumbv7em-none-eabihf target.  7-state
+  enum + next_state() + DAC ramp + cargo-test traversal/clamp/n6-anchor.
+- `tabletop.rs` — XCZU9EG PS aarch64-unknown-none-softfloat.  7-state
+  Penning FSM + AD handshake guard + DDS phase-inc constant 0x4ADD_8E83.
+- `cpt_bench.rs` — STM32H723 companion. PllState struct (PI loop) +
+  Cs stability spec + master-identity holds asserts.
+- `thrust_bench.rs` — STM32H743 companion. Per-event impulse arithmetic +
+  thrust(N_pbar, τ_burn) helper + coincidence gate + Watt-floor SNR test.
+- `Cargo.toml` + `lib.rs` — workspace placeholder w/ `host_test` feature.
+- `firmware/hdl/README.md` + `firmware/mcu/README.md` — Phase D scope +
+  build commands per target.
+
+`firmware/doc/README.md` — overhauled to enumerate Phase C/C.5/D file
+layout + per-pillar cross-link table.
+
+§A.6.1 status:
+  · Phase A (abstract BOM):     ✓
+  · Phase B (Stage-1 sim):      ✓ (verify/numerics_*_*.hexa T2×4 each)
+  · Phase C (golden sim):       ✓ (firmware/sim/*.hexa)
+  · Phase C.5 (board spec):     ✓ (firmware/doc/board_v0_*.md)
+  · Phase D (HDL/MCU skel):     ✓ (firmware/{hdl,mcu}/) — compiles, not flashable
+  · Phase D (real boards):      ✗ (awaits §A.6 step 2 funding)
+  · §A.6 step 4 (Stage-2/3):    ✗ (years out)
+
+Files **only** add to firmware/ tree; verify/all 37/37 unaffected.
+
 ### Added (2026-05-08 — RSC iter 33–35) Phase C — sim-firmware ×4
 
 §A.6.1 Phase C per .roadmap.  New `firmware/sim/` directory with
