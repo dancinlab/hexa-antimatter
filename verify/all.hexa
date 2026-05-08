@@ -39,6 +39,7 @@
 //   firmware/sim/penning_rf.hexa → __HEXA_ANTIMATTER_FIRMWARE_PENNING_RF__
 //   firmware/sim/atomic_clock_counter.hexa → __HEXA_ANTIMATTER_FIRMWARE_ATOMIC_CLOCK__
 //   firmware/sim/thrust_acquisition.hexa → __HEXA_ANTIMATTER_FIRMWARE_THRUST_ACQ__
+//   verify/firmware_phase_d_lint.hexa → __HEXA_ANTIMATTER_FIRMWARE_PHASE_D__
 //   verify/saturation_check.hexa  →  __HEXA_ANTIMATTER_RSC_SATURATED__ STOP
 //   selftest/selftest.hexa        →  __HEXA_ANTIMATTER_SELFTEST__
 //
@@ -92,7 +93,7 @@ fn main() {
     let r = root()
     let q = quiet_mode(args())
     println("========================================================================")
-    println("  hexa-antimatter — verify/all (37-step orchestrator)")
+    println("  hexa-antimatter — verify/all (38-step orchestrator)")
     println("  root: " + r)
     println("========================================================================")
 
@@ -413,6 +414,15 @@ fn main() {
         summary = summary + ["  [PASS] firmware/sim/thrust_acquisition  (Phase C sim, F-AM-4)"]
     } else {
         summary = summary + ["  [FAIL] firmware/sim/thrust_acquisition"]
+    }
+
+    tot = tot + 1
+    if run_step("firmware_phase_d_lint", r + "/verify/firmware_phase_d_lint.hexa",
+                "__HEXA_ANTIMATTER_FIRMWARE_PHASE_D__ PASS", q) {
+        pass_count = pass_count + 1
+        summary = summary + ["  [PASS] verify/firmware_phase_d_lint  (Phase D inventory + invariants)"]
+    } else {
+        summary = summary + ["  [FAIL] verify/firmware_phase_d_lint"]
     }
 
     tot = tot + 1

@@ -225,6 +225,7 @@ fn cmd_verify(a: [str]) {
     if target == "firmware-penning"               { path = HA + "/firmware/sim/penning_rf.hexa" }
     if target == "firmware-atomic-clock"          { path = HA + "/firmware/sim/atomic_clock_counter.hexa" }
     if target == "firmware-thrust"                { path = HA + "/firmware/sim/thrust_acquisition.hexa" }
+    if target == "firmware-phase-d"               { path = HA + "/verify/firmware_phase_d_lint.hexa" }
     let out = exec("hexa run \"" + path + "\" 2>&1")
     println(out.trim())
     if !out.contains(" PASS") {
