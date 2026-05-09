@@ -1,4 +1,4 @@
-<!-- @canonical: n6-architecture@0570a835:domains/physics/tabletop-antimatter/tabletop-antimatter.md -->
+<!-- @canonical: canon@d1640e62:domains/physics/tabletop-antimatter/tabletop-antimatter.md -->
 <!-- @extracted: 2026-05-06 -->
 <!-- @md5_at_extraction: 16569e0cb571f7bac9c557439b6e6237 -->
 <!-- @own(sections=[WHY, COMPARE, REQUIRES, STRUCT, FLOW, EVOLVE, VERIFY], strict=false, order=sequential, prefix="§") -->
@@ -484,7 +484,7 @@ Primary literature:
 - ELENA: *The Extra Low Energy Antiproton ring at CERN.* Hyperfine Interactions 233, 119 (2015).
 
 Substrate / SSOT:
-- `n6-architecture/domains/physics/tabletop-antimatter/` — upstream provenance c0f1f570
+- `canon/domains/physics/tabletop-antimatter/` — upstream provenance c0f1f570
 - `factory/antimatter-factory.md §9` — parent factory split notice
 - `pet_cyclotron/pet-cyclotron.md §2` — path-c PET recycle citation
 

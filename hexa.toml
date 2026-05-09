@@ -2,7 +2,7 @@
 #
 # Spec: shared/hexa-lang/hexa-toml-spec.json (version 1.0.0)
 # Distribution target: hx install hexa-antimatter
-# Provenance: extracted from n6-architecture/domains/physics/ on 2026-05-06
+# Provenance: extracted from canon/domains/physics/ on 2026-05-06
 #             (n6-arch SHA c0f1f570 — sister: hexa-bio cycle 25)
 
 [package]
@@ -76,8 +76,8 @@ verbs_stub = 0
 verdict = "COMPUTATIONAL_WIRED"
 n6_algebra_proof = "verify/n6_arithmetic.hexa — 12/12 PASS (σ·φ = n·τ = J₂ = 24)"
 verifier_sweep = "verify/all.hexa — 4/4 PASS (n6 + cross-doc + release-ladder + selftest)"
-extracted_from = "n6-architecture/domains/physics/ @ 2026-05-06 (SHA c0f1f570)"
-upstream_marker = "n6-architecture/domains/physics/{antimatter-factory,tabletop-antimatter,pet-cyclotron}/"
+extracted_from = "canon/domains/physics/ @ 2026-05-06 (SHA c0f1f570)"
+upstream_marker = "canon/domains/physics/{antimatter-factory,tabletop-antimatter,pet-cyclotron}/"
 
 # ── Scope honesty (raw#10 C3) ─────────────────────────────
 [scope]

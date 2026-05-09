@@ -1,7 +1,7 @@
 # hexa-antimatter v1.1.0 — RSC FINAL + Phase A→D paper-spec surface
 
 **Release date**: 2026-05-08
-**Provenance**: `n6-architecture` SHA `c0f1f570` (extracted at v1.0.0); RSC closure cycle 2026-05-07/08
+**Provenance**: `canon` SHA `c0f1f570` (extracted at v1.0.0); RSC closure cycle 2026-05-07/08
 **License**: MIT
 **Tag**: `v1.1.0`
 
@@ -120,7 +120,7 @@ Per recipe §7.2: **sat-1 + sat-2 + sat-3 all reached** → RSC loop terminated 
 - HEXA family sister substrates: `dancinlab/hexa-bio`, `dancinlab/hexa-rtsc`, `dancinlab/hexa-fusion`
 - Recipe: `~/core/bedrock/docs/runnable_surface_recipe.md`
 - Sibling RSC closure (peer): `dancinlab/hexa-fusion v1.1.0` (parallel saturation 2026-05-08)
-- Upstream `.md` SSOTs in `n6-architecture/domains/physics/`
+- Upstream `.md` SSOTs in `canon/domains/physics/`
 
 ---
 

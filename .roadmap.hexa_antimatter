@@ -44,7 +44,7 @@ DoD:
 
 ## §A.3 Cycle history
 
-- **Cycle 0 (2026-05-06)** — v1.0.0 initial extraction from n6-architecture@c0f1f570.  Commit `f91c153`.  11 files / 2094+ insertions.
+- **Cycle 0 (2026-05-06)** — v1.0.0 initial extraction from canon@c0f1f570.  Commit `f91c153`.  11 files / 2094+ insertions.
 
 - **Cycle 1 (2026-05-08, RSC iter 1–12)** — RSC bootstrap.  4 calc_*.hexa T1 + 9 numerics_*.hexa T2 (basic + parity + solver per pillar) + 3 cross-cutters.  All 3 pillar falsifiers (F-AM-1/2/3) reach T1 + T2 ×3 sat-1 (recipe §7.2).  Commits 7c2dd6b → 65f68c5.
 

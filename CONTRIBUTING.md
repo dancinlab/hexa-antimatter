@@ -97,4 +97,4 @@ If any of these report FAIL, **do not open the PR**.  Fix it first.
 
 All contributions are under MIT license.  By submitting a PR you agree your contribution is your own work or correctly attributed under MIT-compatible license.  No CLA — just MIT.
 
-If you copy text from `n6-architecture/` (provenance commit `c0f1f570`), preserve the `<!-- @canonical: ... -->` header so the lineage is traceable.
+If you copy text from `canon/` (provenance commit `c0f1f570`), preserve the `<!-- @canonical: ... -->` header so the lineage is traceable.

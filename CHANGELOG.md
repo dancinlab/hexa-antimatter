@@ -601,11 +601,11 @@ Toward full sat-1: numerics_pet_cyclotron_solver lifts F-AM-1 → T2×3.
 ## [1.0.0] — 2026-05-06
 
 ### Added
-- Initial extraction from `n6-architecture/domains/physics/` (SHA `c0f1f570`).
+- Initial extraction from `canon/domains/physics/` (SHA `c0f1f570`).
 - 3-verb antimatter substrate scaffold:
-  - `factory/`        ← `n6-architecture/domains/physics/antimatter-factory/`
-  - `tabletop/`       ← `n6-architecture/domains/physics/tabletop-antimatter/`
-  - `pet_cyclotron/`  ← `n6-architecture/domains/physics/pet-cyclotron/`
+  - `factory/`        ← `canon/domains/physics/antimatter-factory/`
+  - `tabletop/`       ← `canon/domains/physics/tabletop-antimatter/`
+  - `pet_cyclotron/`  ← `canon/domains/physics/pet-cyclotron/`
 - Placeholder CLI router `cli/hexa-antimatter.hexa` (3 verb sentinels + status + selftest).
 - `hexa.toml` package manifest (license: MIT, n=6 Dirac-mirror lattice scope).
 - `install.hexa` hx hook (no python deps; selftest sentinel check, warn-only).

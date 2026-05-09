@@ -1,4 +1,4 @@
-<!-- @canonical: n6-architecture@0570a835:domains/physics/pet-cyclotron/pet-cyclotron.md -->
+<!-- @canonical: canon@d1640e62:domains/physics/pet-cyclotron/pet-cyclotron.md -->
 <!-- @extracted: 2026-05-06 -->
 <!-- @md5_at_extraction: 081adb50f910b3c5fe978b1472fc9abf -->
 <!-- gold-standard: shared/harness/sample.md -->
@@ -182,7 +182,7 @@ Upstream:
 - `factory/antimatter-factory.md §9.2 (c)` — sole internal cite, defines path-c branch
 - `tabletop/tabletop-antimatter.md` — sigma³ vs sigma⁶ cost decomposition (this domain provides the σ³ half)
 - `dancinlab/hexa-rtsc` — σ·τ=48 T RT-SC magnet shared with tabletop (Penning trap)
-- `n6-architecture/domains/physics/particle-accelerator/` — small-ring σ-φ=10 cm cyclotron physics
+- `canon/domains/physics/particle-accelerator/` — small-ring σ-φ=10 cm cyclotron physics
 - Hospital PET infrastructure (Varian/IBA/GE PETtrace) — external; ¹⁸F production via ¹⁸O(p,n)¹⁸F
 
 Downstream:
@@ -263,7 +263,7 @@ Primary literature:
 - IAEA TRS-471 (2009) — ¹⁸F-FDG production and quality control reference
 
 Substrate / SSOT:
-- `n6-architecture/domains/physics/pet-cyclotron/` — provenance c0f1f570:domains/physics/pet-cyclotron
+- `canon/domains/physics/pet-cyclotron/` — provenance c0f1f570:domains/physics/pet-cyclotron
 - `factory/antimatter-factory.md §9.2 (c)` — path-c parent (sole external cite per §10 reduction notice)
 - `tabletop/tabletop-antimatter.md` — sigma³ vs sigma⁶ cost decomposition
 

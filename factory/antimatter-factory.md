@@ -1,4 +1,4 @@
-<!-- @canonical: n6-architecture@0570a835:domains/physics/antimatter-factory/antimatter-factory.md -->
+<!-- @canonical: canon@d1640e62:domains/physics/antimatter-factory/antimatter-factory.md -->
 <!-- @extracted: 2026-05-06 -->
 <!-- @md5_at_extraction: e6c5d6b70fc09e15e715172df56a2281 -->
 <!-- gold-standard: shared/harness/sample.md -->
@@ -861,8 +861,8 @@ Details of HEXA-TABLETOP Theorem, TP-18~TP-25, 3-path (laser-Schwinger * compact
 Upstream:
 - `dancinlab/hexa-cern` — CERN AD beam-injection handshake (RS-485 timing trunk, paraphrased in `firmware/sim/penning_rf.hexa`)
 - `dancinlab/hexa-rtsc` — σ·τ=48 T RT-SC magnet substrate (current capacity ≥ 6 kA at 4.2 K)
-- `n6-architecture/domains/physics/room-temp-sc/` — RT-SC alien_index ≥ 10 prerequisite
-- `n6-architecture/domains/physics/particle-accelerator/` — small-ring σ-φ=10 cm cyclotron upstream
+- `canon/domains/physics/room-temp-sc/` — RT-SC alien_index ≥ 10 prerequisite
+- `canon/domains/physics/particle-accelerator/` — small-ring σ-φ=10 cm cyclotron upstream
 
 Downstream:
 - `dancinlab/hexa-ufo` — propulsion fuel consumer (Stage-3 dependency on factory-grade p̄ supply)
@@ -937,9 +937,9 @@ Primary:
 - ATRAP Collaboration. *Centrifugal Separation of Antiprotons and Electrons.* Phys. Rev. Lett. 114, 173001 (2015).
 
 Substrate / SSOT:
-- `n6-architecture/domains/physics/antimatter-factory/antimatter-factory.md` — provenance c0f1f570
-- `n6-architecture/domains/physics/tabletop-antimatter/tabletop-antimatter.md` — split-domain reference
-- `n6-architecture/domains/physics/pet-cyclotron/pet-cyclotron.md` — path-c 18F supply
+- `canon/domains/physics/antimatter-factory/antimatter-factory.md` — provenance c0f1f570
+- `canon/domains/physics/tabletop-antimatter/tabletop-antimatter.md` — split-domain reference
+- `canon/domains/physics/pet-cyclotron/pet-cyclotron.md` — path-c 18F supply
 
 n=6 lattice (algebraic):
 - `verify/n6_arithmetic.hexa` — σ·φ = n·τ = J₂ = 24 first-principles proof

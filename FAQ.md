@@ -103,7 +103,7 @@ RT-SC magnet substrate — provides σ·τ=48 T magnet for both `factory` and `t
 Yes — under MIT, with attribution.  Cite as:
 ```
 hexa-antimatter v1.1.0 (2026-05-08), https://github.com/dancinlab/hexa-antimatter
-provenance: n6-architecture@c0f1f570
+provenance: canon@c0f1f570
 ```
 
 ### Q18. Can I fork and apply the recipe to another domain?

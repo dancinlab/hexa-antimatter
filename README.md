@@ -33,9 +33,9 @@ The lattice serves as an organizing scaffold for the three verbs; its empirical 
 
 | Verb            | Status              | Source                              | n=6 lattice projection                          | Headline candidate                  |
 |-----------------|---------------------|-------------------------------------|--------------------------------------------------|--------------------------------------|
-| `factory`       | WIRED v1.0.0        | n6-architecture/antimatter-factory  | σ·τ=48 T, σ²=144 SM, n/φ=3 vote, σ-φ=10× gain   | 1e12 p-bar/hr, 24-month storage     |
-| `tabletop`      | WIRED v1.0.0        | n6-architecture/tabletop-antimatter | σ³=1728× prod, σ⁶ cost reduction, σ·τ²=192 mo  | 0.29 m³, 1.7e12 p-bar/s, $2.1e4/mg  |
-| `pet_cyclotron` | WIRED v1.0.0        | n6-architecture/pet-cyclotron       | R=σ-φ=10 cm, B=σ·τ=48 T, σ·τ=48 mg/season ¹⁸F   | 48 mg ¹⁸F/season, 2e9 e⁺/s/mg       |
+| `factory`       | WIRED v1.0.0        | canon/antimatter-factory  | σ·τ=48 T, σ²=144 SM, n/φ=3 vote, σ-φ=10× gain   | 1e12 p-bar/hr, 24-month storage     |
+| `tabletop`      | WIRED v1.0.0        | canon/tabletop-antimatter | σ³=1728× prod, σ⁶ cost reduction, σ·τ²=192 mo  | 0.29 m³, 1.7e12 p-bar/s, $2.1e4/mg  |
+| `pet_cyclotron` | WIRED v1.0.0        | canon/pet-cyclotron       | R=σ-φ=10 cm, B=σ·τ=48 T, σ·τ=48 mg/season ¹⁸F   | 48 mg ¹⁸F/season, 2e9 e⁺/s/mg       |
 
 The three verbs form a **triangle** within the HEXA family substrate registry:
 
@@ -229,10 +229,10 @@ hexa-antimatter pet_cyclotron           # R=σ-φ=10 cm, B=σ·τ=48 T, ¹⁸F s
 - **`dancinlab/hexa-ufo`** — Stage-3 propulsion fuel dependency (UFO substrate sources its antimatter fuel from this repo)
 - Sister substrate: [`dancinlab/hexa-bio`](https://github.com/dancinlab/hexa-bio) (molecular toolkit, HEXA family)
 - Upstream concept SSOTs (declarative):
-  - `n6-architecture/domains/physics/antimatter-factory/antimatter-factory.md`
-  - `n6-architecture/domains/physics/tabletop-antimatter/tabletop-antimatter.md`
-  - `n6-architecture/domains/physics/pet-cyclotron/pet-cyclotron.md`
-- Provenance commit: `n6-architecture` SHA `c0f1f570`
+  - `canon/domains/physics/antimatter-factory/antimatter-factory.md`
+  - `canon/domains/physics/tabletop-antimatter/tabletop-antimatter.md`
+  - `canon/domains/physics/pet-cyclotron/pet-cyclotron.md`
+- Provenance commit: `canon` SHA `c0f1f570`
 
 ---
 

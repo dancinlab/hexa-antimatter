@@ -257,7 +257,7 @@ fn cmd_compute(a: [str]) {
 
 fn cmd_version() {
     println("hexa-antimatter " + VERSION)
-    println("standalone Antimatter Substrate (HEXA family — extracted from n6-architecture 2026-05-06)")
+    println("standalone Antimatter Substrate (HEXA family — extracted from canon 2026-05-06)")
     println("license: MIT")
     println("repo:    https://github.com/dancinlab/hexa-antimatter")
 }
