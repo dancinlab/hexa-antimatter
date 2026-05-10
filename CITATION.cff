@@ -25,3 +25,11 @@ repository-code: "https://github.com/dancinlab/hexa-antimatter"
 url: "https://github.com/dancinlab/hexa-antimatter"
 version: "0.1.0"
 date-released: "2026-05-08"
+doi: "10.5281/zenodo.20077465"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.20077465"
+    description: "Concept DOI (always resolves to the latest version)"
+  - type: doi
+    value: "10.5281/zenodo.20077466"
+    description: "Version-specific DOI for v0.1.0"

@@ -2,6 +2,7 @@
 
 > 반물질 substrate — antimatter-factory + tabletop + PET cyclotron. n=6 Dirac-mirror lattice.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20077465.svg)](https://doi.org/10.5281/zenodo.20077465)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.1.0--RSC--FINAL-informational.svg)](CHANGELOG.md)
 [![Verbs: 3/3 wired](https://img.shields.io/badge/verbs-3%2F3_wired_(computational)-brightgreen.svg)](#verbs)
