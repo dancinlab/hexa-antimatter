@@ -179,51 +179,31 @@ Re-run after any SSOT edit. Verifiers exit non-zero on drift. RSC saturation_che
 
 ## § Install
 
-### Via `hx` from local path (verified 2026-05-07)
+### Via `hx` (recommended)
 
 ```bash
-hx install /path/to/hexa-antimatter   # auto-detects [package].entry from hexa.toml
-hexa-antimatter --version             # → 1.0.0
+# Install hexa-lang (ships `hexa` + `hx` package manager)
+curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh | bash
+
+# Install hexa-antimatter
+hx install hexa-antimatter          # global, pulls latest from registry
+hx install hexa-antimatter@1.0.0    # pin specific version
+hexa-antimatter --version
 ```
 
-The build hook (`install.hexa`) runs the 3-verb selftest and reports `selftest PASS — 3/3 sentinels present`. `hx` symlinks the package into `~/.hx/packages/hexa-antimatter` and writes a wrapper shim at `~/.hx/bin/hexa-antimatter`.
+`hx install hexa-antimatter` pulls from <https://github.com/dancinlab/hexa-antimatter> and
+installs the standalone CLI under `$HX_HOME/bin/hexa-antimatter`. The hexa-lang
+package registry resolves any cross-substrate dependencies declared in
+`hexa.toml`.
 
-### Via `hx` from registry (when published)
+### Optional deps
 
-```bash
-hx install hexa-antimatter            # global, pulls latest from registry
-hx install hexa-antimatter@1.0.0      # pin specific version
-hexa-antimatter --version             # → 1.0.0
-```
-
-### Via git clone (raw fallback)
-
-```bash
-git clone https://github.com/dancinlab/hexa-antimatter.git ~/.hexa-antimatter
-export HEXA_ANTIMATTER_ROOT=~/.hexa-antimatter
-export PATH="$HEXA_ANTIMATTER_ROOT/cli:$PATH"
-
-# Run any subcommand:
-hexa run $HEXA_ANTIMATTER_ROOT/cli/hexa-antimatter.hexa selftest
-```
-
-### Quick Start
-
-```bash
-hexa-antimatter status                  # 3/3 wired status table + caveats
-hexa-antimatter selftest                # 3-verb sentinel sweep
-hexa-antimatter verify                  # 4-step orchestrator (n6 + docs + ladder + selftest)
-hexa-antimatter verify n6               # algebraic identity 12/12 PASS
-hexa-antimatter verify docs             # cross-document n=6 invariant audit
-hexa-antimatter verify ladder           # v1.0.0 → v2.0.0 release cadence
-hexa-antimatter compute n6              # derived numbers from n=6 lattice
-hexa-antimatter factory                 # σ·τ=48 T, σ²=144 SM, σ-φ=10× gain
-hexa-antimatter tabletop                # σ³=1728× prod, σ⁶ cost reduction
-hexa-antimatter pet_cyclotron           # R=σ-φ=10 cm, B=σ·τ=48 T, ¹⁸F stock
-```
+`hexa-antimatter` is **pure hexa-lang stdlib** — zero Python deps, zero external.
+All default subcommands run with `hx install hexa-antimatter` alone. Cross-substrate
+extras (e.g. `qmirror` for ANU-QRNG + Aer state-vector simulator) are
+auto-resolved by `hx install` when declared in `hexa.toml`.
 
 ---
-
 ## § Cross-link
 
 - **`dancinlab/hexa-cern`** — accelerator cousin (compact-accelerator substrate)
