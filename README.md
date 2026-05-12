@@ -13,7 +13,7 @@
 
 ---
 
-## § Why (n=6 Dirac-mirror lattice)
+## Why (n=6 Dirac-mirror lattice)
 
 Antimatter is the Dirac-mirror partner of ordinary matter — every fermion has a CPT-conjugate. The n=6 invariant lattice anchors three independent antimatter axes (factory / tabletop / PET-cyclotron) onto a single algebraic substrate:
 
@@ -30,35 +30,7 @@ The lattice serves as an organizing scaffold for the three verbs; its empirical 
 
 ---
 
-## § Verbs (3-verb)
-
-| Verb            | Status              | Source                              | n=6 lattice projection                          | Headline candidate                  |
-|-----------------|---------------------|-------------------------------------|--------------------------------------------------|--------------------------------------|
-| `factory`       | WIRED v1.0.0        | canon/antimatter-factory  | σ·τ=48 T, σ²=144 SM, n/φ=3 vote, σ-φ=10× gain   | 1e12 p-bar/hr, 24-month storage     |
-| `tabletop`      | WIRED v1.0.0        | canon/tabletop-antimatter | σ³=1728× prod, σ⁶ cost reduction, σ·τ²=192 mo  | 0.29 m³, 1.7e12 p-bar/s, $2.1e4/mg  |
-| `pet_cyclotron` | WIRED v1.0.0        | canon/pet-cyclotron       | R=σ-φ=10 cm, B=σ·τ=48 T, σ·τ=48 mg/season ¹⁸F   | 48 mg ¹⁸F/season, 2e9 e⁺/s/mg       |
-
-The three verbs form a **triangle** within the HEXA family substrate registry:
-
-```
-                    ┌─────────────────────┐
-                    │      factory        │
-                    │  (CERN-scale 200 m³)│
-                    │       [WIRED]        │
-                    └──────────┬──────────┘
-                               │
-                ┌──────────────┴──────────────┐
-                │                             │
-       ┌────────▼─────────┐         ┌─────────▼────────┐
-       │     tabletop     │         │   pet_cyclotron  │
-       │ (desktop 0.29 m³)│         │ (¹⁸F β⁺ on-site) │
-       │      [WIRED]     │         │      [WIRED]     │
-       └──────────────────┘         └──────────────────┘
-```
-
----
-
-## § Repository layout
+## Repository layout
 
 ```
 hexa-antimatter/
@@ -108,7 +80,7 @@ hexa-antimatter/
 
 ---
 
-## § Status
+## Status
 
 **v1.1.0 RSC code-layer FINAL.  3-verb substrate.  `RSC_SATURATED__ STOP` + 4/4 falsifier 100% bookkeeping closure.  No working apparatus (raw#10 honest C3).**
 
@@ -120,7 +92,7 @@ hexa-antimatter/
 
 ---
 
-## § Build & verify
+## Build & verify
 
 ```bash
 # unified verifier sweep (38 steps: cross-cutter + T1 + T2 + T3 + meta + sim-firmware + saturation)
@@ -207,7 +179,7 @@ extras (e.g. `qmirror` for ANU-QRNG + Aer state-vector simulator) are
 auto-resolved by `hx install` when declared in `hexa.toml`.
 
 ---
-## § Cross-link
+## Cross-link
 
 - **`dancinlab/hexa-cern`** — accelerator cousin (compact-accelerator substrate)
 - **`dancinlab/hexa-ufo`** — Stage-3 propulsion fuel dependency (UFO substrate sources its antimatter fuel from this repo)
@@ -220,6 +192,6 @@ auto-resolved by `hx install` when declared in `hexa.toml`.
 
 ---
 
-## § License
+## License
 
 MIT. See [LICENSE](LICENSE).
