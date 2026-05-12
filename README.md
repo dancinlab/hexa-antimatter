@@ -177,24 +177,27 @@ Re-run after any SSOT edit. Verifiers exit non-zero on drift. RSC saturation_che
 
 ---
 
-## § Install
-
-### Via `hx` (recommended)
+## Install
 
 ```bash
-# Install hexa-lang (ships `hexa` + `hx` package manager)
-curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh | bash
+# 1. Install hexa-lang (gives you `hexa` + `hx` package manager)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh)"
 
-# Install hexa-antimatter
-hx install hexa-antimatter          # global, pulls latest from registry
-hx install hexa-antimatter@1.0.0    # pin specific version
-hexa-antimatter --version
+# 2. Install hexa-antimatter
+hx install hexa-antimatter
 ```
 
-`hx install hexa-antimatter` pulls from <https://github.com/dancinlab/hexa-antimatter> and
-installs the standalone CLI under `$HX_HOME/bin/hexa-antimatter`. The hexa-lang
-package registry resolves any cross-substrate dependencies declared in
-`hexa.toml`.
+## Run
+
+```bash
+hexa-antimatter factory          # CERN-scale antimatter factory verb [WIRED]
+hexa-antimatter tabletop         # desktop 1.7e12 p-bar/s candidate [WIRED]
+hexa-antimatter pet_cyclotron    # 18F beta+ on-site regeneration [WIRED]
+hexa-antimatter status           # 3/3 wired verb table + verdict + caveats
+hexa-antimatter verify [target]  # run verifier(s); target ∈ all|n6|docs|ladder|...
+hexa-antimatter compute <name>   # show derived numbers; name ∈ n6|factory|tabletop|pet_cyclotron
+hexa-antimatter selftest         # 3-verb sentinel sweep + n=6 algebra check
+```
 
 ### Optional deps
 
