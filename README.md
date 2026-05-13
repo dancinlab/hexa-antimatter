@@ -8,6 +8,7 @@
 [![Verbs: 3/3 wired](https://img.shields.io/badge/verbs-3%2F3_wired_(computational)-brightgreen.svg)](#verbs)
 [![Verify: 38/38 PASS](https://img.shields.io/badge/verify-38%2F38_PASS-brightgreen.svg)](#build--verify)
 [![Closure: 100%](https://img.shields.io/badge/F--AM--1%2F2%2F3%2F4-100%25_closure-brightgreen.svg)](#closure-progress)
+[![Bookkeeping: 100%](https://img.shields.io/badge/bookkeeping-100%25_closure_(38%2F38)-brightgreen.svg)](#verify)
 [![n=6 Dirac-mirror](https://img.shields.io/badge/n%3D6-σ%3D12_τ%3D4_φ%3D2_J₂%3D24-purple.svg)](#why)
 [![Status: RSC SATURATED](https://img.shields.io/badge/status-RSC__SATURATED__STOP-blue.svg)](#status)
 
@@ -92,10 +93,51 @@ hexa-antimatter/
 
 ---
 
+## Verify
+
+Single-command bookkeeping closure sweep (sister-substrate pattern — hexa-rtsc / hexa-cern / hexa-chip):
+
+```bash
+hexa run verify/run_all.hexa     # exit 0 = all 38 green-core subscripts PASS
+                                 # → __HEXA_ANTIMATTER_RUN_ALL__ PASS — 38/38 green
+```
+
+Inventory (38 green-core subscripts):
+
+| tier | count | scripts |
+|:-----|:-----:|:--------|
+| T1 algebraic            |  5 | `n6_arithmetic` + 4 `calc_{factory,tabletop,pet_cyclotron,break_even}` |
+| T2 numerical            | 18 | 4 `numerics_<pillar>` + 4 `_parity` + 4 `_solver` + 4 Stage-1 specials + `cross_pillar` + `lattice_arithmetic` |
+| T3 archival empirical   |  4 | `empirical_{pet,tabletop,dirac,break_even}_inspire` (Inspire-HEP fixture-fallback) |
+| inventory + cross-doc   |  2 | `cross_doc_audit` + `release_ladder` |
+| firmware Phase C sim    |  4 | `firmware/sim/{cyclotron_trigger,penning_rf,atomic_clock_counter,thrust_acquisition}` |
+| firmware Phase D lint   |  1 | `firmware_phase_d_lint` |
+| meta closure gates      |  3 | `falsifier_check` + `lint_numerics` + `saturation_check` |
+| selftest sentinel       |  1 | `selftest/selftest` (3-verb sweep) |
+
+### Honesty
+
+`__HEXA_ANTIMATTER_RUN_ALL__ PASS` means RC=0 from each of the 38 green-core subscripts —
+**bookkeeping closure** of the verified-stable core, **NOT antimatter physics settled**.
+Anti-matter physics is academically grounded (CERN ALPHA / AEGIS / PUMA actively measure
+antihydrogen), but "tabletop antimatter factory" and "n=6 Dirac-mirror lattice" claims
+remain **UNPROVEN apparatus-wise**. No PCB, no flashed firmware, no physical antihydrogen
+yield from this repo. `RSC_SATURATED__ STOP` + 4/4 F-AM 100% bookkeeping closure
+≠ apparatus working.
+
+Per [`LATTICE_POLICY.md`](LATTICE_POLICY.md): lattice tautologies (σ·φ=24) alone are
+NOT sufficient verification; numerics_* tier carries the real-limits anchors
+(¹⁸F half-life 109.77 min, CPT invariance, Tsiolkovsky rocket equation, etc. —
+see [`LIMIT_BREAKTHROUGH.md`](LIMIT_BREAKTHROUGH.md)).
+
+Per raw#10 C3: CERN AD / ALPHA / AEGIS / PUMA / PET radiopharm clinical data use their
+own published invariants; this orchestrator does NOT pin n=6 lattice anchors on external
+entities — those checks live in `cross_doc_audit` / `release_ladder` for our own SSOTs only.
+
 ## Build & verify
 
 ```bash
-# unified verifier sweep (38 steps: cross-cutter + T1 + T2 + T3 + meta + sim-firmware + saturation)
+# legacy 38-step orchestrator (kept for historical compatibility — run_all.hexa is canonical)
 hexa run verify/all.hexa                                  # → 38/38 verifiers PASS
 
 # Phase A — abstract BOM (docs)
@@ -162,9 +204,9 @@ hx install hexa-antimatter
 ## Run
 
 ```bash
-hexa-antimatter factory          # CERN-scale antimatter factory verb [WIRED]
+hexa-antimatter factory          # CERN-scale antimatter factory verb [WIRED]   (1e12 p-bar/hr candidate)
 hexa-antimatter tabletop         # desktop 1.7e12 p-bar/s candidate [WIRED]
-hexa-antimatter pet_cyclotron    # 18F beta+ on-site regeneration [WIRED]
+hexa-antimatter pet_cyclotron    # 18F beta+ on-site regeneration [WIRED]        (48 mg/season stock)
 hexa-antimatter status           # 3/3 wired verb table + verdict + caveats
 hexa-antimatter verify [target]  # run verifier(s); target ∈ all|n6|docs|ladder|...
 hexa-antimatter compute <name>   # show derived numbers; name ∈ n6|factory|tabletop|pet_cyclotron

@@ -1,0 +1,187 @@
+#!hexa strict
+// hexa-antimatter/verify/run_all.hexa — orchestrator (.hexa primary).
+//
+// Single CLI entry that runs the verified-green core of hexa-antimatter's
+// verify/*.hexa + firmware/sim/*.hexa + selftest surface and aggregates
+// pass/fail. Sister of hexa-rtsc / hexa-cern / hexa-chip / hexa-fusion /
+// hexa-ufo run_all pattern — same shape, antimatter-substrate falsifier
+// surface.
+//
+// Inventory (38 green-core subscripts):
+//   T1 algebraic   : n6_arithmetic + 4 calc_* (factory/tabletop/pet/break_even)  (5)
+//   T2 numerical   : 4 numerics_<pillar> + 4 _parity + 4 _solver +               (16)
+//                    4 Stage-1 specials (realistic/relativistic/precision/thrust) +
+//                    numerics_cross_pillar + numerics_lattice_arithmetic
+//   T3 archival    : 4 empirical_*_inspire (PET/tabletop/dirac/break_even)        (4)
+//   inventory      : cross_doc_audit + release_ladder                             (2)
+//   firmware sim   : 4 firmware/sim/*.hexa (Phase C golden behavioral)            (4)
+//   firmware lint  : firmware_phase_d_lint                                        (1)
+//   meta closure   : falsifier_check + lint_numerics + saturation_check           (3)
+//   selftest       : selftest/selftest.hexa (3-verb sentinel)                     (1)
+//
+// Total: 38 subject scripts (run_all.hexa itself excluded).
+//
+// Patterned on hexa-cern/verify/run_all.hexa and hexa-chip/verify/run_all.hexa
+// — uses explicit RC capture (`; echo $?`) and HEXA_ANTIMATTER_ROOT
+// propagation through the resource-tcp shim (commit 27d496d makes
+// `env("HEXA_ANTIMATTER_ROOT")` work under dispatch).
+//
+// Run:
+//     hexa run verify/run_all.hexa     # exit 0 = all 38 subscripts PASS
+//
+// HONESTY (closure-honesty-contract per .own own 2):
+//
+//   PASS here means RC=0 from each of the 38 green-core subscripts —
+//   bookkeeping closure of the verified-stable core (T1 algebra + T2
+//   numerics + T3 paper-existence proxy + firmware sim + meta gates).
+//   NOT antimatter physics settled. Anti-matter physics is academically
+//   grounded (CERN ALPHA / AEGIS / PUMA measure antihydrogen today), but
+//   "tabletop antimatter factory" and "n=6 Dirac-mirror lattice" claims
+//   remain UNPROVEN apparatus-wise. No PCB, no flashed firmware, no
+//   physical antihydrogen yield from this repo. RSC_SATURATED__ STOP +
+//   4/4 falsifier 100% bookkeeping closure ≠ apparatus working.
+//
+//   Per LATTICE_POLICY.md: lattice tautologies (σ·φ=24) alone are NOT
+//   sufficient verification. The numerics_* tier carries the
+//   real-limits anchors (¹⁸F half-life 109.77 min, antiproton energetics,
+//   CPT invariance, Tsiolkovsky rocket equation — see LIMIT_BREAKTHROUGH.md).
+//
+//   Per raw#10 C3: CERN AD / ALPHA / AEGIS / PUMA / PET radiopharm
+//   clinical data use their own published invariants; this orchestrator
+//   does NOT pin n=6 lattice anchors on external entities — those checks
+//   live in cross_doc_audit/release_ladder for our own SSOTs only.
+//
+// @no-lock-needed
+
+let HOME = env("HOME")
+
+fn _root() -> str {
+    let r = env("HEXA_ANTIMATTER_ROOT")
+    if r.len() > 0 { return r }
+    let pwd = exec("pwd").trim()
+    if pwd.len() > 0 { return pwd }
+    return HOME + "/core/hexa-antimatter"  // @allow-devpath
+}
+
+let ROOT = _root()
+
+let SCRIPTS: [str] = [
+    // ─── T1 algebraic (5) ─────────────────────────────────────────
+    "verify/n6_arithmetic.hexa",
+    "verify/calc_factory.hexa",
+    "verify/calc_tabletop.hexa",
+    "verify/calc_pet_cyclotron.hexa",
+    "verify/calc_break_even.hexa",
+
+    // ─── T2 numerical (16) ────────────────────────────────────────
+    "verify/numerics_factory.hexa",
+    "verify/numerics_tabletop.hexa",
+    "verify/numerics_pet_cyclotron.hexa",
+    "verify/numerics_break_even.hexa",
+    "verify/numerics_factory_parity.hexa",
+    "verify/numerics_tabletop_parity.hexa",
+    "verify/numerics_pet_cyclotron_parity.hexa",
+    "verify/numerics_break_even_parity.hexa",
+    "verify/numerics_factory_solver.hexa",
+    "verify/numerics_tabletop_solver.hexa",
+    "verify/numerics_pet_cyclotron_solver.hexa",
+    "verify/numerics_break_even_solver.hexa",
+    "verify/numerics_pet_realistic.hexa",
+    "verify/numerics_tabletop_relativistic.hexa",
+    "verify/numerics_dirac_precision.hexa",
+    "verify/numerics_break_even_thrust.hexa",
+    "verify/numerics_cross_pillar.hexa",
+    "verify/numerics_lattice_arithmetic.hexa",
+
+    // ─── T3 archival empirical (4) ────────────────────────────────
+    "verify/empirical_pet_inspire.hexa",
+    "verify/empirical_tabletop_inspire.hexa",
+    "verify/empirical_dirac_inspire.hexa",
+    "verify/empirical_break_even_inspire.hexa",
+
+    // ─── inventory + cross-doc (2) ────────────────────────────────
+    "verify/cross_doc_audit.hexa",
+    "verify/release_ladder.hexa",
+
+    // ─── firmware Phase C sim (4) ─────────────────────────────────
+    "firmware/sim/cyclotron_trigger.hexa",
+    "firmware/sim/penning_rf.hexa",
+    "firmware/sim/atomic_clock_counter.hexa",
+    "firmware/sim/thrust_acquisition.hexa",
+
+    // ─── firmware Phase D lint (1) ────────────────────────────────
+    "verify/firmware_phase_d_lint.hexa",
+
+    // ─── meta closure gates (3) ───────────────────────────────────
+    "verify/falsifier_check.hexa",
+    "verify/lint_numerics.hexa",
+    "verify/saturation_check.hexa",
+
+    // ─── selftest sentinel (1) ────────────────────────────────────
+    "selftest/selftest.hexa",
+]
+
+fn shq(s: str) -> str {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _hexa_bin() -> str {
+    let real = HOME + "/.hx/packages/hexa/hexa.real"  // @allow-devpath
+    if file_exists(real) { return real }
+    let direct = HOME + "/.hx/packages/hexa/build/hexa_interp.real"  // @allow-devpath
+    if file_exists(direct) { return direct }
+    let h = exec("which hexa 2>/dev/null").trim()
+    if h.len() > 0 { return h }
+    return HOME + "/.hx/bin/hexa"  // @allow-devpath
+}
+
+fn main() {
+    println("========================================================================")
+    println("  hexa-antimatter verify/run_all — aggregate sweep")
+    println("  root: " + ROOT)
+    println("========================================================================")
+    let mut passed = 0
+    let mut failed = 0
+    let hbin = _hexa_bin()
+    let lang = env("HEXA_LANG")
+    let env_pfx = if lang.len() > 0 { "HEXA_LANG=" + shq(lang) + " " } else { "" }
+    for s in SCRIPTS {
+        println("")
+        println("---- " + s + " ----")
+        let cmd = env_pfx + "HEXA_SHIM_NO_DARWIN_LANDING=1 RESOURCE_LOCAL_HEXA=1 " +
+                  "HEXA_ANTIMATTER_ROOT=" + shq(ROOT) + " " +
+                  shq(hbin) + " run " + shq(ROOT + "/" + s) +
+                  " >/tmp/_hexa_antimatter_v.out 2>&1; echo $?"
+        let rc_str = exec(cmd).trim()
+        let rc = int(rc_str)
+        let out = exec("cat /tmp/_hexa_antimatter_v.out 2>/dev/null")
+        // print last 6 lines for compactness
+        let lines = out.split("\n")
+        let n = lines.len()
+        let mut start = 0
+        if n > 6 { start = n - 6 }
+        let mut k = start
+        while k < n {
+            println(lines[k])
+            k = k + 1
+        }
+        if rc == 0 {
+            passed = passed + 1
+            println("  → " + s + " PASS")
+        } else {
+            failed = failed + 1
+            println("  → " + s + " FAIL (rc=" + str(rc) + ")")
+        }
+    }
+    println("")
+    println("========================================================================")
+    let total = passed + failed
+    println("  " + str(passed) + "/" + str(total) + " scripts passed")
+    if failed > 0 {
+        println("  verify sweep FAILED — see per-script output above.")
+        println("__HEXA_ANTIMATTER_RUN_ALL__ FAIL")
+        exit(1)
+    }
+    println("  PASS — all hexa-antimatter green-core invariants hold.")
+    println("__HEXA_ANTIMATTER_RUN_ALL__ PASS — " + str(passed) + "/" + str(total) + " green")
+}
