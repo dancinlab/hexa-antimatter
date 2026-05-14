@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-label="hexa-antimatter logo">
+  <polygon points="70,8 130,42 130,98 70,132 10,98 10,42"
+           fill="none" stroke="#bf8700" stroke-width="6"
+           stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="70" cy="70" r="20"
+          fill="none" stroke="#bf8700" stroke-width="4"/>
+  <path d="M 55,55 Q 70,70 85,55 Q 70,70 85,85 Q 70,70 55,85 Q 70,70 55,55 Z"
+        fill="none" stroke="#bf8700" stroke-width="3"
+        stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="70" y="118" text-anchor="middle"
+        font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+        font-size="14" font-weight="700" fill="#bf8700"
+        letter-spacing="1">antimatter</text>
+</svg>
