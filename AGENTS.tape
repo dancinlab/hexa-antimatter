@@ -46,7 +46,7 @@
 @I id001 := "hexa-antimatter" :: identity-claim [d=2026-05-14 active]
   kind = "HEXA-Antimatter family — antimatter physics"
   brief = "HEXA-Antimatter family · antimatter physics"
-  parent = "dancinlab/echoes"
+  parent = "dancinlab"
 
 @L l1 := "repo-layout" :: structure [active]
   .roadmap.hexa_antimatter -> "file"
